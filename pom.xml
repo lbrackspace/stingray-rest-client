@@ -44,7 +44,10 @@
                 <version>0.3.6</version>
                 <configuration>
                     <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
-                    <targetPackage>com.example.types</targetPackage>
+                    <targetPackage>org.rackspace.stingray.client</targetPackage>
+
+                    <!--<sourceDirectory>${basedir}/src/main/resources/schema/test</sourceDirectory>-->
+                    <!--<targetPackage>com.example.types</targetPackage>-->
                 </configuration>
                 <executions>
                     <execution>

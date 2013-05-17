@@ -1,0 +1,416 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"properties": {
+			"type":"object",
+			"id": "http://jsonschema.net/properties",
+			"required":false,
+			"properties":{
+				"auto_scaling": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/auto_scaling",
+					"required":false,
+					"properties":{
+						"cloud_credentials": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/cloud_credentials",
+							"required":false
+						},
+						"cluster": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/cluster",
+							"required":false
+						},
+						"data_center": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/data_center",
+							"required":false
+						},
+						"data_store": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/data_store",
+							"required":false
+						},
+						"enabled": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/auto_scaling/enabled",
+							"required":false
+						},
+						"external": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/auto_scaling/external",
+							"required":false
+						},
+						"hysteresis": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/hysteresis",
+							"required":false
+						},
+						"imageid": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/imageid",
+							"required":false
+						},
+						"ips_to_use": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/ips_to_use",
+							"required":false
+						},
+						"last_node_idle_time": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/last_node_idle_time",
+							"required":false
+						},
+						"max_nodes": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/max_nodes",
+							"required":false
+						},
+						"min_nodes": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/min_nodes",
+							"required":false
+						},
+						"name": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/name",
+							"required":false
+						},
+						"port": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/port",
+							"required":false
+						},
+						"refractory": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/refractory",
+							"required":false
+						},
+						"response_time": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/response_time",
+							"required":false
+						},
+						"scale_down_level": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/scale_down_level",
+							"required":false
+						},
+						"scale_up_level": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/auto_scaling/scale_up_level",
+							"required":false
+						},
+						"size_id": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/auto_scaling/size_id",
+							"required":false
+						}
+					}
+				},
+				"basic": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/basic",
+					"required":false,
+					"properties":{
+						"bandwidth_class": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/basic/bandwidth_class",
+							"required":false
+						},
+						"disabled": {
+							"type":"array",
+							"id": "http://jsonschema.net/properties/basic/disabled",
+							"required":false,
+							"items":
+								{
+									"type":"string",
+									"id": "http://jsonschema.net/properties/basic/disabled/0",
+									"required":false
+								}
+
+
+						},
+						"draining": {
+							"type":"array",
+							"id": "http://jsonschema.net/properties/basic/draining",
+							"required":false
+						},
+						"failure_pool": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/basic/failure_pool",
+							"required":false
+						},
+						"max_idle_connections_pernode": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/basic/max_idle_connections_pernode",
+							"required":false
+						},
+						"monitors": {
+							"type":"array",
+							"id": "http://jsonschema.net/properties/basic/monitors",
+							"required":false
+						},
+						"node_connection_attempts": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/basic/node_connection_attempts",
+							"required":false
+						},
+						"nodes": {
+							"type":"array",
+							"id": "http://jsonschema.net/properties/basic/nodes",
+							"required":false,
+							"items":
+								{
+									"type":"string",
+									"id": "http://jsonschema.net/properties/basic/nodes/0",
+									"required":false
+								}
+
+
+						},
+						"note": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/basic/note",
+							"required":false
+						},
+						"passive_monitoring": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/basic/passive_monitoring",
+							"required":false
+						},
+						"persistence_class": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/basic/persistence_class",
+							"required":false
+						},
+						"transparent": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/basic/transparent",
+							"required":false
+						}
+					}
+				},
+				"connection": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/connection",
+					"required":false,
+					"properties":{
+						"max_connect_time": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/connection/max_connect_time",
+							"required":false
+						},
+						"max_connections_per_node": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/connection/max_connections_per_node",
+							"required":false
+						},
+						"max_queue_size": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/connection/max_queue_size",
+							"required":false
+						},
+						"max_reply_time": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/connection/max_reply_time",
+							"required":false
+						},
+						"queue_timeout": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/connection/queue_timeout",
+							"required":false
+						}
+					}
+				},
+				"ftp": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/ftp",
+					"required":false,
+					"properties":{
+						"support_rfc_2428": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ftp/support_rfc_2428",
+							"required":false
+						}
+					}
+				},
+				"http": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/http",
+					"required":false,
+					"properties":{
+						"keepalive_non_idempotent": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/http/keepalive_non_idempotent",
+							"required":false
+						},
+						"keepalive": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/http/keepalive",
+							"required":false
+						}
+					}
+				},
+				"load_balancing": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/load_balancing",
+					"required":false,
+					"properties":{
+						"algorithm": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/load_balancing/algorithm",
+							"required":false
+						},
+						"node_weighting": {
+							"type":"array",
+							"id": "http://jsonschema.net/properties/load_balancing/node_weighting",
+							"required":false,
+							"items":
+								{
+									"type":"object",
+									"id": "http://jsonschema.net/properties/load_balancing/node_weighting/0",
+									"required":false,
+									"properties":{
+										"node": {
+											"type":"string",
+											"id": "http://jsonschema.net/properties/load_balancing/node_weighting/0/node",
+											"required":false
+										},
+										"weight": {
+											"type":"number",
+											"id": "http://jsonschema.net/properties/load_balancing/node_weighting/0/weight",
+											"required":false
+										}
+									}
+								}
+
+
+						},
+						"priority_enabled": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/load_balancing/priority_enabled",
+							"required":false
+						},
+						"priority_nodes": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/load_balancing/priority_nodes",
+							"required":false
+						},
+						"priority_values": {
+							"type":"array",
+							"id": "http://jsonschema.net/properties/load_balancing/priority_values",
+							"required":false,
+							"items":
+								{
+									"type":"string",
+									"id": "http://jsonschema.net/properties/load_balancing/priority_values/0",
+									"required":false
+								}
+
+
+						}
+					}
+				},
+				"node": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/node",
+					"required":false,
+					"properties":{
+						"close_on_death": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/node/close_on_death",
+							"required":false
+						},
+						"retry_fail_time": {
+							"type":"number",
+							"id": "http://jsonschema.net/properties/node/retry_fail_time",
+							"required":false
+						}
+					}
+				},
+				"smtp": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/smtp",
+					"required":false,
+					"properties":{
+						"send_starttls": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/smtp/send_starttls",
+							"required":false
+						}
+					}
+				},
+				"ssl": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/ssl",
+					"required":false,
+					"properties":{
+						"client_auth": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ssl/client_auth",
+							"required":false
+						},
+						"enable": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ssl/enable",
+							"required":false
+						},
+						"enhance": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ssl/enhance",
+							"required":false
+						},
+						"send_close_alerts": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ssl/send_close_alerts",
+							"required":false
+						},
+						"server_name": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ssl/server_name",
+							"required":false
+						},
+						"strict_verify": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/ssl/strict_verify",
+							"required":false
+						}
+					}
+				},
+				"tcp": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/tcp",
+					"required":false,
+					"properties":{
+						"nagle": {
+							"type":"boolean",
+							"id": "http://jsonschema.net/properties/tcp/nagle",
+							"required":false
+						}
+					}
+				},
+				"udp": {
+					"type":"object",
+					"id": "http://jsonschema.net/properties/udp",
+					"required":false,
+					"properties":{
+						"accept_from_mask": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/udp/accept_from_mask",
+							"required":false
+						},
+						"accept_from": {
+							"type":"string",
+							"id": "http://jsonschema.net/properties/udp/accept_from",
+							"required":false
+						}
+					}
+				}
+			}
+		}
+	}
+}
