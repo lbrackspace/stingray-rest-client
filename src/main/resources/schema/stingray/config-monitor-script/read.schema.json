@@ -1,0 +1,22 @@
+{
+   "$schema":       "http://json-schema.org/draft-03/schema#",
+   "id":            "/rvbd/schema/tm/1.0/config/active/scripts#read",
+   "title":         "Monitor Program",
+   "description":   "An executable program that can be used to by external program monitors to report the health of backend services.",
+    "javaType" :     "org.rackspace.stingray.client.monitor.script.MonitorScriptRead",
+   "type":          "object",
+   "required":      true,
+   
+   "properties": {
+      "properties": {
+          "javaType" :     "org.rackspace.stingray.client.monitor.script.MonitorScriptReadProperties",
+         "type":                  "object",
+         "required":              true,
+         "additionalProperties":  true,
+         
+         "properties": {
+            
+         }
+      }
+   }
+}

@@ -1,0 +1,22 @@
+{
+   "$schema":       "http://json-schema.org/draft-03/schema#",
+   "id":            "/rvbd/schema/tm/1.0/config/active/extra#read",
+   "title":         "Extra File",
+   "description":   "A user-uploaded file. Such files can be used in TrafficScript code using the \"resource.get\" function.",
+    "javaType" :     "org.rackspace.stingray.client.extra.file.ExtraFileRead",
+   "type":          "object",
+   "required":      true,
+   
+   "properties": {
+      "properties": {
+          "javaType" :     "org.rackspace.stingray.client.extra.file.ExtraFileReadProperties",
+         "type":                  "object",
+         "required":              true,
+         "additionalProperties":  true,
+         
+         "properties": {
+            
+         }
+      }
+   }
+}

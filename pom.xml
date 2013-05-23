@@ -43,11 +43,26 @@
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                 <version>0.3.6</version>
                 <configuration>
-                    <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
-                    <targetPackage>org.rackspace.stingray.client</targetPackage>
-
-                    <!--<sourceDirectory>${basedir}/src/main/resources/schema/test</sourceDirectory>-->
-                    <!--<targetPackage>com.example.types</targetPackage>-->
+                    <sourcePaths>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-action-script</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-bandwidth</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-extra-file</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-glb</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-location</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-monitor</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-monitor-script</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-persistence</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-pool</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-protection</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-rate</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-ssl-cacrl</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-ssl-client-keypair</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-ssl-keypair</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-tm</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-traffic-ip</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-trafficscript</sourcePath>
+                        <sourcePath>${basedir}/src/main/resources/schema/stingray/config-virtual-server</sourcePath>
+                    </sourcePaths>
                 </configuration>
                 <executions>
                     <execution>
