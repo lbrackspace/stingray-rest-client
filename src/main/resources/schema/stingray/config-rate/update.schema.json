@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/rate#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/rate#",
    "title":         "Rate Shaping Class",
    "description":   "A rate shaping class restricts the number of connections being processed by a virtual server at once.",
-    "javaType" :     "org.rackspace.stingray.client.rate.RateUpdate",
+    "javaType" :     "org.rackspace.stingray.client.rate.Rate",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.rate.RateUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.rate.RateProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.rate.RateUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.rate.RateBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,

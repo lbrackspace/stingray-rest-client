@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/flipper#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/flipper#",
    "title":         "Traffic IP Group",
    "description":   "Traffic IP groups are sets of IP addresses that are distributed across a cluster for fault tolerance.",
-    "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpUpdate",
+    "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIp",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -42,7 +42,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpUpdateIpMapping",
+                         "javaType" :     "org.rackspace.stingray.client.traffic.ip.TrafficIpIpMapping",
                         "type":                  "object",
                         "additionalProperties":  false,
                         

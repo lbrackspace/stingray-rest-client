@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/zxtms#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/zxtms#",
    "title":         "Traffic Manager",
    "description":   "Settings that alter the behavior of services running on a single machine.",
-    "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdate",
+    "javaType" :     "org.rackspace.stingray.client.tm.TrafficManager",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -49,7 +49,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateTrafficIp",
+                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerTrafficIp",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -78,7 +78,7 @@
             },
             
             "appliance": {
-                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateAppliance",
+                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerAppliance",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -109,7 +109,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateHosts",
+                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerHosts",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -137,7 +137,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateIf",
+                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerIf",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -192,7 +192,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateIp",
+                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerIp",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -276,7 +276,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateRoutes",
+                         "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerRoutes",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -411,7 +411,7 @@
             },
             
             "cluster_comms": {
-                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateClusterComms",
+                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerClusterComms",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -446,7 +446,7 @@
             },
             
             "java": {
-                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateJava",
+                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerJava",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -463,7 +463,7 @@
             },
             
             "rest_api": {
-                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateRestApi",
+                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerRestApi",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -480,7 +480,7 @@
             },
             
             "snmp": {
-                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerUpdateSnmp",
+                "javaType" :     "org.rackspace.stingray.client.tm.TrafficManagerSnmp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,

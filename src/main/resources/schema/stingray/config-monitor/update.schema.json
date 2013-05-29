@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/monitors#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/monitors#",
    "title":         "Monitor",
    "description":   "Monitors check important remote services are running, by periodically sending them traffic and checking the response is correct. They are used by virtual servers to detect the failure of backend nodes.",
-    "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdate",
+    "javaType" :     "org.rackspace.stingray.client.monitor.Monitor",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.monitor.MonitorProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -92,7 +92,7 @@
             },
             
             "http": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateHttp",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorHttp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -133,7 +133,7 @@
             },
             
             "rtsp": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateRtsp",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorRtsp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -161,7 +161,7 @@
             },
             
             "script": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateScript",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorScript",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -174,7 +174,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateArguments",
+                         "javaType" :     "org.rackspace.stingray.client.monitor.MonitorArguments",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -210,7 +210,7 @@
             },
             
             "sip": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateSip",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorSip",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -237,7 +237,7 @@
             },
             
             "tcp": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateTcp",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorTcp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -271,7 +271,7 @@
             },
             
             "udp": {
-                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUpdateUdp",
+                "javaType" :     "org.rackspace.stingray.client.monitor.MonitorUdp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
