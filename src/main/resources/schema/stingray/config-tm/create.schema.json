@@ -156,8 +156,7 @@
                            "bmode": {
                               "description":   "The trunking mode used for the interface (only 802.3ad is currently supported).",
                               
-                              "type":          "string",
-                              "enum":          ["802_3ad","balance_alb"]
+                              "type":          "string"
                            },
                            "bond": {
                               "description":   "The trunk of which the interface should be a member.",
@@ -180,8 +179,7 @@
                            "speed": {
                               "description":   "The speed of the interface.",
                               
-                              "type":          "string",
-                              "enum":          ["10","100","1000"]
+                              "type":          "string"
                            }
                         }
                      }
@@ -346,22 +344,19 @@
                   "shim_load_balance": {
                      "description":   "The load balancing method for the selecting a Cloud Steelhead appliance.",
                      
-                     "type":          "string",
-                     "enum":          ["priority","round_robin"]
+                     "type":          "string"
                   },
                   
                   "shim_log_level": {
                      "description":   "The minimum severity that the discovery agent will record to its log.",
                      
-                     "type":          "string",
-                     "enum":          ["critical","debug","info","notice","serious","warning"]
+                     "type":          "string"
                   },
                   
                   "shim_mode": {
                      "description":   "The mode used to discover Cloud Steelheads in the local cloud or data center.",
                      
-                     "type":          "string",
-                     "enum":          ["local","manual","portal"]
+                     "type":          "string"
                   },
                   
                   "shim_portal_url": {
@@ -531,8 +526,7 @@
                   "hash_algorithm": {
                      "description":   "The hash algorithm for authenticated SNMPv3 communications.",
                      
-                     "type":          "string",
-                     "enum":          ["md5","sha1"]
+                     "type":          "string"
                   },
                   
                   "port": {
@@ -551,8 +545,7 @@
                   "security_level": {
                      "description":   "The security level for SNMPv3 communications.",
                      
-                     "type":          "string",
-                     "enum":          ["authnopriv","authpriv","noauthnopriv"]
+                     "type":          "string"
                   },
                   
                   "username": {

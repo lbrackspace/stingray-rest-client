@@ -40,8 +40,7 @@
                   "sharing": {
                      "description":   "The scope of the bandwidth class.",
                      
-                     "type":          "string",
-                     "enum":          ["cluster","connection","machine"]
+                     "type":          "string"
                   }
                }
             }

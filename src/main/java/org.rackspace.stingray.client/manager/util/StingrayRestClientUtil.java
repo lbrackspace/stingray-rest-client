@@ -1,82 +1,72 @@
 package org.rackspace.stingray.client.manager.util;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
+import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.params.ClientParamBean;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.params.ConnManagerParamBean;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.params.HttpProtocolParamBean;
-import org.rackspace.stingray.client.StingrayRestClient;
-import org.rackspace.stingray.client.manager.security.EasySSLSocketFactory;
-import ru.hh.jersey.hchttpclient.ApacheHttpClient;
-import ru.hh.jersey.hchttpclient.ApacheHttpClientHandler;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+
+import javax.net.ssl.*;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 public class StingrayRestClientUtil {
-    private static final Log LOG = LogFactory.getLog(StingrayRestClient.class);
+    private static final Log LOG = LogFactory.getLog(StingrayRestClientUtil.class);
 
-    /**
-     * Takes no params, builds a Client from jersey client using jersey-hc and ApacheHttpClient
-     * using the values from the properties file...
-     *
-     * @return the configured ApacheHttpClient
-     */
-    public static ApacheHttpClient createHttpClient() throws Exception {
-        HttpClient httpClient = null;
+    public static class ClientHelper {
 
-        try {
-            //Set the BasicHttpParams()
-            //HttpProtocolParamBean() will allow for Java Bean conventions to manipulate the Http protocol parameters of HttpParams()
-            HttpParams params = new BasicHttpParams();
-            HttpProtocolParamBean connParams = new HttpProtocolParamBean(params);
-            connParams.setVersion(HttpVersion.HTTP_1_1);
-            connParams.setUseExpectContinue(false);
+        public static ClientConfig configureClient() {
+            TrustManager[] certs = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
 
-            //Set the ConnmanagerParamBean()
-            //ConnManagerParamBean() will allow for Java Bean conventions to manipulate the connection manager parameters of HttpParams()
-            ConnManagerParamBean poolParams = new ConnManagerParamBean(params);
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] chain, String authType)
+                                throws CertificateException {
+                        }
 
-            //How many connections do we want open.
-            poolParams.setMaxTotalConnections(300);
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] chain, String authType)
+                                throws CertificateException {
+                        }
+                    }
+            };
+            SSLContext ctx = null;
+            try {
+                ctx = SSLContext.getInstance("TLS");
+                ctx.init(null, certs, new SecureRandom());
+            } catch (java.security.GeneralSecurityException ex) {
+            }
+            HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
 
-            //How long before we timeout
-            poolParams.setTimeout(300);
+            ClientConfig config = new DefaultClientConfig();
+            config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+            config.getClasses().add(JacksonJsonProvider.class);
 
-            //Set the ClientParamBean()
-            //ClientParamBean() will allow for Java Bean conventions to manipulate the client parameters of HttpParams()
-            ClientParamBean clientParams = new ClientParamBean(params);
-
-            //what is the max redirects we allow
-            clientParams.setMaxRedirects(2);
-            clientParams.setAllowCircularRedirects(true);
-            clientParams.setRejectRelativeRedirect(false);
-            clientParams.setHandleAuthentication(false);
-
-            //Set the schemeRegistry
-            SchemeRegistry schemata = new SchemeRegistry();
-
-            //Service is HTTPS Only, uncomment if testing against non-secure service...
-//        schemata.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-            schemata.register(new Scheme("https", new EasySSLSocketFactory(), 443));
-
-            //Used for multi-threaded requests, use commented line if you do not wish to multi-thread
-//            ClientConnectionManager connManager = new SingleClientConnManager(params, schemata);  //Use for non threaded requests...
-            ClientConnectionManager connManager = new ThreadSafeClientConnManager(params, schemata);
-
-            //Sets the DefaultHttpClient with configured connection manager and params...
-            httpClient = new DefaultHttpClient(connManager, params);
-        } catch (Exception ex) {
-            LOG.error("ERROR: ", ex);
-            throw ex;
+            try {
+                config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
+                        new HostnameVerifier() {
+                            @Override
+                            public boolean verify(String hostname, SSLSession session) {
+                                return true;
+                            }
+                        },
+                        ctx
+                ));
+            } catch (Exception e) {
+            }
+            return config;
         }
 
-        return new ApacheHttpClient(new ApacheHttpClientHandler(httpClient));
+        public static Client createClient() {
+            return Client.create(ClientHelper.configureClient());
+        }
     }
 }

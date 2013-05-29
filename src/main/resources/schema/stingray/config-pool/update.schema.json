@@ -6,6 +6,8 @@
     "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdate",
    "type":          "object",
    "required":      false,
+    "additionalProperties":  false,
+
    
    "properties": {
       "properties": {
@@ -121,138 +123,157 @@
                }
             },
             
-            "auto_scaling": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateAutoScale",
+
+              "auto_scaling": {
+                  "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateAutoScale",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
-               
+
                "properties": {
                   "cloud_credentials": {
                      "description":   "The Cloud Credentials object containing authentication credentials to use in cloud API calls.",
-                     
-                     "type":          "string"
+
+                     "type":          "string",
+                     "required":      true
                   },
-                  
+
                   "cluster": {
                      "description":   "The ESX host or ESX cluster name to put the new virtual machine instances on.",
-                     
-                     "type":          "string"
+
+                     "type":          "string",
+                     "required":      true
                   },
-                  
+
                   "data_center": {
                      "description":   "The name of the logical datacenter on the vCenter server. Virtual machines will be scaled up and down under the datacenter root folder.",
-                     
-                     "type":          "string"
+
+                     "type":          "string",
+                     "required":      true
                   },
-                  
+
                   "data_store": {
                      "description":   "The name of the datastore to be used by the newly created virtual machine.",
-                     
-                     "type":          "string"
+
+                     "type":          "string",
+                     "required":      true
                   },
-                  
+
                   "enabled": {
                      "description":   "Are the nodes of this pool subject to auto-scaling?  If yes, nodes will be automatically added and removed from the pool by the chosen auto-scaling mechanism.",
-                     
-                     "type":          "boolean"
+
+                     "type":          "boolean",
+                     "required":      true
                   },
-                  
+
                   "external": {
                      "description":   "Whether or not auto-scaling is being handled by an external system. Set this value to true if all aspects of auto-scaling are handled by an external system, such as RightScale. If set to false, the traffic manager will determine when to scale the pool and will communicate with the cloud provider to create and destroy nodes as necessary.",
-                     
-                     "type":          "boolean"
+
+                     "type":          "boolean",
+                     "required":      true
                   },
-                  
+
                   "hysteresis": {
                      "description":   "The time period in seconds for which a change condition must persist before the change is actually instigated.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "imageid": {
                      "description":   "The identifier for the image of the instances to create.",
-                     
-                     "type":          "string"
+
+                     "type":          "string",
+                     "required":      true
                   },
-                  
+
                   "ips_to_use": {
                      "description":   "Which type of IP addresses on the node to use.  Choose private IPs if the traffic manager is in the same cloud as the nodes, otherwise choose public IPs.",
-                     
+
                      "type":          "string",
-                     "enum":          ["private_ips","publicips"]
+                     "required":      false
                   },
-                  
+
                   "last_node_idle_time": {
                      "description":   "The time in seconds for which the last node in an auto-scaled pool must have been idle before it is destroyed.  This is only relevant if min_nodes is 0.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "max_nodes": {
                      "description":   "The maximum number of nodes in this auto-scaled pool.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "min_nodes": {
                      "description":   "The minimum number of nodes in this auto-scaled pool.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "name": {
                      "description":   "The beginning of the name of nodes in the cloud that are part of this auto-scaled pool",
-                     
+
                      "type":          "string",
+                     "required":      true,
                      "pattern":       "^[A-Za-z]*$"
                   },
-                  
+
                   "port": {
                      "description":   "The port number to use for each node in this auto-scaled pool.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "refractory": {
                      "description":   "The time period in seconds after the instigation of a re-size during which no further changes will be made to the pool size.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "response_time": {
                      "description":   "The expected response time of the nodes in ms.  This time is used as a reference when deciding whether a node's response time is conforming.  All responses from all the nodes will be compared to this reference and the percentage of conforming responses is the base for decisions about scaling the pool up or down.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0
                   },
-                  
+
                   "scale_down_level": {
                      "description":   "The fraction, in percent, of conforming requests above which the pool size is decreased.  If the percentage of conforming requests exceeds this value, the pool is scaled down.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0,
                      "maximum":       100
                   },
-                  
+
                   "scale_up_level": {
                      "description":   "The fraction, in percent, of conforming requests below which the pool size is increased.  If the percentage of conforming requests drops below this value, the pool is scaled up.",
-                     
+
                      "type":          "integer",
+                     "required":      true,
                      "minimum":       0,
                      "maximum":       100
                   },
-                  
+
                   "size_id": {
                      "description":   "The identifier for the size of the instances to create.",
-                     
-                     "type":          "string"
+
+                     "type":          "string",
+                     "required":      true
                   }
                }
             },
@@ -352,8 +373,7 @@
                   "algorithm": {
                      "description":   "The load balancing algorithm that this pool uses to distribute load across its nodes.",
                      
-                     "type":          "string",
-                     "enum":          ["fastest_response_time","least_connections","perceptive","random","round_robin","weighted_least_connections","weighted_round_robin"]
+                     "type":          "string"
                   },
                   
                   "node_weighting": {
@@ -521,8 +541,7 @@
                   "accept_from": {
                      "description":   "The IP addresses and ports from which responses to UDP requests should be accepted. \n If set to accept responses from a specific set of IP addresses, you will need to enter a CIDR Mask (such as 10.100.0.0/16).",
                      
-                     "type":          "string",
-                     "enum":          ["all","dest_ip_only","dest_only","ip_mask"]
+                     "type":          "string"
                   },
                   
                   "accept_from_mask": {

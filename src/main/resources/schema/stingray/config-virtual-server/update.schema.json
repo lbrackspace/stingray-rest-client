@@ -165,8 +165,7 @@
                   "ssl_client_cert_headers": {
                      "description":   "What HTTP headers the virtual server should add to each request to show the data in the client certificate.",
                      
-                     "type":          "string",
-                     "enum":          ["all","none","simple"]
+                     "type":          "string"
                   },
                   
                   "ssl_decrypt": {
@@ -303,8 +302,7 @@
                   "domain": {
                      "description":   "The way in which the traffic manager should rewrite the domain portion of any cookies set by a back-end web server.",
                      
-                     "type":          "string",
-                     "enum":          ["no_rewrite","set_to_named","set_to_request"]
+                     "type":          "string"
                   },
                   
                   "new_domain": {
@@ -329,8 +327,7 @@
                   "secure": {
                      "description":   "Whether or not the traffic manager should modify the \"secure\" tag of any cookies set by a back-end web server.",
                      
-                     "type":          "string",
-                     "enum":          ["no_modify","set_secure","unset_secure"]
+                     "type":          "string"
                   }
                }
             },
@@ -444,8 +441,7 @@
                   "chunk_overhead_forwarding": {
                      "description":   "Handling of HTTP chunk overhead.  When Stingray receives data from a server or client that consists purely of protocol overhead (contains no payload), forwarding of such segments is delayed until useful payload data arrives (setting \"lazy\").  Changing this key to \"eager\" will make Stingray incur the overhead of immediately passing such data on; it should only be used with HTTP peers whose chunk handling requires it.",
                      
-                     "type":          "string",
-                     "enum":          ["eager","lazy"]
+                     "type":          "string"
                   },
                   
                   "location_regex": {
@@ -464,8 +460,7 @@
                   "location_rewrite": {
                      "description":   "The action the virtual server should take if the \"Location\" header does not match the \"location_regex\" regular expression.",
                      
-                     "type":          "string",
-                     "enum":          ["always","if_host_matches","never"]
+                     "type":          "string"
                   },
                   
                   "mime_default": {
@@ -591,8 +586,7 @@
                   "dangerous_requests": {
                      "description":   "The action to take when a SIP request with body data arrives that should be routed to an external IP.",
                      
-                     "type":          "string",
-                     "enum":          ["forbid","forward","node"]
+                     "type":          "string"
                   },
                   
                   "follow_route": {
@@ -612,8 +606,7 @@
                   "mode": {
                      "description":   "The mode that this SIP virtual server should operate in.",
                      
-                     "type":          "string",
-                     "enum":          ["full_gateway","route","sip_gateway"]
+                     "type":          "string"
                   },
                   
                   "rewrite_uri": {
@@ -744,14 +737,12 @@
                            "nonce": {
                               "description":   "How to use the OCSP nonce extension, which protects against OCSP replay attacks. Some OCSP servers do not support nonces.",
                               
-                              "type":          "string",
-                              "enum":          ["off","on","strict"]
+                              "type":          "string"
                            },
                            "required": {
                               "description":   "Whether we should do an OCSP check for this issuer, and whether it is required or optional.",
                               
-                              "type":          "string",
-                              "enum":          ["none","optional","strict"]
+                              "type":          "string"
                            },
                            "responder_cert": {
                               "description":   "The expected responder certificate",
@@ -802,8 +793,7 @@
                   "request_client_cert": {
                      "description":   "Whether or not the virtual server should request an identifying SSL certificate from each client.",
                      
-                     "type":          "string",
-                     "enum":          ["dont_request","request","require"]
+                     "type":          "string"
                   },
                   
                   "send_close_alerts": {

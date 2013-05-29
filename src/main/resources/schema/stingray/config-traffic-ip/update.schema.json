@@ -101,8 +101,7 @@
                   "mode": {
                      "description":   "The method used to distribute traffic IPs across machines in the cluster. If \"multihosted\" is used then \"multicast\" must be set to an appropriate multicast IP address.",
                      
-                     "type":          "string",
-                     "enum":          ["ec2elastic","multihosted","singlehosted"]
+                     "type":          "string"
                   },
                   
                   "multicast": {

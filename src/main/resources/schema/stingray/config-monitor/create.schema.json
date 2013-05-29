@@ -60,8 +60,7 @@
                   "scope": {
                      "description":   "A monitor can either monitor each node in the pool separately and disable an individual node if it fails, or it can monitor a specific machine and disable the entire pool if that machine fails. GLB location monitors must monitor a specific machine.",
                      
-                     "type":          "string",
-                     "enum":          ["pernode","poolwide"]
+                     "type":          "string"
                   },
                   
                   "timeout": {
@@ -75,8 +74,7 @@
                   "type": {
                      "description":   "The internal monitor implementation of this monitor.",
                      
-                     "type":          "string",
-                     "enum":          ["connect","http","ping","program","rtsp","sip","tcp_transaction"]
+                     "type":          "string"
                   },
                   
                   "use_ssl": {
@@ -233,8 +231,7 @@
                   "transport": {
                      "description":   "Which transport protocol the SIP monitor will use to query the server.",
                      
-                     "type":          "string",
-                     "enum":          ["tcp","udp"]
+                     "type":          "string"
                   }
                }
             },

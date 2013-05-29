@@ -26,8 +26,7 @@
                   "algorithm": {
                      "description":   "Defines the global load balancing algorithm to be used.",
                      
-                     "type":          "string",
-                     "enum":          ["chained","geo","hybrid","load","round_robin","weighted_random"]
+                     "type":          "string"
                   },
                   
                   "all_monitors_needed": {

@@ -43,8 +43,7 @@
                      "description":   "The scope of the bandwidth class.",
                      
                      "type":          "string",
-                     "required":      true,
-                     "enum":          ["cluster","connection","machine"]
+                     "required":      true
                   }
                }
             }

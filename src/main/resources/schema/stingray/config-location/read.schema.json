@@ -56,8 +56,7 @@
                      "description":   "Does this location contain traffic managers and configuration or is it a recipient of GLB requests?",
                      
                      "type":          "string",
-                     "required":      true,
-                     "enum":          ["config","glb"]
+                     "required":      true
                   }
                }
             }

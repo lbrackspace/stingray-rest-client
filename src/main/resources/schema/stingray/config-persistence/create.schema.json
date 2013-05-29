@@ -39,8 +39,7 @@
                   "failure_mode": {
                      "description":   "The action the pool should take if the session data is invalid or it cannot contact the node specified by the session.",
                      
-                     "type":          "string",
-                     "enum":          ["close","new_node","url"]
+                     "type":          "string"
                   },
                   
                   "note": {
@@ -52,8 +51,7 @@
                   "type": {
                      "description":   "The type of session persistence to use.",
                      
-                     "type":          "string",
-                     "enum":          ["asp","cookie","ip","j2ee","named","ssl","transparent","universal","x_zeus"]
+                     "type":          "string"
                   },
                   
                   "url": {
