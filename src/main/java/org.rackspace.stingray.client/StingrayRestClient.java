@@ -13,6 +13,7 @@ import org.rackspace.stingray.client.pool.Pool;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
+import java.util.List;
 
 public class StingrayRestClient {
     private ApacheHttpClient client;
@@ -56,6 +57,23 @@ public class StingrayRestClient {
             throw ux;
         }
 
+        return response;
+    }
+
+    public ClientResponse getPools(String path) throws Exception {
+        ClientResponse response;
+        Client client = StingrayRestClientUtil.ClientHelper.createClient();
+
+        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
+        try {
+            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
+            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        } catch (UniformInterfaceException ux) {
+            throw ux;
+        }
+
+        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
         return response;
     }
 }

@@ -50,4 +50,10 @@ public class StingrayRestClientTest {
 //        System.out.print("PoolRead: " + response2.getEntity(PoolUpdate.class));
         org.junit.Assert.assertEquals(4, updatedpool.getProperties().getBasic().getNodes().size());
     }
+
+    @Test
+    public void verifyGetAllPools() throws Exception {
+        StingrayRestClient client = new StingrayRestClient();
+        ClientResponse response = client.getPools("pools");
+    }
 }

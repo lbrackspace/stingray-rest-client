@@ -8,11 +8,19 @@ import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.rackspace.stingray.client.pool.Pool;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StingrayRestClientUtil {
     private static final Log LOG = LogFactory.getLog(StingrayRestClientUtil.class);
@@ -67,6 +75,18 @@ public class StingrayRestClientUtil {
 
         public static Client createClient() {
             return Client.create(ClientHelper.configureClient());
+        }
+
+
+        public static List<Pool> parsePools(String poolsString) {
+            List<Pool> pools = new ArrayList<Pool>();
+
+            String[] parsedPools = poolsString.split("[\":{}\\[\\] ]+");
+            for (String vals : parsedPools) {
+                Pool pool = new Pool();
+                pools.add(pool);
+            }
+            return new ArrayList<Pool>();
         }
     }
 }
