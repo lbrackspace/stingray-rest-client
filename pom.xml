@@ -12,6 +12,7 @@
     </description>
 
     <dependencies>
+        <!--Jersey-->
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
@@ -27,13 +28,13 @@
             <artifactId>jersey-json</artifactId>
             <version>1.17.1</version>
         </dependency>
-
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-apache-client</artifactId>
             <version>1.12</version>
         </dependency>
 
+        <!--Testing/Logging-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -62,6 +63,12 @@
             <version>2.2.1</version>
         </dependency>
 
+        <!--Configuration-->
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.7</version>
+        </dependency>
     </dependencies>
 
     <build>

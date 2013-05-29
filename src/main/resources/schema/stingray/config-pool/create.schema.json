@@ -126,7 +126,7 @@
                   "javaType" :     "org.rackspace.stingray.client.pool.PoolCreateAutoScale",
                "type":                  "object",
                "required":              true,
-               "additionalProperties":  false,
+               "additionalProperties":  true,
 
                "properties": {
                   "cloud_credentials": {
