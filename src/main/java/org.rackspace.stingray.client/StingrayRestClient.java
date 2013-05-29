@@ -9,7 +9,6 @@ import org.rackspace.stingray.client.config.ClientConfigKeys;
 import org.rackspace.stingray.client.config.Configuration;
 import org.rackspace.stingray.client.config.StingrayRestClientConfiguration;
 import org.rackspace.stingray.client.manager.util.StingrayRestClientUtil;
-import org.rackspace.stingray.client.pool.PoolUpdate;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;

@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/vservers#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/vservers#",
    "title":         "Virtual Server",
    "description":   "A virtual server represents the front end of a load balanced network service. It processes traffic it receives on a specified port and distributes load over a pool of backend nodes.",
-    "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdate",
+    "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServer",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -177,7 +177,7 @@
             },
             
             "aptimizer": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateAptimizer",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerAptimizer",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -196,7 +196,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateProfile",
+                         "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerProfile",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -225,7 +225,7 @@
             },
             
             "connection": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateConnection",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerConnection",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -278,7 +278,7 @@
             },
             
             "connection_errors": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateConnectionError",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerConnectionError",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -293,7 +293,7 @@
             },
             
             "cookie": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateCookie",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerCookie",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -333,7 +333,7 @@
             },
             
             "ftp": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateFtp",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerFtp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -378,7 +378,7 @@
             },
             
             "gzip": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateGzip",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerGzip",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -432,7 +432,7 @@
             },
             
             "http": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateHttp",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerHttp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -478,7 +478,7 @@
             },
             
             "log": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateLog",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerLog",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -523,7 +523,7 @@
             },
             
             "request_tracing": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateRequestTracing",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerRequestTracing",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -544,7 +544,7 @@
             },
             
             "rtsp": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateRtsp",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerRtsp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -577,7 +577,7 @@
             },
             
             "sip": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateSip",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerSip",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -656,7 +656,7 @@
             },
             
             "smtp": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateSmtp",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerSmtp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -671,7 +671,7 @@
             },
             
             "ssl": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateSsl",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerSsl",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -718,7 +718,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateOcspIssuer",
+                         "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerOcspIssuer",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -815,7 +815,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateServerCertHostMapping",
+                         "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerServerCertHostMapping",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -845,7 +845,7 @@
             },
             
             "syslog": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateSyslog",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerSyslog",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -872,7 +872,7 @@
             },
             
             "tcp": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateTcp",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerTcp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -887,7 +887,7 @@
             },
             
             "udp": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateUdp",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUdp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -922,7 +922,7 @@
             },
             
             "web_cache": {
-                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerUpdateWebcache",
+                "javaType" :     "org.rackspace.stingray.client.config.virtualserver.VirtualServerWebcache",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,

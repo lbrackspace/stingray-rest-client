@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/services#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/services#",
    "title":         "GLB Service",
    "description":   "A global load balancing service is used by a virtual server to modify DNS requests in order load balance data across different GLB locations.",
-    "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadbalancingUpdate",
+    "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadBalancing",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadbalancingUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadBalancingProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadbalancingUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadBalancingBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -59,7 +59,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadbalancingUpdateDnsSecKey",
+                         "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadBalancingDnsSecKey",
 
                         "type":                  "object",
                         "additionalProperties":  false,
@@ -128,7 +128,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadbalancingUpdateLocation",
+                         "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadBalancingLocation",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -199,7 +199,7 @@
             },
             
             "log": {
-                "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadbalancingUpdateLog",
+                "javaType" :     "org.rackspace.stingray.client.glb.GlobalLoadBalancingLog",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,

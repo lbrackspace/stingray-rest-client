@@ -1,15 +1,15 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/protection#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/protection#",
    "title":         "Protection Class",
    "description":   "A protection class specifies the level of protection against network attacks for a virtual server.",
-    "javaType" :     "org.rackspace.stingray.client.protection.ProtectionUpdate",
+    "javaType" :     "org.rackspace.stingray.client.protection.Protection",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.protection.ProtectionUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.protection.ProtectionProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -63,7 +63,7 @@
             },
             
             "access_restriction": {
-                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionUpdateAccessRestiction",
+                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionAccessRestiction",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -94,7 +94,7 @@
             },
             
             "connection_limiting": {
-                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionUpdateConnectionLimiting",
+                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionConnectionLimiting",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -138,7 +138,7 @@
             },
             
             "http": {
-                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionUpdateHttp",
+                "javaType" :     "org.rackspace.stingray.client.protection.ProtectionHttp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,

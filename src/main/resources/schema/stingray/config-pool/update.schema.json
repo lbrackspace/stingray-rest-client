@@ -1,9 +1,9 @@
 {
    "$schema":       "http://json-schema.org/draft-03/schema#",
-   "id":            "/rvbd/schema/tm/1.0/config/active/pools#update",
+   "id":            "/rvbd/schema/tm/1.0/config/active/pools#",
    "title":         "Pool",
    "description":   "A pool manages a group of backend nodes. It routes traffic to the most appropriate node, based on load balancing and session persistence criteria.",
-    "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdate",
+    "javaType" :     "org.rackspace.stingray.client.pool.Pool",
    "type":          "object",
    "required":      false,
     "additionalProperties":  false,
@@ -11,7 +11,7 @@
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateProperties",
+          "javaType" :     "org.rackspace.stingray.client.pool.PoolProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -19,7 +19,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateBasic",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -125,7 +125,7 @@
             
 
               "auto_scaling": {
-                  "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateAutoScale",
+                  "javaType" :     "org.rackspace.stingray.client.pool.PoolAutoScale",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -279,7 +279,7 @@
             },
             
             "connection": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateConnection",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolConnection",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -328,7 +328,7 @@
             },
             
             "ftp": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateFtp",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolFtp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -343,7 +343,7 @@
             },
             
             "http": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateHttp",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolHttp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -364,7 +364,7 @@
             },
             
             "load_balancing": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateLoadbalancing",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolLoadbalancing",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -383,7 +383,7 @@
                      "required":      true,
                      
                      "items": {
-                         "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateNodeWeight",
+                         "javaType" :     "org.rackspace.stingray.client.pool.PoolNodeWeight",
                         "type":                  "object",
                         "additionalProperties":  false,
                         
@@ -434,7 +434,7 @@
             },
             
             "node": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateNode",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolNode",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -457,7 +457,7 @@
             },
             
             "smtp": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateSmtp",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolSmtp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -472,7 +472,7 @@
             },
             
             "ssl": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateSsl",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolSsl",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -517,7 +517,7 @@
             },
             
             "tcp": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateTcp",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolTcp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
@@ -532,7 +532,7 @@
             },
             
             "udp": {
-                "javaType" :     "org.rackspace.stingray.client.pool.PoolUpdateUdp",
+                "javaType" :     "org.rackspace.stingray.client.pool.PoolUdp",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
