@@ -29,19 +29,28 @@ public class ApacheCommonsConfiguration implements Configuration {
     private synchronized void checkState() throws ConfigurationInitializationException {
         if (configuration == null || fileIsDifferentAndExists()) {
             try {
-                if (!configurationFile.exists()) {
-                    throw new ConfigurationNotFoundException("Unable to locate file: " + configurationFile.getPath());
-                } else if (!configurationFile.canRead()) {
-                    throw new ConfigurationAccessException("Insufficient permissions to read file: " + configurationFile.getPath());
+                    if(configurationFile.exists())
+                    {
+                        if(configurationFile.canRead())
+                        {
+                                    configurationFileLastModifiedTimestamp = configurationFile.lastModified();
+                        }
+                        else
+                        {
+                            configuration = new PropertiesConfiguration();
+                            throw new ConfigurationAccessException("Insufficient permission to read file: "+ configurationFile.getPath());
+                        }
+                    }
+                    else
+                    {
+                        configuration = new PropertiesConfiguration();
+                        throw new ConfigurationAccessException("Unable to locate file: " + configurationFile.getPath());
+                    }
                 }
-            } catch (ConfigurationInitializationException cie) {
-                //Got to love piggy back logic that breaks programatic flow
-                configuration = new PropertiesConfiguration();
-
-                throw cie;
-            } finally {
-                configurationFileLastModifiedTimestamp = configurationFile.lastModified();
-            }
+                catch(ConfigurationInitializationException cie)
+                {
+                    throw cie;
+                }
 
             try {
                 configuration = new PropertiesConfiguration(configurationFile);
@@ -68,7 +77,7 @@ public class ApacheCommonsConfiguration implements Configuration {
             okay = configuration.containsKey(key.name());
 
             if (!okay) {
-                break;
+                return okay;
             }
         }
 
