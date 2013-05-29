@@ -10,6 +10,8 @@ import org.rackspace.stingray.client.pool.PoolProperties;
 
 import javax.xml.bind.JAXBException;
 
+import static junit.framework.Assert.assertNotNull;
+
 public class StingrayRestClientTest {
 
     @Test
@@ -55,5 +57,6 @@ public class StingrayRestClientTest {
     public void verifyGetAllPools() throws Exception {
         StingrayRestClient client = new StingrayRestClient();
         ClientResponse response = client.getPools("pools");
+        assertNotNull(response.getEntity(String.class));
     }
 }

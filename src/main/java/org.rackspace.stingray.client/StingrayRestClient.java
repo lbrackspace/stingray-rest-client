@@ -13,7 +13,6 @@ import org.rackspace.stingray.client.pool.Pool;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
-import java.util.List;
 
 public class StingrayRestClient {
     private ApacheHttpClient client;
@@ -73,7 +72,7 @@ public class StingrayRestClient {
             throw ux;
         }
 
-        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
+//        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
         return response;
     }
 }

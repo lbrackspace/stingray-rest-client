@@ -4,7 +4,6 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.rackspace.stingray.client.config.exception.ConfigurationAccessException;
 import org.rackspace.stingray.client.config.exception.ConfigurationInitializationException;
-import org.rackspace.stingray.client.config.exception.ConfigurationNotFoundException;
 
 import java.io.File;
 
@@ -29,28 +28,20 @@ public class ApacheCommonsConfiguration implements Configuration {
     private synchronized void checkState() throws ConfigurationInitializationException {
         if (configuration == null || fileIsDifferentAndExists()) {
             try {
-                    if(configurationFile.exists())
-                    {
-                        if(configurationFile.canRead())
-                        {
-                                    configurationFileLastModifiedTimestamp = configurationFile.lastModified();
-                        }
-                        else
-                        {
-                            configuration = new PropertiesConfiguration();
-                            throw new ConfigurationAccessException("Insufficient permission to read file: "+ configurationFile.getPath());
-                        }
-                    }
-                    else
-                    {
+                if (configurationFile.exists()) {
+                    if (configurationFile.canRead()) {
+                        configurationFileLastModifiedTimestamp = configurationFile.lastModified();
+                    } else {
                         configuration = new PropertiesConfiguration();
-                        throw new ConfigurationAccessException("Unable to locate file: " + configurationFile.getPath());
+                        throw new ConfigurationAccessException("Insufficient permission to read file: " + configurationFile.getPath());
                     }
+                } else {
+                    configuration = new PropertiesConfiguration();
+                    throw new ConfigurationAccessException("Unable to locate file: " + configurationFile.getPath());
                 }
-                catch(ConfigurationInitializationException cie)
-                {
-                    throw cie;
-                }
+            } catch (ConfigurationInitializationException cie) {
+                throw cie;
+            }
 
             try {
                 configuration = new PropertiesConfiguration(configurationFile);
