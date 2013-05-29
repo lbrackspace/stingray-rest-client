@@ -9,6 +9,7 @@ import org.rackspace.stingray.client.config.ClientConfigKeys;
 import org.rackspace.stingray.client.config.Configuration;
 import org.rackspace.stingray.client.config.StingrayRestClientConfiguration;
 import org.rackspace.stingray.client.manager.util.StingrayRestClientUtil;
+import org.rackspace.stingray.client.pool.Pool;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
@@ -39,7 +40,7 @@ public class StingrayRestClient {
         return response;
     }
 
-    public ClientResponse updatePool(String path, PoolUpdate pool) throws Exception {
+    public ClientResponse updatePool(String path, Pool pool) throws Exception {
         //Path will be in the client methods. This method should be generic possibly ...
         ClientResponse response = null;
         Client client = StingrayRestClientUtil.ClientHelper.createClient();
