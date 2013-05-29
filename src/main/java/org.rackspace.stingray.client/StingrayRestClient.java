@@ -28,9 +28,11 @@ public class StingrayRestClient {
         ClientResponse response = null;
         Client client = StingrayRestClientUtil.ClientHelper.createClient();
 
-        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
+        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint)
+                + config.getString(ClientConfigKeys.stingray_base_uri));
         try {
-            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
+            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user),
+                    config.getString(ClientConfigKeys.stingray_admin_key)));
             response = client.resource(endpoint + path)
                     .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         } catch (UniformInterfaceException ux) {

@@ -2,6 +2,8 @@ package org.rackspace.stingray.client;
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Test;
+import org.rackspace.stingray.client.manager.PoolManager;
+import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolBasic;
 import org.rackspace.stingray.client.pool.PoolProperties;
@@ -9,6 +11,13 @@ import org.rackspace.stingray.client.pool.PoolProperties;
 import javax.xml.bind.JAXBException;
 
 public class StingrayRestClientTest {
+
+    @Test
+    public void verifyStingrayPoolManager() throws Exception, JAXBException {
+        PoolManager poolManager = new PoolManagerImpl();
+        Pool pool = poolManager.retrievePool("528830_770");
+        org.junit.Assert.assertNotNull(pool);
+    }
 
     @Test
     public void verifyStingrayRestClientConnection() throws Exception, JAXBException {
