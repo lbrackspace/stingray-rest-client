@@ -1,78 +1,57 @@
 package org.rackspace.stingray.client;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.client.apache.ApacheHttpClient;
-import org.rackspace.stingray.client.config.ClientConfigKeys;
-import org.rackspace.stingray.client.config.Configuration;
-import org.rackspace.stingray.client.config.StingrayRestClientConfiguration;
-import org.rackspace.stingray.client.manager.util.StingrayRestClientUtil;
+import org.rackspace.stingray.client.manager.PoolManager;
+import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
 
-import javax.ws.rs.core.MediaType;
-import java.net.URI;
+public class StingrayRestClient extends StingrayRestClientManager {
 
-public class StingrayRestClient {
-    private ApacheHttpClient client;
-    private Configuration config;
+    private final PoolManager poolManager = new PoolManagerImpl();
 
-    public StingrayRestClient() {
-        config = new StingrayRestClientConfiguration();
+    /*
+     * @param Sting vsName the virtual server name to retrieve the pool for
+     * @throws Exception, because we have yet to throw a checked one, update this at that time....
+     */
+    public Pool retrievePool(String vsName) throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.retrievePool(endpoint, client, vsName);
     }
 
-    public ClientResponse getResource(String path) throws Exception {
-        //Path will be in the client methods. This method should be generic ...
+    //Todo: rest of the methods, this is dependent on the managers being built up...
 
-        ClientResponse response = null;
-        Client client = StingrayRestClientUtil.ClientHelper.createClient();
+//    public ClientResponse updatePool(String path, Pool pool) throws Exception {
+//        //Path will be in the client methods. This method should be generic possibly ...
+//        ClientResponse response = null;
+//        Client client = StingrayRestClientUtil.ClientHelper.createClient();
+//
+//        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
+//        try {
+//            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
+//            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
+//                    .accept(MediaType.APPLICATION_JSON).entity(pool).put(ClientResponse.class);
+//        } catch (UniformInterfaceException ux) {
+//            throw ux;
+//        }
+//
+//        return response;
+//    }
+//
 
-        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint)
-                + config.getString(ClientConfigKeys.stingray_base_uri));
-        try {
-            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user),
-                    config.getString(ClientConfigKeys.stingray_admin_key)));
-            response = client.resource(endpoint + path)
-                    .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        } catch (UniformInterfaceException ux) {
-            throw ux;
-        }
-
-        return response;
-    }
-
-    public ClientResponse updatePool(String path, Pool pool) throws Exception {
-        //Path will be in the client methods. This method should be generic possibly ...
-        ClientResponse response = null;
-        Client client = StingrayRestClientUtil.ClientHelper.createClient();
-
-        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
-        try {
-            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
-            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON).entity(pool).put(ClientResponse.class);
-        } catch (UniformInterfaceException ux) {
-            throw ux;
-        }
-
-        return response;
-    }
-
-    public ClientResponse getPools(String path) throws Exception {
-        ClientResponse response;
-        Client client = StingrayRestClientUtil.ClientHelper.createClient();
-
-        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
-        try {
-            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
-            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        } catch (UniformInterfaceException ux) {
-            throw ux;
-        }
-
-//        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
-        return response;
-    }
+    //TODO: to do this call we need to generate object (based off of json schema we build) to pull in all lists as its 'generic' according to stingray
+//    public ClientResponse getPools(String path) throws Exception {
+//        ClientResponse response;
+//        Client client = StingrayRestClientUtil.ClientHelper.createClient();
+//
+//        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
+//        try {
+//            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
+//            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
+//                    .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+//        } catch (UniformInterfaceException ux) {
+//            throw ux;
+//        }
+//
+////        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
+//        return response;
+//    }
 }

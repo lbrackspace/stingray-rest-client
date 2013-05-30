@@ -1,8 +1,9 @@
-package org.rackspace.stingray.client.manager.util;
+package org.rackspace.stingray.client.util;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import org.apache.commons.logging.Log;
@@ -10,12 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.rackspace.stingray.client.pool.Pool;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -27,7 +23,7 @@ public class StingrayRestClientUtil {
 
     public static class ClientHelper {
 
-        public static ClientConfig configureClient() {
+        public static ClientConfig configureClient(boolean isDebugging) {
             TrustManager[] certs = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
@@ -55,8 +51,10 @@ public class StingrayRestClientUtil {
             HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
 
             ClientConfig config = new DefaultClientConfig();
-            config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
             config.getClasses().add(JacksonJsonProvider.class);
+
+            config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
             try {
                 config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
@@ -73,8 +71,10 @@ public class StingrayRestClientUtil {
             return config;
         }
 
-        public static Client createClient() {
-            return Client.create(ClientHelper.configureClient());
+        public static Client createClient(boolean isDebugging) {
+            Client client = Client.create(ClientHelper.configureClient(isDebugging));
+            if (isDebugging) client.addFilter(new LoggingFilter());
+            return client;
         }
 
 
