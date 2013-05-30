@@ -51,10 +51,8 @@ public class StingrayRestClientUtil {
             HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
 
             ClientConfig config = new DefaultClientConfig();
-
-            config.getClasses().add(JacksonJsonProvider.class);
-
             config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+            config.getClasses().add(JacksonJsonProvider.class);
 
             try {
                 config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(

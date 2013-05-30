@@ -1,5 +1,6 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.ClientResponse;
 import org.rackspace.stingray.client.manager.PoolManager;
 import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
@@ -15,6 +16,26 @@ public class StingrayRestClient extends StingrayRestClientManager {
     public Pool retrievePool(String vsName) throws Exception {
         //Todo: see @throws javadoc
         return poolManager.retrievePool(endpoint, client, vsName);
+    }
+
+    public Pool createPool(String vsName, Pool pool) throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.createPool(endpoint, client, vsName, pool);
+    }
+
+    public Pool updatePool(String vsName, Pool pool) throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.updatePool(endpoint, client, vsName, pool);
+    }
+
+    public void deletePool(String vsName) throws Exception {
+        //Todo: see @throws javadoc
+        poolManager.deletePool(endpoint, client, vsName);
+    }
+
+    public ClientResponse test() throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.test(endpoint, client);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...

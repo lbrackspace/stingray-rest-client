@@ -1,26 +1,85 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.ClientResponse;
+import org.junit.Assert;
 import org.junit.Test;
+import org.rackspace.stingray.client.error.StingrayClientError;
 import org.rackspace.stingray.client.pool.Pool;
+import org.rackspace.stingray.client.pool.PoolBasic;
+import org.rackspace.stingray.client.pool.PoolLoadbalancing;
+import org.rackspace.stingray.client.pool.PoolProperties;
+import org.rackspace.stingray.client.util.EnumFactory;
+
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StingrayRestClientTest {
 
     @Test
-    public void verifyStingrayPoolManager() throws Exception {
+    public void verifyStingrayPoolManagerGet() throws Exception {
         StingrayRestClient client = new StingrayRestClient();
 
         Pool pool = client.retrievePool("528830_770");
-        org.junit.Assert.assertNotNull(pool);
+        Assert.assertNotNull(pool);
     }
 
-//    @Test
-//    public void verifyStingrayRestClientConnection() throws Exception, JAXBException {
-//        StingrayRestClient client = new StingrayRestClient();
-//        ClientResponse response = client.getResource("pools/528830_770");
-//        System.out.print(response.toString());
-////        System.out.print("PoolRead: " + response.getEntity(String.class));
-//        System.out.print("PoolRead: " + response.getEntity(Pool.class));
-//    }
+    @Test
+    public void verifyStingrayPoolManagerCreateAndUpdate() throws Exception {
+        StingrayRestClient client = new StingrayRestClient();
+
+        Pool pool = new Pool();
+        PoolProperties poolProperties = new PoolProperties();
+        PoolBasic poolBasic = new PoolBasic();
+
+        Set<String> nodes = new HashSet<String>();
+        nodes.add("10.1.1.1:80");
+        poolBasic.setNodes(nodes);
+
+        poolBasic.setPassive_monitoring(false);
+
+        PoolLoadbalancing lbalgo = new PoolLoadbalancing();
+        lbalgo.setAlgorithm(EnumFactory.Accept_from.WEIGHTED_ROUND_ROBIN.toString());
+
+        poolProperties.setBasic(poolBasic);
+        poolProperties.setLoad_balancing(lbalgo);
+
+        pool.setProperties(poolProperties);
+
+        Pool rpool = client.createPool("ctest_001", pool);
+
+        Assert.assertNotNull(rpool);
+        Assert.assertEquals(EnumFactory.Accept_from.WEIGHTED_ROUND_ROBIN.toString(), rpool.getProperties().getLoad_balancing().getAlgorithm());
+
+        rpool.getProperties().getBasic().getNodes().add("10.2.2.2:8080");
+        Pool upool = client.updatePool("ctest_001", rpool);
+
+        Assert.assertEquals(2, upool.getProperties().getBasic().getNodes().size());
+
+        client.deletePool("ctest_001");
+    }
+
+    @Test
+    public void verifyErrorResponseParsing() throws Exception, JAXBException {
+        StingrayRestClient client = new StingrayRestClient();
+        ClientResponse response;
+
+        response = client.test();
+
+        String tjson = "{\"error_id\":\"json.parse_error\",\"error_text\":\"Invalid JSON data: Didn't find ':' after Hash key\"}";
+
+        response.setEntityInputStream(new ByteArrayInputStream(tjson.getBytes()));
+
+        ValidationError error = response.getEntity(ValidationError.class);
+        Assert.assertNotNull(error);
+
+        System.out.printf("ERROR: %s", error);
+        Assert.assertEquals("json.parse_error", error.getError_id());
+        Assert.assertEquals("Invalid JSON data: Didn't find ':' after Hash key", error.getError_text());
+    }
+
+
 //
 //    @Test
 //    public void verifyUpdateNodeOnPool() throws Exception, JAXBException {
