@@ -5,19 +5,19 @@ import com.sun.jersey.api.client.ClientResponse;
 import org.rackspace.stingray.client.manager.BaseManager;
 import org.rackspace.stingray.client.manager.PoolManager;
 import org.rackspace.stingray.client.pool.Pool;
+import org.rackspace.stingray.client.util.ClientConstants;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
 public class PoolManagerImpl extends BaseManager implements PoolManager {
-    String poolPath = "pools/";
 
     @Override
     public Pool retrievePool(URI endpoint, Client client, String vsName) {
         Pool pool = null;
         ClientResponse response = null;
         try {
-            response = client.resource(endpoint + poolPath + vsName)
+            response = client.resource(endpoint + ClientConstants.POOL_PATH  + vsName)
                     .accept(MediaType.APPLICATION_JSON)
                     .get(ClientResponse.class);
 
@@ -42,7 +42,7 @@ public class PoolManagerImpl extends BaseManager implements PoolManager {
     public Pool updatePool(URI endpoint, Client client, String vsName, Pool pool) {
         ClientResponse response = null;
         try {
-            response = client.resource(endpoint + poolPath + vsName)
+            response = client.resource(endpoint + ClientConstants.POOL_PATH + vsName)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
                     .entity(pool)
@@ -65,7 +65,7 @@ public class PoolManagerImpl extends BaseManager implements PoolManager {
     public void deletePool(URI endpoint, Client client, String vsName) {
         ClientResponse response = null;
         try {
-            response = client.resource(endpoint + poolPath + vsName)
+            response = client.resource(endpoint + ClientConstants.POOL_PATH  + vsName)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
                     .delete(ClientResponse.class);
