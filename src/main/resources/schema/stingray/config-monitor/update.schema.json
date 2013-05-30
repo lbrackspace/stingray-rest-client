@@ -146,7 +146,7 @@
                   },
                   
                   "path": {
-                     "description":   "The path to use in the RTSP request (some servers will return 500 Internal Server Error unless this is a valid media file).",
+                     "description":   "The path to use in the RTSP request (some servers will return 500 Internal Server error unless this is a valid media file).",
                      
                      "type":          "string",
                      "pattern":       "^/[^ ]*$"
