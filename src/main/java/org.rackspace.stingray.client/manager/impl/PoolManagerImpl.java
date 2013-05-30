@@ -79,4 +79,18 @@ public class PoolManagerImpl extends BaseManager implements PoolManager {
             //todo: ADD Checked Exception. EX: StingrayRestClientGeneralException... Handle exceptions properly..
         }
     }
+
+    public ClientResponse test(URI endpoint, Client client) {
+        Pool pool = null;
+        ClientResponse response = null;
+        try {
+            response = client.resource(endpoint + ClientConstants.POOL_PATH )
+                    .accept(MediaType.APPLICATION_JSON)
+                    .get(ClientResponse.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
 }

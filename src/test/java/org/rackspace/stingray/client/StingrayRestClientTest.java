@@ -1,13 +1,17 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Assert;
 import org.junit.Test;
+import org.rackspace.stingray.client.error.StingrayClientError;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolBasic;
 import org.rackspace.stingray.client.pool.PoolLoadbalancing;
 import org.rackspace.stingray.client.pool.PoolProperties;
 import org.rackspace.stingray.client.util.EnumFactory;
 
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,14 +60,39 @@ public class StingrayRestClientTest {
         client.deletePool("ctest_001");
     }
 
-//    @Test
-//    public void verifyStingrayRestClientConnection() throws Exception, JAXBException {
-//        StingrayRestClient client = new StingrayRestClient();
-//        ClientResponse response = client.getResource("pools/528830_770");
-//        System.out.print(response.toString());
-////        System.out.print("PoolRead: " + response.getEntity(String.class));
-//        System.out.print("PoolRead: " + response.getEntity(Pool.class));
-//    }
+    @Test
+    public void verifyErrorResponseParsing() throws Exception, JAXBException {
+        StingrayRestClient client = new StingrayRestClient();
+        ClientResponse response;
+
+        response = client.test();
+
+        String tjson = "{\"error_id\":\"json.parse_error\",\"error_text\":\"Invalid JSON data: Didn't find ':' after Hash key\"}";
+
+        response.setEntityInputStream(new ByteArrayInputStream(tjson.getBytes()));
+
+        StingrayClientError error = response.getEntity(StingrayClientError.class);
+        Assert.assertNotNull(error);
+
+        System.out.printf("ERROR: %s", error);
+        Assert.assertEquals("json.parse_error", error.getAdditionalProperties().get("error_id"));
+        Assert.assertEquals("Invalid JSON data: Didn't find ':' after Hash key", error.getAdditionalProperties().get("error_text"));
+    }
+
+    @Test
+    public void verifyErrorResponseValidationParsing() throws Exception, JAXBException {
+        StingrayRestClient client = new StingrayRestClient();
+        ClientResponse response;
+
+        response = client.test();
+
+        String tjson = "";
+
+        response.setEntityInputStream(new ByteArrayInputStream(tjson.getBytes()));
+
+        StingrayClientError error = response.getEntity(StingrayClientError.class);
+        Assert.assertNotNull(error);
+    }
 //
 //    @Test
 //    public void verifyUpdateNodeOnPool() throws Exception, JAXBException {

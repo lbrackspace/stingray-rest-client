@@ -1,5 +1,6 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.ClientResponse;
 import org.rackspace.stingray.client.manager.PoolManager;
 import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
@@ -30,6 +31,11 @@ public class StingrayRestClient extends StingrayRestClientManager {
     public void deletePool(String vsName) throws Exception {
         //Todo: see @throws javadoc
         poolManager.deletePool(endpoint, client, vsName);
+    }
+
+    public ClientResponse test() throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.test(endpoint, client);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...
