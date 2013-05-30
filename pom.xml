@@ -78,6 +78,7 @@
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                 <version>0.3.6</version>
                 <configuration>
+                    <annotationStyle>jackson1</annotationStyle>
                     <sourcePaths>
                         <sourcePath>${basedir}/src/main/resources/schema/stingray/config-action-script</sourcePath>
                         <sourcePath>${basedir}/src/main/resources/schema/stingray/config-bandwidth</sourcePath>

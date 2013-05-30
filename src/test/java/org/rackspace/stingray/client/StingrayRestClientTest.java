@@ -1,16 +1,59 @@
 package org.rackspace.stingray.client;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.rackspace.stingray.client.pool.Pool;
+import org.rackspace.stingray.client.pool.PoolBasic;
+import org.rackspace.stingray.client.pool.PoolLoadbalancing;
+import org.rackspace.stingray.client.pool.PoolProperties;
+import org.rackspace.stingray.client.util.EnumFactory;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class StingrayRestClientTest {
 
     @Test
-    public void verifyStingrayPoolManager() throws Exception {
+    public void verifyStingrayPoolManagerGet() throws Exception {
         StingrayRestClient client = new StingrayRestClient();
 
         Pool pool = client.retrievePool("528830_770");
-        org.junit.Assert.assertNotNull(pool);
+        Assert.assertNotNull(pool);
+    }
+
+    @Test
+    public void verifyStingrayPoolManagerCreateAndUpdate() throws Exception {
+        StingrayRestClient client = new StingrayRestClient();
+
+        Pool pool = new Pool();
+        PoolProperties poolProperties = new PoolProperties();
+        PoolBasic poolBasic = new PoolBasic();
+
+        Set<String> nodes = new HashSet<String>();
+        nodes.add("10.1.1.1:80");
+        poolBasic.setNodes(nodes);
+
+        poolBasic.setPassive_monitoring(false);
+
+        PoolLoadbalancing lbalgo = new PoolLoadbalancing();
+        lbalgo.setAlgorithm(EnumFactory.Accept_from.WEIGHTED_ROUND_ROBIN.toString());
+
+        poolProperties.setBasic(poolBasic);
+        poolProperties.setLoad_balancing(lbalgo);
+
+        pool.setProperties(poolProperties);
+
+        Pool rpool = client.createPool("ctest_001", pool);
+
+        Assert.assertNotNull(rpool);
+        Assert.assertEquals(EnumFactory.Accept_from.WEIGHTED_ROUND_ROBIN.toString(), rpool.getProperties().getLoad_balancing().getAlgorithm());
+
+        rpool.getProperties().getBasic().getNodes().add("10.2.2.2:8080");
+        Pool upool = client.updatePool("ctest_001", rpool);
+
+        Assert.assertEquals(2, upool.getProperties().getBasic().getNodes().size());
+
+        client.deletePool("ctest_001");
     }
 
 //    @Test

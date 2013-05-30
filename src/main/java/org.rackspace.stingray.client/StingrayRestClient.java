@@ -17,6 +17,21 @@ public class StingrayRestClient extends StingrayRestClientManager {
         return poolManager.retrievePool(endpoint, client, vsName);
     }
 
+    public Pool createPool(String vsName, Pool pool) throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.createPool(endpoint, client, vsName, pool);
+    }
+
+    public Pool updatePool(String vsName, Pool pool) throws Exception {
+        //Todo: see @throws javadoc
+        return poolManager.updatePool(endpoint, client, vsName, pool);
+    }
+
+    public void deletePool(String vsName) throws Exception {
+        //Todo: see @throws javadoc
+        poolManager.deletePool(endpoint, client, vsName);
+    }
+
     //Todo: rest of the methods, this is dependent on the managers being built up...
 
 //    public ClientResponse updatePool(String path, Pool pool) throws Exception {
