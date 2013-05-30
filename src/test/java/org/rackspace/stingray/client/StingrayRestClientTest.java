@@ -71,7 +71,7 @@ public class StingrayRestClientTest {
 
         response.setEntityInputStream(new ByteArrayInputStream(tjson.getBytes()));
 
-        StingrayClientError error = response.getEntity(StingrayClientError.class);
+        ValidationError error = response.getEntity(ValidationError.class);
         Assert.assertNotNull(error);
 
         System.out.printf("ERROR: %s", error);
@@ -79,20 +79,7 @@ public class StingrayRestClientTest {
         Assert.assertEquals("Invalid JSON data: Didn't find ':' after Hash key", error.getError_text());
     }
 
-    @Test
-    public void verifyErrorResponseValidationParsing() throws Exception, JAXBException {
-        StingrayRestClient client = new StingrayRestClient();
-        ClientResponse response;
 
-        response = client.test();
-
-        String tjson = "";
-
-        response.setEntityInputStream(new ByteArrayInputStream(tjson.getBytes()));
-
-        StingrayClientError error = response.getEntity(StingrayClientError.class);
-        Assert.assertNotNull(error);
-    }
 //
 //    @Test
 //    public void verifyUpdateNodeOnPool() throws Exception, JAXBException {
