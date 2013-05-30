@@ -6,6 +6,7 @@ import org.rackspace.stingray.client.manager.BaseManager;
 import org.rackspace.stingray.client.manager.PoolManager;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.util.ClientConstants;
+import org.rackspace.stingray.client.util.StingrayList;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
@@ -78,6 +79,11 @@ public class PoolManagerImpl extends BaseManager implements PoolManager {
             e.printStackTrace();
             //todo: ADD Checked Exception. EX: StingrayRestClientGeneralException... Handle exceptions properly..
         }
+    }
+
+    @Override
+    public StingrayList getPools(URI endpoint, Client client) {
+        return new StingrayList();
     }
 
     public ClientResponse test(URI endpoint, Client client) {

@@ -2,22 +2,22 @@
     "$schema":       "http://json-schema.org/draft-03/schema#",
     "id":            "/rvbd/schema/tm/1.0/config/active/error#ValidationError",
     "title":         "Error",
-    "description":   "The Error apping for thrown errors",
+    "description":   "The error apping for thrown errors",
     "javaType" :     "org.rackspace.stingray.client.error.ValidationError",
     "type":          "object",
     "required":      true,
 
     "properties": {
         "error_id": {
-            "description": "Error Classification",
+            "description": "error Classification",
             "type": "string"
         },
         "error_text": {
-            "description": "Error Message",
+            "description": "error Message",
             "type": "string"
         },
         "error_info":{
-            "description": "Error Information",
+            "description": "error Information",
             "type": "string"
         }
 
