@@ -1,0 +1,30 @@
+{
+    "$schema":       "http://json-schema.org/draft-03/schema#",
+    "id":            "/rvbd/schema/tm/1.0/config/active/error#StingrayClientError",
+    "title":         "Error",
+    "description":   "The Error apping for thrown errors",
+    "javaType" :     "org.rackspace.stingray.client.error.StingrayClientError",
+    "type":          "object",
+    "required":      true,
+
+    "properties": {
+        "accept_from": {
+            "description":   "The Error mapping for thrown errors",
+
+            "type":          "Error",
+            "required":      false,
+            "additionalProperties": false,
+            "properties": {
+                "error_id": {
+                    "description": "Error Classification",
+                    "type": "string"
+                },
+                "error_text": {
+                    "description": "Error Message",
+                    "type": "string"
+                }
+
+            }
+        }
+    }
+}
