@@ -3,7 +3,7 @@ package org.rackspace.stingray.client;
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Assert;
 import org.junit.Test;
-import org.rackspace.stingray.client.error.StingrayClientError;
+import org.rackspace.stingray.client.error.ValidationError;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolBasic;
 import org.rackspace.stingray.client.pool.PoolLoadbalancing;
