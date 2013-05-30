@@ -75,8 +75,8 @@ public class StingrayRestClientTest {
         Assert.assertNotNull(error);
 
         System.out.printf("ERROR: %s", error);
-        Assert.assertEquals("json.parse_error", error.getAdditionalProperties().get("error_id"));
-        Assert.assertEquals("Invalid JSON data: Didn't find ':' after Hash key", error.getAdditionalProperties().get("error_text"));
+        Assert.assertEquals("json.parse_error", error.getError_id());
+        Assert.assertEquals("Invalid JSON data: Didn't find ':' after Hash key", error.getError_text());
     }
 
     @Test
