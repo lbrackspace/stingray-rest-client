@@ -1,6 +1,6 @@
 package org.rackspace.stingray.client;
 
-import com.sun.jersey.api.client.ClientResponse;
+import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.manager.PoolManager;
 import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
@@ -11,31 +11,41 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
     /*
      * @param Sting vsName the virtual server name to retrieve the pool for
-     * @throws Exception, because we have yet to throw a checked one, update this at that time....
+     * @throws StingrayRestClientException
      */
-    public Pool retrievePool(String vsName) throws Exception {
-        //Todo: see @throws javadoc
+    public Pool retrievePool(String vsName) throws StingrayRestClientException {
         return poolManager.retrievePool(endpoint, client, vsName);
     }
 
-    public Pool createPool(String vsName, Pool pool) throws Exception {
-        //Todo: see @throws javadoc
+    /**
+     *
+     * @param vsName The virtual server name related to the pool
+     * @param pool The pool object used to create a Stingray Pool
+     * @return The configured pool object
+     * @throws StingrayRestClientException
+     */
+    public Pool createPool(String vsName, Pool pool) throws StingrayRestClientException {
         return poolManager.createPool(endpoint, client, vsName, pool);
     }
 
-    public Pool updatePool(String vsName, Pool pool) throws Exception {
-        //Todo: see @throws javadoc
+   /**
+     *
+     * @param vsName The virtual server name related to the pool
+     * @param pool The pool object used to create a Stingray Pool
+     * @return The configured pool object
+     * @throws StingrayRestClientException
+     */
+    public Pool updatePool(String vsName, Pool pool) throws StingrayRestClientException {
         return poolManager.updatePool(endpoint, client, vsName, pool);
     }
 
-    public void deletePool(String vsName) throws Exception {
-        //Todo: see @throws javadoc
+    /**
+     *
+     * @param vsName The virtual server name related to the pool
+     * @throws StingrayRestClientException
+     */
+    public void deletePool(String vsName) throws StingrayRestClientException {
         poolManager.deletePool(endpoint, client, vsName);
-    }
-
-    public ClientResponse test() throws Exception {
-        //Todo: see @throws javadoc
-        return poolManager.test(endpoint, client);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...

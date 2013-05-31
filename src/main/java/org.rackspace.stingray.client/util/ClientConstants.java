@@ -44,6 +44,12 @@ public class ClientConstants {
     /** Constants used for performing queries against the identity service **/
     public static final String POOL_PATH = "pools/";
 
+    /** Error messages for the Stingray Rest Client**/
+    public static final String REQUEST_ERROR = "The Stingray Rest Client encountered a problem processing the request: ";
+
+    public static final String CLIENT_ERROR = "There was an error communicating with the auth service...";
+
+
     /** Default error responses **/
     public static final String MISSING_PROP = "One or more values necessary for this request could not be found, please check the request and try again.";
     public static Properties MIMETYPES = new Properties ();

@@ -1,9 +1,9 @@
 {
     "$schema":       "http://json-schema.org/draft-03/schema#",
-    "id":            "/rvbd/schema/tm/1.0/config/active/error#ValidationError",
-    "title":         "Error",
-    "description":   "The error apping for thrown errors",
-    "javaType" :     "org.rackspace.stingray.client.error.ValidationError",
+    "id":            "/rvbd/schema/tm/1.0/config/active/exception#ClientException",
+    "title":         "Stingray Rest Client Exception",
+    "description":   "The Stingray Rest Client exception wrapper for client errors",
+    "javaType" :     "org.rackspace.stingray.client.exception.ClientException",
     "type":          "object",
     "required":      true,
 
