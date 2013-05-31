@@ -42,7 +42,24 @@ public class ClientConstants {
     public static final int DEFAULT_SERVER_FAULT = 500;
 
     /** Constants used for performing queries against the identity service **/
+    public static final String ACTIONSCRIPT_PATH = "actionprogs/";
+    public static final String BANDWIDTH_PATH = "bandwidth/";
+    public static final String EXTRAFILE_PATH = "extra/";
+    public static final String GLB_PATH = "services/";
+    public static final String LOCATION_PATH = "locations/";
+    public static final String MONITOR_PATH = "monitors/";
+    public static final String MONITORSCRIPT_PATH = "scripts/";
+    public static final String PERSISTENCE_PATH = "persistence";
     public static final String POOL_PATH = "pools/";
+    public static final String PROTECTION_PATH = "protection/";
+    public static final String RATE_PATH = "rate/";
+    public static final String CACRL_PATH = "ssl/cas/";
+    public static final String CLIENTKEYPAIR_PATH = "ssl/client_keys/";
+    public static final String KEYPAIR_PATH = "ssl/server_keys/";
+    public static final String TRAFFICMANAGER_PATH = "zxtms/";
+    public static final String IP_PATH = "flipper/";
+    public static final String TRAFFICSCRIPT_PATH = "rules/";
+    public static final String SERVER_PATH = "vservers/";
 
     /** Error messages for the Stingray Rest Client**/
     public static final String REQUEST_ERROR = "The Stingray Rest Client encountered a problem processing the request: ";

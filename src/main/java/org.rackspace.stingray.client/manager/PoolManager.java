@@ -9,7 +9,7 @@ import java.net.URI;
 
 public interface PoolManager {
 
-    public StingrayList getPools(URI endpoint, Client client);
+    public StingrayList getPools(URI endpoint, Client client) throws StingrayRestClientException;
 
     public Pool retrievePool(URI endpoint, Client client, String vsName) throws StingrayRestClientException;
 

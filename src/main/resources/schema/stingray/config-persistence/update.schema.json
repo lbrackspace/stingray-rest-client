@@ -3,13 +3,13 @@
    "id":            "/rvbd/schema/tm/1.0/config/active/persistence#",
    "title":         "Session Persistence Class",
    "description":   "A session persistence class is used to identify the session a new connection belongs too and deliver it to the same backend node.",
-    "javaType" :     "org.rackspace.stingray.client.persistence.Pesistence",
+    "javaType" :     "org.rackspace.stingray.client.persistence.Persistence",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.persistence.PesistenceProperties",
+          "javaType" :     "org.rackspace.stingray.client.persistence.PersistenceProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.persistence.PesistenceBasic",
+                "javaType" :     "org.rackspace.stingray.client.persistence.PersistenceBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,

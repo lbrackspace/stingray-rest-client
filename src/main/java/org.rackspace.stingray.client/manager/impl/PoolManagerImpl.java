@@ -18,7 +18,7 @@ public class PoolManagerImpl extends BaseManager implements PoolManager {
     private static final Log LOG = LogFactory.getLog(PoolManagerImpl.class);
 
 
-    @Override public StingrayList getPools(URI endpoint, Client client) {
+    @Override public StingrayList getPools(URI endpoint, Client client) throws StingrayRestClientException{
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

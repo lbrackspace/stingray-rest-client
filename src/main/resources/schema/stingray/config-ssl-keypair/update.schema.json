@@ -3,13 +3,13 @@
    "id":            "/rvbd/schema/tm/1.0/config/active/ssl/server_keys#",
    "title":         "SSL Key Pair",
    "description":   "SSL Server Certificates are presented to clients by virtual servers when SSL decryption is enabled.",
-    "javaType" :     "org.rackspace.stingray.client.ssl.keypair.SslKeyPair",
+    "javaType" :     "org.rackspace.stingray.client.ssl.keypair.Keypair",
    "type":          "object",
    "required":      false,
    
    "properties": {
       "properties": {
-          "javaType" :     "org.rackspace.stingray.client.ssl.keypair.SslKeyPairProperties",
+          "javaType" :     "org.rackspace.stingray.client.ssl.keypair.KeypairProperties",
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
@@ -17,7 +17,7 @@
          "properties": {
             
             "basic": {
-                "javaType" :     "org.rackspace.stingray.client.ssl.keypair.SslKeyPairBasic",
+                "javaType" :     "org.rackspace.stingray.client.ssl.keypair.KeypairBasic",
                "type":                  "object",
                "required":              false,
                "additionalProperties":  false,
