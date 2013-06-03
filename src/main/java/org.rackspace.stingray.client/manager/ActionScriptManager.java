@@ -3,13 +3,13 @@ package org.rackspace.stingray.client.manager;
 import com.sun.jersey.api.client.Client;
 import org.rackspace.stingray.client.action.ActionScript;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
-import org.rackspace.stingray.client.util.StingrayList;
+import org.rackspace.stingray.client.list.GenericActionScripts;
 
 import java.net.URI;
 
 public interface ActionScriptManager {
 
-    public StingrayList getActionScripts(URI endpoint, Client client) throws StingrayRestClientException;
+    public GenericActionScripts getActionScripts(URI endpoint, Client client) throws StingrayRestClientException;
 
     public ActionScript retrieveActionScript(URI endpoint, Client client, String vsName) throws StingrayRestClientException;
 
