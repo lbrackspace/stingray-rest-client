@@ -3,19 +3,19 @@
    "id":            "/rvbd/schema/tm/1.0/config/active/actionprogs#",
    "title":         "Action Program",
    "description":   "This is a program or script that can be referenced and used by actions of type 'Program'",
-   "javaType" :     "org.rackspace.stingray.client.action.ActionScript",
+   "javaType" :     "org.rackspace.stingray.client.action.ClientResponse",
    "type":          "object",
    "required":      false,
-   
+
    "properties": {
       "javaType" :     "org.rackspace.stingray.client.action.ActionScriptProperties",
       "properties": {
          "type":                  "object",
          "required":              true,
          "additionalProperties":  false,
-         
+
          "properties": {
-            
+
          }
       }
    }

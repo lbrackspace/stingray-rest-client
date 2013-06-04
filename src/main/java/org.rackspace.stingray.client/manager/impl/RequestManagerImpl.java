@@ -4,18 +4,17 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.rackspace.stingray.client.action.ActionScript;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Children;
-import org.rackspace.stingray.client.manager.ActionScriptManager;
 import org.rackspace.stingray.client.manager.BaseManager;
+import org.rackspace.stingray.client.manager.RequestManager;
 import org.rackspace.stingray.client.util.ClientConstants;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
-public class ActionScriptManagerImpl extends BaseManager implements ActionScriptManager {
-    private static final Log LOG = LogFactory.getLog(ActionScriptManagerImpl.class);
+public class RequestManagerImpl extends BaseManager implements RequestManager {
+    private static final Log LOG = LogFactory.getLog(RequestManagerImpl.class);
 
     /**
      *
@@ -24,11 +23,11 @@ public class ActionScriptManagerImpl extends BaseManager implements ActionScript
      * @return
      */
     @Override
-    public Children getActionScripts(URI endpoint, Client client) throws StingrayRestClientException {
+    public Children retrieveList(URI endpoint, Client client) throws StingrayRestClientException {
         Children scripts = null;
         ClientResponse response = null;
         try {
-            response = client.resource(URI.create(endpoint + ClientConstants.ACTIONSCRIPT_PATH)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+            response = client.resource(URI.create(endpoint + ClientConstants.ACTIONSCRIPT_PATH)).accept(MediaType.APPLICATION_JSON).get(com.sun.jersey.api.client.ClientResponse.class);
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
@@ -44,89 +43,85 @@ public class ActionScriptManagerImpl extends BaseManager implements ActionScript
      *
      * @param endpoint
      * @param client
-     * @param vsName
+     * @param path
      * @return
      * @throws StingrayRestClientException
      */
     @Override
-    public ActionScript retrieveActionScript(URI endpoint, Client client, String vsName) throws StingrayRestClientException {
-        ActionScript actionScript = null;
+    public ClientResponse retrieveItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
         ClientResponse response = null;
         try {
-            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH  + vsName)
+            response = client.resource(endpoint + path)
                     .accept(MediaType.APPLICATION_JSON)
                     .get(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
-
-            actionScript = response.getEntity(ActionScript.class);
         } catch (Exception e) {
             throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, e);
         }
-        return actionScript;
+        return response;
     }
 
     /**
      *
      * @param endpoint
      * @param client
-     * @param vsName
-     * @param actionScript
+     * @param path
+     * @param object
      * @return
      * @throws StingrayRestClientException
      */
     @Override
-    public ActionScript createActionScript(URI endpoint, Client client, String vsName, ActionScript actionScript) throws StingrayRestClientException {
-        return updateActionScript(endpoint, client, vsName, actionScript);
+    public ClientResponse createItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException {
+        return updateItem(endpoint, client, path, object);
     }
 
     /**
      *
      * @param endpoint
      * @param client
-     * @param vsName
-     * @param actionScript
+     * @param path
+     * @param object
      * @return
      * @throws StingrayRestClientException
      */
     @Override
-    public ActionScript updateActionScript(URI endpoint, Client client, String vsName, ActionScript actionScript) throws StingrayRestClientException {
+    public ClientResponse updateItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException {
        ClientResponse response = null;
         try {
-            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH + vsName)
+            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH + path)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
-                    .entity(actionScript)
-                    .put(ClientResponse.class);
+                    .entity(object)
+                    .put(com.sun.jersey.api.client.ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
-
-            actionScript = response.getEntity(ActionScript.class);
         } catch (Exception e) {
             throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, e);
         }
-        return actionScript;    }
+        return response;
+    }
 
     /**
      *
      * @param endpoint
      * @param client
-     * @param vsName
+     * @param path
      * @return
      * @throws StingrayRestClientException
      */
     @Override
-    public boolean deleteActionScript(URI endpoint, Client client, String vsName) throws StingrayRestClientException {
-        ClientResponse response = null;
+    public boolean deleteItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
+        com.sun.jersey.api.client.ClientResponse response = null;
         try {
-            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH + vsName)
+            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH + path)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
-                    .delete(ClientResponse.class);
+                    .delete(com.sun.jersey.api.client.ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);

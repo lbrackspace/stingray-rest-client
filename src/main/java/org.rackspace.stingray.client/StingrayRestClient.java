@@ -1,24 +1,25 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.ClientResponse;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Children;
-import org.rackspace.stingray.client.manager.ActionScriptManager;
-import org.rackspace.stingray.client.manager.PoolManager;
-import org.rackspace.stingray.client.manager.impl.ActionScriptManagerImpl;
-import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
+import org.rackspace.stingray.client.manager.RequestManager;
+import org.rackspace.stingray.client.manager.impl.RequestManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
+import org.rackspace.stingray.client.util.ClientConstants;
 
 public class StingrayRestClient extends StingrayRestClientManager {
 
-    private final PoolManager poolManager = new PoolManagerImpl();
-    private final ActionScriptManager actionScriptManager = new ActionScriptManagerImpl();
+    private final RequestManager requestManager = new RequestManagerImpl();
 
-    /*
-     * @param Sting vsName the virtual server name to retrieve the pool for
+    /**
+     * @param vsName the virtual server name for pool retrieval
      * @throws StingrayRestClientException
      */
     public Pool retrievePool(String vsName) throws StingrayRestClientException {
-        return poolManager.retrievePool(endpoint, client, vsName);
+        ClientResponse response = requestManager.retrieveItem(endpoint, client, ClientConstants.POOL_PATH + vsName);
+        Pool pool = interpretResponse(response, Pool.class);
+        return pool;
     }
 
     /**
@@ -29,7 +30,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public Pool createPool(String vsName, Pool pool) throws StingrayRestClientException {
-        return poolManager.createPool(endpoint, client, vsName, pool);
+        ClientResponse response = requestManager.createItem(endpoint, client, ClientConstants.POOL_PATH + vsName, pool);
+        return interpretResponse(response, Pool.class);
     }
 
    /**
@@ -40,7 +42,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public Pool updatePool(String vsName, Pool pool) throws StingrayRestClientException {
-        return poolManager.updatePool(endpoint, client, vsName, pool);
+        ClientResponse response = requestManager.updateItem(endpoint, client, ClientConstants.POOL_PATH + vsName, pool);
+        return interpretResponse(response, Pool.class);
     }
 
     /**
@@ -49,11 +52,16 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public void deletePool(String vsName) throws StingrayRestClientException {
-        poolManager.deletePool(endpoint, client, vsName);
+        requestManager.deleteItem(endpoint, client, ClientConstants.POOL_PATH + vsName);
     }
 
+    /**
+     *
+     * @throws StingrayRestClientException
+     * @return the generic list for pools providing the name and the endpoint for a specific request
+     */
     public Children getActionScripts() throws StingrayRestClientException {
-        return actionScriptManager.getActionScripts(endpoint, client);
+        return requestManager.retrieveList(endpoint, client);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...
@@ -93,4 +101,15 @@ public class StingrayRestClient extends StingrayRestClientManager {
 ////        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
 //        return response;
 //    }
+
+    /**
+     *
+     * @param response
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    private <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) {
+        return response.getEntity(clazz);
+    }
 }
