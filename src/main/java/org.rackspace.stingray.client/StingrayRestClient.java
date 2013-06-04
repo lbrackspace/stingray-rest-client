@@ -61,7 +61,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for pools providing the name and the endpoint for a specific request
      */
     public Children getActionScripts() throws StingrayRestClientException {
-        return requestManager.retrieveList(endpoint, client);
+        return requestManager.retrieveList(endpoint, client, ClientConstants.ACTIONSCRIPT_PATH);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...

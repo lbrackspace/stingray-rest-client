@@ -23,11 +23,11 @@ public class RequestManagerImpl extends BaseManager implements RequestManager {
      * @return
      */
     @Override
-    public Children retrieveList(URI endpoint, Client client) throws StingrayRestClientException {
+    public Children retrieveList(URI endpoint, Client client, String path) throws StingrayRestClientException {
         Children scripts = null;
         ClientResponse response = null;
         try {
-            response = client.resource(URI.create(endpoint + ClientConstants.ACTIONSCRIPT_PATH)).accept(MediaType.APPLICATION_JSON).get(com.sun.jersey.api.client.ClientResponse.class);
+            response = client.resource(URI.create(endpoint + path)).accept(MediaType.APPLICATION_JSON).get(com.sun.jersey.api.client.ClientResponse.class);
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
@@ -91,7 +91,7 @@ public class RequestManagerImpl extends BaseManager implements RequestManager {
     public ClientResponse updateItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException {
        ClientResponse response = null;
         try {
-            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH + path)
+            response = client.resource(endpoint + path)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
                     .entity(object)
@@ -118,7 +118,7 @@ public class RequestManagerImpl extends BaseManager implements RequestManager {
     public boolean deleteItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
         com.sun.jersey.api.client.ClientResponse response = null;
         try {
-            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH + path)
+            response = client.resource(endpoint + path)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
                     .delete(com.sun.jersey.api.client.ClientResponse.class);

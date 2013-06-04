@@ -9,7 +9,7 @@ import java.net.URI;
 
 public interface RequestManager {
 
-    public Children retrieveList(URI endpoint, Client client) throws StingrayRestClientException;
+    public Children retrieveList(URI endpoint, Client client, String path) throws StingrayRestClientException;
 
     public ClientResponse retrieveItem(URI endpoint, Client client, String path) throws StingrayRestClientException;
 
