@@ -31,8 +31,6 @@ import static org.mockito.Mockito.when;
 public class RequestManagerTest {
 
 
-
-
     @RunWith(MockitoJUnitRunner.class)
     public static class WhenRetrievingAPool {
         private RequestManager requestManager;
@@ -91,7 +89,7 @@ public class RequestManagerTest {
 
             ClientResponse response = requestManager.retrieveItem(getPoolPath(), client, vsName);
 
-            Assert.assertTrue(response.getEntity(Pool.class).equals(Pool.class));
+            Assert.assertNotNull(response.getEntity(Pool.class));
             Assert.assertTrue(true);
         }
 
@@ -109,7 +107,7 @@ public class RequestManagerTest {
     }
 
     @RunWith(MockitoJUnitRunner.class)
-    public static class WhenUpdatingAPool{
+    public static class WhenUpdatingAPool {
         private RequestManager requestManager;
         private Client client;
         private WebResource webResource;
@@ -130,7 +128,7 @@ public class RequestManagerTest {
             mockClientHandler = new MockClientHandler();
         }
 
-         private Pool createPool() {
+        private Pool createPool() {
             PoolProperties poolProperties = new PoolProperties();
             PoolHttp poolHttp = new PoolHttp();
             poolHttp.setKeepalive(true);
@@ -142,10 +140,8 @@ public class RequestManagerTest {
         }
 
 
-
-
         private URI getPoolPath() throws URISyntaxException {
-                    return new URI(MockClientHandler.ROOT + "pool");
+            return new URI(MockClientHandler.ROOT + "pool");
         }
 
 
@@ -175,6 +171,89 @@ public class RequestManagerTest {
             Assert.assertNotNull(response.getEntity(Pool.class));
             Pool poolEntity = response.getEntity(Pool.class);
             Assert.assertTrue(true);
+        }
+
+
+        @Test(expected = StingrayRestClientException.class)
+        public void shouldThrowExceptionWhenBadResponseStatus() throws URISyntaxException, StingrayRestClientException {
+            mockClientHandler.when("pool", "PUT").thenReturn(Response.Status.BAD_REQUEST, pool);
+
+            setupMocks();
+
+            requestManager.retrieveItem(getPoolPath(), client, vsName);
+        }
+    }
+
+    public static class WhenDeletingAPool {
+        private RequestManager requestManager;
+        private Client client;
+        private WebResource webResource;
+        private String vsName;
+        private ClientResponse mockedResponse;
+        private MockClientHandler mockClientHandler;
+        private Pool pool;
+        private WebResource.Builder builder;
+
+
+        @Before
+        public void standUp() throws URISyntaxException, IOException {
+            requestManager = new RequestManagerImpl();
+            vsName = "12345_1234";
+
+            pool = createPool();
+
+            mockClientHandler = new MockClientHandler();
+        }
+
+        private Pool createPool() {
+                   PoolProperties poolProperties = new PoolProperties();
+                   PoolHttp poolHttp = new PoolHttp();
+                   poolHttp.setKeepalive(true);
+                   poolProperties.setHttp(poolHttp);
+
+                   Pool pool = new Pool();
+                   pool.setProperties(poolProperties);
+                   return pool;
+               }
+
+
+        private URI getPoolPath() throws URISyntaxException {
+            return new URI(MockClientHandler.ROOT + "pool");
+        }
+
+
+        private void setupMocks() throws URISyntaxException {
+            ClientRequest clientRequest = new ClientRequest.Builder().accept(MediaType.APPLICATION_JSON).build(getPoolPath(), "DELETE");
+            mockedResponse = mockClientHandler.handle(clientRequest);
+
+            client = mock(Client.class);
+            webResource = mock(WebResource.class);
+            builder = mock(WebResource.Builder.class);
+
+            when(client.resource(anyString())).thenReturn(webResource);
+            when(webResource.accept(MediaType.APPLICATION_JSON)).thenReturn(builder);
+            when(builder.type(MediaType.APPLICATION_JSON)).thenReturn(builder);
+            when(builder.delete(ClientResponse.class)).thenReturn(mockedResponse);
+        }
+
+
+         @Test
+        public void shouldReturnTrueAfterSuccessfulDelete() throws URISyntaxException, StingrayRestClientException {
+            mockClientHandler.when("pool", "DELETE").thenReturn(Response.Status.ACCEPTED, pool);
+            pool = mock(Pool.class);
+
+            setupMocks();
+
+            Assert.assertTrue(requestManager.deleteItem(getPoolPath(), client, vsName));
+        }
+
+        @Test(expected = StingrayRestClientException.class)
+        public void shouldThrowExceptionWhenBadResponseStatus() throws URISyntaxException, StingrayRestClientException {
+            mockClientHandler.when("pool", "DELETE").thenReturn(Response.Status.BAD_REQUEST, pool);
+
+            setupMocks();
+
+            requestManager.retrieveItem(getPoolPath(), client, vsName);
         }
     }
 }
