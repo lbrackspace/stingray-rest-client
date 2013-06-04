@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.rackspace.stingray.client.action.ActionScript;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
-import org.rackspace.stingray.client.list.GenericActionScripts;
+import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.manager.ActionScriptManager;
 import org.rackspace.stingray.client.manager.BaseManager;
 import org.rackspace.stingray.client.util.ClientConstants;
@@ -24,18 +24,18 @@ public class ActionScriptManagerImpl extends BaseManager implements ActionScript
      * @return
      */
     @Override
-    public GenericActionScripts getActionScripts(URI endpoint, Client client) throws StingrayRestClientException {
-        GenericActionScripts scripts = null;
+    public Children getActionScripts(URI endpoint, Client client) throws StingrayRestClientException {
+        Children scripts = null;
         ClientResponse response = null;
         try {
-            response = client.resource(endpoint + ClientConstants.ACTIONSCRIPT_PATH).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+            response = client.resource(URI.create(endpoint + ClientConstants.ACTIONSCRIPT_PATH)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
 
-            scripts = response.getEntity(GenericActionScripts.class);
+            scripts = response.getEntity(Children.class);
         } catch(Exception e) {
-            throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR);
+            throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, e);
         }
         return scripts;
     }

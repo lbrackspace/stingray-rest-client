@@ -1,13 +1,17 @@
 package org.rackspace.stingray.client;
 
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.list.Children;
+import org.rackspace.stingray.client.manager.ActionScriptManager;
 import org.rackspace.stingray.client.manager.PoolManager;
+import org.rackspace.stingray.client.manager.impl.ActionScriptManagerImpl;
 import org.rackspace.stingray.client.manager.impl.PoolManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
 
 public class StingrayRestClient extends StingrayRestClientManager {
 
     private final PoolManager poolManager = new PoolManagerImpl();
+    private final ActionScriptManager actionScriptManager = new ActionScriptManagerImpl();
 
     /*
      * @param Sting vsName the virtual server name to retrieve the pool for
@@ -46,6 +50,10 @@ public class StingrayRestClient extends StingrayRestClientManager {
      */
     public void deletePool(String vsName) throws StingrayRestClientException {
         poolManager.deletePool(endpoint, client, vsName);
+    }
+
+    public Children getActionScripts() throws StingrayRestClientException {
+        return actionScriptManager.getActionScripts(endpoint, client);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...
