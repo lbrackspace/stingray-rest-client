@@ -1,16 +1,102 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import org.rackspace.stingray.client.config.Configuration;
+import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.manager.RequestManager;
+import org.rackspace.stingray.client.manager.StingrayRestClientManager;
 import org.rackspace.stingray.client.manager.impl.RequestManagerImpl;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.util.ClientConstants;
 
-public class StingrayRestClient extends StingrayRestClientManager {
+import java.net.URI;
 
+public class StingrayRestClient extends StingrayRestClientManager {
     private final RequestManager requestManager = new RequestManagerImpl();
+
+    public StingrayRestClient(URI endpoint, Configuration config, Client client) {
+        super(config, endpoint, client, false, null, null);
+    }
+
+    public StingrayRestClient(URI endpoint, Configuration config) {
+        super(config, endpoint, null, false, null, null);
+    }
+
+    public StingrayRestClient(URI endpoint) {
+        super(null, endpoint, null, false, null, null);
+    }
+
+    public StingrayRestClient(URI endpoint, String adminUser, String adminKey) {
+        super(null, endpoint, null, false, adminUser, adminKey);
+    }
+
+    public StingrayRestClient(URI endpoint, boolean isDebugging, String adminUser, String adminKey) {
+        super(null, endpoint, null, isDebugging, adminUser, adminKey);
+    }
+
+    public StingrayRestClient(boolean isDebugging) {
+        super(null, null, null, isDebugging, null, null);
+    }
+
+    public StingrayRestClient() {
+        super(null, null, null, false, null, null);
+    }
+
+
+    /**
+     * Virtual Servers
+     */
+
+
+    /**
+     * @param vsName
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public VirtualServer retrieveVirtualServer(String vsName) throws StingrayRestClientException {
+        ClientResponse response = requestManager.retrieveItem(endpoint, client, ClientConstants.SERVER_PATH + vsName);
+        return interpretResponse(response, VirtualServer.class);
+    }
+
+    /**
+     * @param vsName
+     * @param virtualServer
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public VirtualServer createVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
+        ClientResponse response = requestManager.createItem(endpoint, client, ClientConstants.SERVER_PATH + vsName, virtualServer);
+        return interpretResponse(response, VirtualServer.class);
+    }
+
+    /**
+     * @param vsName
+     * @param virtualServer
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public VirtualServer updateVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
+        ClientResponse response = requestManager.updateItem(endpoint, client, ClientConstants.SERVER_PATH + vsName, virtualServer);
+        return interpretResponse(response, VirtualServer.class);
+    }
+
+    /**
+     * @param vsName
+     * @param virtualServer
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public boolean deleteVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
+        return requestManager.deleteItem(endpoint, client, ClientConstants.SERVER_PATH + vsName);
+    }
+
+
+    /**
+     * POOLS
+     */
 
     /**
      * @param vsName the virtual server name for pool retrieval
@@ -23,9 +109,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     *
      * @param vsName The virtual server name related to the pool
-     * @param pool The pool object used to create a Stingray Pool
+     * @param pool   The pool object used to create a Stingray Pool
      * @return The configured pool object
      * @throws StingrayRestClientException
      */
@@ -34,10 +119,9 @@ public class StingrayRestClient extends StingrayRestClientManager {
         return interpretResponse(response, Pool.class);
     }
 
-   /**
-     *
+    /**
      * @param vsName The virtual server name related to the pool
-     * @param pool The pool object used to create a Stingray Pool
+     * @param pool   The pool object used to create a Stingray Pool
      * @return The configured pool object
      * @throws StingrayRestClientException
      */
@@ -47,7 +131,6 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     *
      * @param vsName The virtual server name related to the pool
      * @throws StingrayRestClientException
      */
@@ -56,60 +139,12 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     *
-     * @throws StingrayRestClientException
      * @return the generic list for pools providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
      */
     public Children getActionScripts() throws StingrayRestClientException {
         return requestManager.retrieveList(endpoint, client, ClientConstants.ACTIONSCRIPT_PATH);
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...
-
-//    public ClientResponse updatePool(String path, Pool pool) throws Exception {
-//        //Path will be in the client methods. This method should be generic possibly ...
-//        ClientResponse response = null;
-//        Client client = StingrayRestClientUtil.ClientHelper.createClient();
-//
-//        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
-//        try {
-//            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
-//            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
-//                    .accept(MediaType.APPLICATION_JSON).entity(pool).put(ClientResponse.class);
-//        } catch (UniformInterfaceException ux) {
-//            throw ux;
-//        }
-//
-//        return response;
-//    }
-//
-
-    //TODO: to do this call we need to generate object (based off of json schema we build) to pull in all lists as its 'generic' according to stingray
-//    public ClientResponse getPools(String path) throws Exception {
-//        ClientResponse response;
-//        Client client = StingrayRestClientUtil.ClientHelper.createClient();
-//
-//        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
-//        try {
-//            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
-//            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
-//                    .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-//        } catch (UniformInterfaceException ux) {
-//            throw ux;
-//        }
-//
-////        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
-//        return response;
-//    }
-
-    /**
-     *
-     * @param response
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    private <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) {
-        return response.getEntity(clazz);
-    }
 }

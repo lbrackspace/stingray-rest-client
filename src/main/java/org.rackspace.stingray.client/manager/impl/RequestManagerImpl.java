@@ -6,14 +6,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Children;
-import org.rackspace.stingray.client.manager.BaseManager;
 import org.rackspace.stingray.client.manager.RequestManager;
 import org.rackspace.stingray.client.util.ClientConstants;
 
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
-public class RequestManagerImpl extends BaseManager implements RequestManager {
+import static org.rackspace.stingray.client.manager.util.RequestManagerUtil.*;
+
+public class RequestManagerImpl implements RequestManager {
     private static final Log LOG = LogFactory.getLog(RequestManagerImpl.class);
 
     /**
@@ -27,7 +28,7 @@ public class RequestManagerImpl extends BaseManager implements RequestManager {
         Children scripts = null;
         ClientResponse response = null;
         try {
-            response = client.resource(URI.create(endpoint + path)).accept(MediaType.APPLICATION_JSON).get(com.sun.jersey.api.client.ClientResponse.class);
+            response = client.resource(URI.create(endpoint + path)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
@@ -95,7 +96,7 @@ public class RequestManagerImpl extends BaseManager implements RequestManager {
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
                     .entity(object)
-                    .put(com.sun.jersey.api.client.ClientResponse.class);
+                    .put(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
@@ -121,7 +122,7 @@ public class RequestManagerImpl extends BaseManager implements RequestManager {
             response = client.resource(endpoint + path)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON)
-                    .delete(com.sun.jersey.api.client.ClientResponse.class);
+                    .delete(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
