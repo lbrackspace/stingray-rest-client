@@ -1,15 +1,19 @@
 package org.rackspace.stingray.client;
 
+import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import org.mockito.cglib.core.Local;
 import org.rackspace.stingray.client.action.ActionScript;
 import org.rackspace.stingray.client.bandwidth.Bandwidth;
+import org.rackspace.stingray.client.config.Configuration;
+import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.extra.file.ExtraFile;
 import org.rackspace.stingray.client.glb.GlobalLoadBalancing;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.location.Location;
 import org.rackspace.stingray.client.manager.RequestManager;
+import org.rackspace.stingray.client.manager.StingrayRestClientManager;
 import org.rackspace.stingray.client.manager.impl.RequestManagerImpl;
 import org.rackspace.stingray.client.monitor.Monitor;
 import org.rackspace.stingray.client.monitor.MonitorScript;
@@ -18,15 +22,57 @@ import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.protection.Protection;
 import org.rackspace.stingray.client.rate.Rate;
 import org.rackspace.stingray.client.util.ClientConstants;
-
 import javax.xml.bind.annotation.XmlElementDecl;
 import java.awt.*;
 import java.awt.image.LookupOp;
+import java.net.URI;
 
 public class StingrayRestClient extends StingrayRestClientManager {
-
     private final RequestManager requestManager = new RequestManagerImpl();
 
+    public StingrayRestClient(URI endpoint, Configuration config, Client client) {
+        super(config, endpoint, client, false, null, null);
+    }
+
+    public StingrayRestClient(URI endpoint, Configuration config) {
+        super(config, endpoint, null, false, null, null);
+    }
+
+    public StingrayRestClient(URI endpoint) {
+        super(null, endpoint, null, false, null, null);
+    }
+
+    public StingrayRestClient(URI endpoint, String adminUser, String adminKey) {
+        super(null, endpoint, null, false, adminUser, adminKey);
+    }
+
+    public StingrayRestClient(URI endpoint, boolean isDebugging, String adminUser, String adminKey) {
+        super(null, endpoint, null, isDebugging, adminUser, adminKey);
+    }
+
+    public StingrayRestClient(boolean isDebugging) {
+        super(null, null, null, isDebugging, null, null);
+    }
+
+    public StingrayRestClient() {
+        super(null, null, null, false, null, null);
+    }
+
+    private Boolean isPathValid(String path) {
+        if (path.equals(ClientConstants.RATE_PATH) || path.equals(ClientConstants.PERSISTENCE_PATH)
+                || path.equals(ClientConstants.POOL_PATH) || path.equals(ClientConstants.ACTIONSCRIPT_PATH)
+                || path.equals(ClientConstants.BANDWIDTH_PATH) || path.equals(ClientConstants.CACRL_PATH)
+                || path.equals(ClientConstants.CLIENTKEYPAIR_PATH) || path.equals(ClientConstants.EXTRAFILE_PATH)
+                || path.equals(ClientConstants.GLB_PATH) || path.equals(ClientConstants.IP_PATH)
+                || path.equals(ClientConstants.KEYPAIR_PATH) || path.equals(ClientConstants.LOCATION_PATH)
+                || path.equals(ClientConstants.MONITOR_PATH) || path.equals(ClientConstants.MONITORSCRIPT_PATH)
+                || path.equals(ClientConstants.PROTECTION_PATH) || path.equals(ClientConstants.SERVER_PATH)
+                || path.equals(ClientConstants.TRAFFICMANAGER_PATH) || path.equals(ClientConstants.TRAFFICSCRIPT_PATH)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * @param path Path to object endpoint in the rest client
@@ -68,7 +114,6 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-
     private <T> T createItem(String vsName, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
         return updateItem(vsName, clazz, path, obj);
     }
@@ -102,21 +147,35 @@ public class StingrayRestClient extends StingrayRestClientManager {
             throw new StingrayRestClientException();
     }
 
+    /**
+     * @param vsName
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public VirtualServer retrieveVirtualServer(String vsName) throws StingrayRestClientException {
+        ClientResponse response = requestManager.retrieveItem(endpoint, client, ClientConstants.SERVER_PATH + vsName);
+        return interpretResponse(response, VirtualServer.class);
+    }
 
-    private Boolean isPathValid(String path) {
-        if (path.equals(ClientConstants.RATE_PATH) || path.equals(ClientConstants.PERSISTENCE_PATH)
-                || path.equals(ClientConstants.POOL_PATH) || path.equals(ClientConstants.ACTIONSCRIPT_PATH)
-                || path.equals(ClientConstants.BANDWIDTH_PATH) || path.equals(ClientConstants.CACRL_PATH)
-                || path.equals(ClientConstants.CLIENTKEYPAIR_PATH) || path.equals(ClientConstants.EXTRAFILE_PATH)
-                || path.equals(ClientConstants.GLB_PATH) || path.equals(ClientConstants.IP_PATH)
-                || path.equals(ClientConstants.KEYPAIR_PATH) || path.equals(ClientConstants.LOCATION_PATH)
-                || path.equals(ClientConstants.MONITOR_PATH) || path.equals(ClientConstants.MONITORSCRIPT_PATH)
-                || path.equals(ClientConstants.PROTECTION_PATH) || path.equals(ClientConstants.SERVER_PATH)
-                || path.equals(ClientConstants.TRAFFICMANAGER_PATH) || path.equals(ClientConstants.TRAFFICSCRIPT_PATH)) {
-            return true;
-        } else {
-            return false;
-        }
+    /**
+     * @param vsName
+     * @param virtualServer
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public VirtualServer updateVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
+        ClientResponse response = requestManager.updateItem(endpoint, client, ClientConstants.SERVER_PATH + vsName, virtualServer);
+        return interpretResponse(response, VirtualServer.class);
+    }
+
+    /**
+     * @param vsName
+     * @param virtualServer
+     * @return
+     * @throws StingrayRestClientException
+     */
+    public boolean deleteVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
+        return requestManager.deleteItem(endpoint, client, ClientConstants.SERVER_PATH + vsName);
     }
 
 
@@ -127,6 +186,9 @@ public class StingrayRestClient extends StingrayRestClientManager {
     public Children getPools() throws StingrayRestClientException {
         return getItems(ClientConstants.POOL_PATH);
     }
+    /*
+     * POOLS
+     */
 
     /**
      * @param vsName the virtual server name for pool retrieval
@@ -624,7 +686,6 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     //Todo: rest of the methods, this is dependent on the managers being built up...
-
 //    public ClientResponse updatePool(String path, Pool pool) throws Exception {
 //        //Path will be in the client methods. This method should be generic possibly ...
 //        ClientResponse response = null;
@@ -660,14 +721,4 @@ public class StingrayRestClient extends StingrayRestClientManager {
 ////        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
 //        return response;
 //    }
-
-    /**
-     * @param response
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    private <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) {
-        return response.getEntity(clazz);
-    }
 }

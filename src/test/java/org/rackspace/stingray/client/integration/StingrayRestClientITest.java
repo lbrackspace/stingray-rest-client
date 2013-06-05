@@ -3,6 +3,7 @@ package org.rackspace.stingray.client.integration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
+import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolBasic;
 import org.rackspace.stingray.client.pool.PoolLoadbalancing;
@@ -20,7 +21,7 @@ public class StingrayRestClientITest {
     public void verifyStingrayPoolManagerGet() throws Exception {
         StingrayRestClient client = new StingrayRestClient();
 
-        Pool pool = client.retrievePool("528830_770");
+        VirtualServer pool = client.retrieveVirtualServer("528830_770");
         Assert.assertNotNull(pool);
     }
 
