@@ -21,7 +21,15 @@ import org.rackspace.stingray.client.persistence.Persistence;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.protection.Protection;
 import org.rackspace.stingray.client.rate.Rate;
+import org.rackspace.stingray.client.ssl.cacrl.Cacrl;
+import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypair;
+import org.rackspace.stingray.client.ssl.keypair.Keypair;
+import org.rackspace.stingray.client.tm.TrafficManager;
+import org.rackspace.stingray.client.traffic.ip.TrafficIp;
+import org.rackspace.stingray.client.trafficscript.Trafficscript;
 import org.rackspace.stingray.client.util.ClientConstants;
+import sun.nio.ch.SocketOpts;
+
 import javax.xml.bind.annotation.XmlElementDecl;
 import java.awt.*;
 import java.awt.image.LookupOp;
@@ -153,8 +161,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public VirtualServer retrieveVirtualServer(String vsName) throws StingrayRestClientException {
-        ClientResponse response = requestManager.retrieveItem(endpoint, client, ClientConstants.SERVER_PATH + vsName);
-        return interpretResponse(response, VirtualServer.class);
+        return retrieveItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH);
     }
 
     /**
@@ -164,18 +171,16 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public VirtualServer updateVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
-        ClientResponse response = requestManager.updateItem(endpoint, client, ClientConstants.SERVER_PATH + vsName, virtualServer);
-        return interpretResponse(response, VirtualServer.class);
+        return updateItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH, virtualServer);
     }
 
     /**
      * @param vsName
-     * @param virtualServer
      * @return
      * @throws StingrayRestClientException
      */
-    public boolean deleteVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
-        return requestManager.deleteItem(endpoint, client, ClientConstants.SERVER_PATH + vsName);
+    public boolean deleteVirtualServer(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.SERVER_PATH);
     }
 
 
@@ -684,6 +689,279 @@ public class StingrayRestClient extends StingrayRestClientManager {
     public void deleteRate(String vsName) throws StingrayRestClientException {
         deleteItem(vsName, ClientConstants.RATE_PATH);
     }
+
+     /**
+     * @return the generic list for cacrls providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
+     */
+    public Children getCacrls() throws StingrayRestClientException {
+        return getItems(ClientConstants.CACRL_PATH);
+    }
+
+    /**
+     * @param vsName the virtual server name for cacrl retrieval
+     * @throws StingrayRestClientException
+     */
+    public Cacrl retrieveCacrl(String vsName) throws StingrayRestClientException {
+        return retrieveItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the cacrl
+     * @param cacrl   The cacrl object used to create a Stingray cacrl
+     * @return The configured Cacrl object
+     * @throws StingrayRestClientException
+     */
+    public Cacrl createCacrl(String vsName, Cacrl cacrl) throws StingrayRestClientException {
+        return createItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH, cacrl);
+    }
+
+
+    /**
+     * @param vsName The virtual server name related to the cacrl
+     * @param cacrl   The cacrl object used to create a Stingray cacrl
+     * @return The configured Cacrl object
+     * @throws StingrayRestClientException
+     */
+    public Cacrl updateCacrl(String vsName, Cacrl cacrl) throws StingrayRestClientException {
+        return createItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH, cacrl);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the cacrl
+     * @throws StingrayRestClientException
+     */
+    public void deleteCacrl(String vsName) throws StingrayRestClientException {
+        deleteItem(vsName, ClientConstants.CACRL_PATH);
+    }
+
+
+     /**
+     * @return the generic list for client keypairs providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
+     */
+    public Children getClientKeypairs() throws StingrayRestClientException {
+        return getItems(ClientConstants.CLIENTKEYPAIR_PATH);
+    }
+
+    /**
+     * @param vsName the virtual server name for client keypair retrieval
+     * @throws StingrayRestClientException
+     */
+    public ClientKeypair retrieveClientKeypair(String vsName) throws StingrayRestClientException {
+        return retrieveItem(vsName, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the client keypair
+     * @param clientKeypair The client keypair object used to create a Stingray client keypair
+     * @return The configured ClientKeypair object
+     * @throws StingrayRestClientException
+     */
+    public ClientKeypair createClientKeypair(String vsName, ClientKeypair clientKeypair) throws StingrayRestClientException {
+        return createItem(vsName, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH, clientKeypair);
+    }
+
+
+    /**
+     * @param vsName The virtual server name related to the clientkeypair
+     * @param clientKeypair The client keypair object used to create a Stingray client keypairs
+     * @return The configured ClientKeypair object
+     * @throws StingrayRestClientException
+     */
+    public ClientKeypair updateClientKeypair(String vsName, ClientKeypair clientKeypair) throws StingrayRestClientException {
+        return createItem(vsName, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH, clientKeypair);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the client keypair
+     * @throws StingrayRestClientException
+     */
+    public void deleteClientKeypair(String vsName) throws StingrayRestClientException {
+        deleteItem(vsName, ClientConstants.CLIENTKEYPAIR_PATH);
+    }
+
+     /**
+     * @return the generic list for keypairs providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
+     */
+    public Children getKeypairs() throws StingrayRestClientException {
+        return getItems(ClientConstants.KEYPAIR_PATH);
+    }
+
+    /**
+     * @param vsName the virtual server name for keypair retrieval
+     * @throws StingrayRestClientException
+     */
+    public Keypair retrieveKeypair(String vsName) throws StingrayRestClientException {
+        return retrieveItem(vsName, Keypair.class, ClientConstants.KEYPAIR_PATH);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the keypair
+     * @param keypair   The keypair object used to create a Stingray keypair
+     * @return The configured Keypair object
+     * @throws StingrayRestClientException
+     */
+    public Keypair createKeypair(String vsName, Keypair keypair) throws StingrayRestClientException {
+        return createItem(vsName, Keypair.class, ClientConstants.KEYPAIR_PATH, keypair);
+    }
+
+
+    /**
+     * @param vsName The virtual server name related to the keypair
+     * @param keypair The keypair object used to create a Stingray keypairs
+     * @return The configured Keypair object
+     * @throws StingrayRestClientException
+     */
+    public Keypair updateKeypair(String vsName, Keypair keypair) throws StingrayRestClientException {
+        return createItem(vsName, Keypair.class, ClientConstants.KEYPAIR_PATH, keypair);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the keypair
+     * @throws StingrayRestClientException
+     */
+    public void deleteKeypair(String vsName) throws StingrayRestClientException {
+        deleteItem(vsName, ClientConstants.KEYPAIR_PATH);
+    }
+
+
+     /**
+     * @return the generic list for traffic managers providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
+     */
+    public Children getTrafficManagers() throws StingrayRestClientException {
+        return getItems(ClientConstants.TRAFFICMANAGER_PATH);
+    }
+
+    /**
+     * @param vsName the virtual server name for rate retrieval
+     * @throws StingrayRestClientException
+     */
+    public TrafficManager retrieveTrafficManager(String vsName) throws StingrayRestClientException {
+        return retrieveItem(vsName, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the traffic manager
+     * @param trafficManager The traffic manager object used to create a Stingray traffic manager
+     * @return The configured TrafficManager object
+     * @throws StingrayRestClientException
+     */
+    public TrafficManager createTrafficManager(String vsName, TrafficManager trafficManager) throws StingrayRestClientException {
+        return createItem(vsName, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH, trafficManager);
+    }
+
+
+    /**
+     * @param vsName The virtual server name related to the traffic manager
+     * @param trafficManager The traffic manager object used to create a Stingray traffic manager
+     * @return The configured TrafficManager object
+     * @throws StingrayRestClientException
+     */
+    public TrafficManager updateTrafficManager(String vsName, TrafficManager trafficManager) throws StingrayRestClientException {
+        return createItem(vsName, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH, trafficManager);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the rate
+     * @throws StingrayRestClientException
+     */
+    public void deleteTrafficManager(String vsName) throws StingrayRestClientException {
+        deleteItem(vsName, ClientConstants.TRAFFICMANAGER_PATH);
+    }
+
+     /**
+     * @return the generic list for trafficscripts providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
+     */
+    public Children getTrafficscripts() throws StingrayRestClientException {
+        return getItems(ClientConstants.TRAFFICSCRIPT_PATH);
+    }
+
+    /**
+     * @param vsName the virtual server name for trafficscript retrieval
+     * @throws StingrayRestClientException
+     */
+    public Trafficscript retrieveTraffiscript(String vsName) throws StingrayRestClientException {
+        return retrieveItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the trafficscript
+     * @param trafficscript The rate object used to create a Stingray trafficscript
+     * @return The configured Trafficscript object
+     * @throws StingrayRestClientException
+     */
+    public Trafficscript createTrafficscript(String vsName, Trafficscript trafficscript) throws StingrayRestClientException {
+        return createItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript);
+    }
+
+
+    /**
+     * @param vsName The virtual server name related to the trafficscript
+     * @param trafficscript The trafficscript object used to create a Stingray trafficscript
+     * @return The configured Trafficscript object
+     * @throws StingrayRestClientException
+     */
+    public Trafficscript updateTrafficScript(String vsName, Trafficscript trafficscript) throws StingrayRestClientException {
+        return createItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the trafficscript
+     * @throws StingrayRestClientException
+     */
+    public void deleteTrafficscript(String vsName) throws StingrayRestClientException {
+        deleteItem(vsName, ClientConstants.TRAFFICSCRIPT_PATH);
+    }
+
+     /**
+     * @return the generic list for TrafficIps providing the name and the endpoint for a specific request
+     * @throws StingrayRestClientException
+     */
+    public Children getTrafficIps() throws StingrayRestClientException {
+        return getItems(ClientConstants.IP_PATH);
+    }
+
+    /**
+     * @param vsName the virtual server name for rate retrieval
+     * @throws StingrayRestClientException
+     */
+    public TrafficIp retrieveTrafficIp(String vsName) throws StingrayRestClientException {
+        return retrieveItem(vsName, TrafficIp.class, ClientConstants.IP_PATH);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the Traffic Ip
+     * @param trafficIp The rate object used to create a Stingray Traffic Ip
+     * @return The configured TrafficIp object
+     * @throws StingrayRestClientException
+     */
+    public TrafficIp createTrafficIp(String vsName, TrafficIp trafficIp) throws StingrayRestClientException {
+        return createItem(vsName, TrafficIp.class, ClientConstants.IP_PATH, trafficIp);
+    }
+
+
+    /**
+     * @param vsName The virtual server name related to the Traffic Ip
+     * @param trafficIp   The Traffic Ip object used to create a Stingray Traffic Ip
+     * @return The configured TrafficIp object
+     * @throws StingrayRestClientException
+     */
+    public TrafficIp updateTrafficIp(String vsName, TrafficIp trafficIp) throws StingrayRestClientException {
+        return createItem(vsName, TrafficIp.class, ClientConstants.IP_PATH, trafficIp);
+    }
+
+    /**
+     * @param vsName The virtual server name related to the TrafficIp
+     * @throws StingrayRestClientException
+     */
+    public void deleteTrafficIp(String vsName) throws StingrayRestClientException {
+        deleteItem(vsName, ClientConstants.IP_PATH);
+    }
+
 
     //Todo: rest of the methods, this is dependent on the managers being built up...
 //    public ClientResponse updatePool(String path, Pool pool) throws Exception {
