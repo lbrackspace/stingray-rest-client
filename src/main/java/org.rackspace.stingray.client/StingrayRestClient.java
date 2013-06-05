@@ -8,6 +8,7 @@ import org.rackspace.stingray.client.bandwidth.Bandwidth;
 import org.rackspace.stingray.client.config.Configuration;
 import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.extra.file.ExtraFile;
 import org.rackspace.stingray.client.glb.GlobalLoadBalancing;
 import org.rackspace.stingray.client.list.Children;
@@ -91,7 +92,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
         if (isPathValid(path)) {
             return requestManager.retrieveList(endpoint, client, path);
         } else {
-            throw new StingrayRestClientException();
+            throw new StingrayRestClientPathException(path);
         }
     }
 
@@ -109,7 +110,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
             T obj = interpretResponse(response, clazz);
             return obj;
         } else {
-            throw new StingrayRestClientException();
+            throw new StingrayRestClientPathException(path);
         }
     }
 
@@ -137,8 +138,15 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     private <T> T updateItem(String vsName, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
+        if(isPathValid(path))
+        {
         ClientResponse response = requestManager.updateItem(endpoint, client, path + vsName, obj);
         return interpretResponse(response, clazz);
+        }
+        else
+        {
+            throw new StingrayRestClientPathException(path);
+        }
     }
 
 
