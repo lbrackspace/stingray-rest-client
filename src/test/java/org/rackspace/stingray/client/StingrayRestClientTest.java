@@ -18,13 +18,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.rackspace.stingray.client.bandwidth.Bandwidth;
 import org.rackspace.stingray.client.bandwidth.BandwidthBasic;
 import org.rackspace.stingray.client.bandwidth.BandwidthProperties;
-<<<<<<< HEAD
-=======
 import org.rackspace.stingray.client.config.Configuration;
-import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
->>>>>>> Fixed mock issue
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.manager.RequestManager;
 import org.rackspace.stingray.client.mock.MockClientHandler;
