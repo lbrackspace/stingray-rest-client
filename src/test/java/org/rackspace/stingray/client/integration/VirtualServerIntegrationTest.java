@@ -32,7 +32,7 @@ public class VirtualServerIntegrationTest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
         Child child = children.getChildren().get(0);
         String vsname = child.getName();
-        VirtualServer vs = client.retrieveVirtualServer(vsname);
+        VirtualServer vs = client.getVirtualServer(vsname);
         Assert.assertNotNull(vs);
     }
 }

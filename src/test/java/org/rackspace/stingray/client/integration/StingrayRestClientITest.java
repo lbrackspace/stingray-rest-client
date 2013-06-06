@@ -21,7 +21,7 @@ public class StingrayRestClientITest {
     public void verifyStingrayPoolManagerGet() throws Exception {
         StingrayRestClient client = new StingrayRestClient();
 
-        VirtualServer pool = client.retrieveVirtualServer("528830_770");
+        VirtualServer pool = client.getVirtualServer("528830_770");
         Assert.assertNotNull(pool);
     }
 

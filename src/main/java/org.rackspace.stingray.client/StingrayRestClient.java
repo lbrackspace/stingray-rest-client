@@ -85,7 +85,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      */
     private Children getItems(String path) throws StingrayRestClientException {
         if (isPathValid(path)) {
-            return requestManager.retrieveList(endpoint, client, path);
+            return requestManager.getList(endpoint, client, path);
         } else {
             throw new StingrayRestClientPathException(path);
         }
@@ -99,9 +99,9 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    private <T> T retrieveItem(String vsName, java.lang.Class<T> clazz, String path) throws StingrayRestClientException {
+    private <T> T getItem(String vsName, java.lang.Class<T> clazz, String path) throws StingrayRestClientException {
         if (isPathValid(path)) {
-            ClientResponse response = requestManager.retrieveItem(endpoint, client, path + vsName);
+            ClientResponse response = requestManager.getItem(endpoint, client, path + vsName);
             T obj = interpretResponse(response, clazz);
             return obj;
         } else {
@@ -171,8 +171,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    public VirtualServer retrieveVirtualServer(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH);
+    public VirtualServer getVirtualServer(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH);
     }
 
     /**
@@ -210,8 +210,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for pool retrieval
      * @throws StingrayRestClientException
      */
-    public Pool retrievePool(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Pool.class, ClientConstants.POOL_PATH);
+    public Pool getPool(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Pool.class, ClientConstants.POOL_PATH);
     }
 
     /**
@@ -256,7 +256,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public ActionScript retrievActionScript(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, ActionScript.class, ClientConstants.ACTIONSCRIPT_PATH);
+        return getItem(vsName, ActionScript.class, ClientConstants.ACTIONSCRIPT_PATH);
     }
 
     /**
@@ -300,8 +300,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for bandwidth retrieval
      * @throws StingrayRestClientException
      */
-    public Bandwidth retrieveBandwidth(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Bandwidth.class, ClientConstants.BANDWIDTH_PATH);
+    public Bandwidth getBandwidth(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Bandwidth.class, ClientConstants.BANDWIDTH_PATH);
     }
 
     /**
@@ -346,8 +346,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for extra file retrieval
      * @throws StingrayRestClientException
      */
-    public ExtraFile retrieveExtraFile(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, ExtraFile.class, ClientConstants.EXTRAFILE_PATH);
+    public ExtraFile getExtraFile(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, ExtraFile.class, ClientConstants.EXTRAFILE_PATH);
     }
 
     /**
@@ -391,8 +391,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for global load balancing retrieval
      * @throws StingrayRestClientException
      */
-    public GlobalLoadBalancing retrieveGlb(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, GlobalLoadBalancing.class, ClientConstants.GLB_PATH);
+    public GlobalLoadBalancing getGlb(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, GlobalLoadBalancing.class, ClientConstants.GLB_PATH);
     }
 
     /**
@@ -438,8 +438,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for extra file retrieval
      * @throws StingrayRestClientException
      */
-    public Location retrieveLocation(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Location.class, ClientConstants.LOCATION_PATH);
+    public Location getLocation(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Location.class, ClientConstants.LOCATION_PATH);
     }
 
     /**
@@ -484,8 +484,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for monitor retrieval
      * @throws StingrayRestClientException
      */
-    public Monitor retrieveMonitor(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Monitor.class, ClientConstants.MONITOR_PATH);
+    public Monitor getMonitor(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Monitor.class, ClientConstants.MONITOR_PATH);
     }
 
     /**
@@ -530,8 +530,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for monitor script retrieval
      * @throws StingrayRestClientException
      */
-    public MonitorScript retrieveMonitorScript(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, MonitorScript.class, ClientConstants.MONITORSCRIPT_PATH);
+    public MonitorScript getMonitorScript(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, MonitorScript.class, ClientConstants.MONITORSCRIPT_PATH);
     }
 
     /**
@@ -576,8 +576,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for persistence retrieval
      * @throws StingrayRestClientException
      */
-    public Persistence retrievePersistence(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Persistence.class, ClientConstants.PERSISTENCE_PATH);
+    public Persistence getPersistence(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Persistence.class, ClientConstants.PERSISTENCE_PATH);
     }
 
     /**
@@ -622,8 +622,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for protection retrieval
      * @throws StingrayRestClientException
      */
-    public Protection retrieveProtection(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Protection.class, ClientConstants.PROTECTION_PATH);
+    public Protection getProtection(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Protection.class, ClientConstants.PROTECTION_PATH);
     }
 
     /**
@@ -668,8 +668,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for rate retrieval
      * @throws StingrayRestClientException
      */
-    public Rate retrieveRate(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Rate.class, ClientConstants.RATE_PATH);
+    public Rate getRate(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Rate.class, ClientConstants.RATE_PATH);
     }
 
     /**
@@ -713,8 +713,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for cacrl retrieval
      * @throws StingrayRestClientException
      */
-    public Cacrl retrieveCacrl(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH);
+    public Cacrl getCacrl(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH);
     }
 
     /**
@@ -759,8 +759,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for client keypair retrieval
      * @throws StingrayRestClientException
      */
-    public ClientKeypair retrieveClientKeypair(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH);
+    public ClientKeypair getClientKeypair(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH);
     }
 
     /**
@@ -804,8 +804,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for keypair retrieval
      * @throws StingrayRestClientException
      */
-    public Keypair retrieveKeypair(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Keypair.class, ClientConstants.KEYPAIR_PATH);
+    public Keypair getKeypair(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Keypair.class, ClientConstants.KEYPAIR_PATH);
     }
 
     /**
@@ -850,8 +850,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for rate retrieval
      * @throws StingrayRestClientException
      */
-    public TrafficManager retrieveTrafficManager(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH);
+    public TrafficManager getTrafficManager(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH);
     }
 
     /**
@@ -895,8 +895,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for trafficscript retrieval
      * @throws StingrayRestClientException
      */
-    public Trafficscript retrieveTraffiscript(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH);
+    public Trafficscript getTraffiscript(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH);
     }
 
     /**
@@ -940,8 +940,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for rate retrieval
      * @throws StingrayRestClientException
      */
-    public TrafficIp retrieveTrafficIp(String vsName) throws StingrayRestClientException {
-        return retrieveItem(vsName, TrafficIp.class, ClientConstants.IP_PATH);
+    public TrafficIp getTrafficIp(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, TrafficIp.class, ClientConstants.IP_PATH);
     }
 
     /**
