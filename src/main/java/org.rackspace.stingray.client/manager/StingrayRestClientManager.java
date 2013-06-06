@@ -19,6 +19,7 @@ public class StingrayRestClientManager {
     protected final String adminKey;
 
 
+
     /**
      * Creates the client configured for authentication and security.
 

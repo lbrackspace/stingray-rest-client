@@ -87,7 +87,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            ClientResponse response = requestManager.retrieveItem(getPoolPath(), client, vsName);
+            ClientResponse response = requestManager.getItem(getPoolPath(), client, vsName);
 
             Assert.assertNotNull(response.getEntity(Pool.class));
             Assert.assertTrue(true);
@@ -100,7 +100,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            requestManager.retrieveItem(getPoolPath(), client, vsName);
+            requestManager.getItem(getPoolPath(), client, vsName);
         }
 
 
@@ -180,7 +180,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            requestManager.retrieveItem(getPoolPath(), client, vsName);
+            requestManager.getItem(getPoolPath(), client, vsName);
         }
     }
 
@@ -253,7 +253,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            requestManager.retrieveItem(getPoolPath(), client, vsName);
+            requestManager.getItem(getPoolPath(), client, vsName);
         }
     }
 }

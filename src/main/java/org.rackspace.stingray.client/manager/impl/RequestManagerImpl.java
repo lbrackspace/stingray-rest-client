@@ -2,6 +2,7 @@ package org.rackspace.stingray.client.manager.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
@@ -24,11 +25,13 @@ public class RequestManagerImpl implements RequestManager {
      * @return
      */
     @Override
-    public Children retrieveList(URI endpoint, Client client, String path) throws StingrayRestClientException {
+    public Children getList(URI endpoint, Client client, String path) throws StingrayRestClientException {
         Children scripts = null;
         ClientResponse response = null;
         try {
-            response = client.resource(URI.create(endpoint + path)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+            response = client.resource(URI.create(endpoint + path))
+                    .accept(MediaType.APPLICATION_JSON)
+                    .get(ClientResponse.class);
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
             }
@@ -49,12 +52,13 @@ public class RequestManagerImpl implements RequestManager {
      * @throws StingrayRestClientException
      */
     @Override
-    public ClientResponse retrieveItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
+    public ClientResponse getItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
         ClientResponse response = null;
         try {
-            response = client.resource(endpoint + path)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .get(ClientResponse.class);
+          //  response =
+          WebResource resource =  client.resource(endpoint + path);
+          WebResource.Builder builder = resource.accept(MediaType.APPLICATION_JSON);
+          response = builder.get(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
