@@ -35,4 +35,8 @@ public class VirtualServerIntegrationTest extends StingrayTestBase {
         VirtualServer vs = client.getVirtualServer(vsname);
         Assert.assertNotNull(vs);
     }
+
+    @Test
+    public void createVirtualServer() throws StingrayRestClientException {
+    }
 }
