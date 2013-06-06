@@ -13,7 +13,11 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.junit.Assert;
 
+import org.rackspace.stingray.client.bandwidth.Bandwidth;
+import org.rackspace.stingray.client.bandwidth.BandwidthBasic;
+import org.rackspace.stingray.client.bandwidth.BandwidthProperties;
 import org.rackspace.stingray.client.config.Configuration;
+import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.manager.RequestManager;
@@ -22,6 +26,7 @@ import org.rackspace.stingray.client.mock.MockClientHandler;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolHttp;
 import org.rackspace.stingray.client.pool.PoolProperties;
+import org.rackspace.stingray.client.util.ClientConstants;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -110,6 +115,7 @@ public class StingrayRestClientTest {
         private WebResource webResource;
         private WebResource.Builder builder;
         private Pool pool;
+        private Bandwidth bandwidth;
         private String vsName;
 
         @Before
@@ -118,13 +124,24 @@ public class StingrayRestClientTest {
             mockedManager = mock(RequestManager.class);
 
 
-            vsName = "12345_1234";
+            vsName = "1234_123";
+
 
             pool = createPool();
-
+            bandwidth = createBandwidth();
 
         }
 
+
+        private Bandwidth createBandwidth() {
+            BandwidthProperties bandwidthProperties = new BandwidthProperties();
+            bandwidth = new Bandwidth();
+            BandwidthBasic bandwidthBasic = new BandwidthBasic();
+            bandwidthBasic.setMaximum(5000);
+            bandwidthProperties.setBasic(bandwidthBasic);
+            bandwidth.setProperties(bandwidthProperties);
+            return bandwidth;
+        }
 
         private Pool createPool() {
             PoolProperties poolProperties = new PoolProperties();
@@ -144,32 +161,33 @@ public class StingrayRestClientTest {
             client = mock(Client.class);
             webResource = mock(WebResource.class);
             builder = mock(WebResource.Builder.class);
+            mockedManager = mock(RequestManager.class);
 
             when(client.resource(anyString())).thenReturn(webResource);
             when(webResource.accept(MediaType.APPLICATION_JSON)).thenReturn(builder);
             when(builder.get(ClientResponse.class)).thenReturn(mockedResponse);
-
+            try {
+                when(mockedManager.getItem(getItemPath(), client, anyString())).thenReturn(mockedResponse);
+            } catch (Exception e) {
+            }
+            when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
         }
 
 
         private URI getItemPath() throws URISyntaxException {
 
-            return new URI(MockClientHandler.ROOT + "pools/" + vsName);
+            return new URI(MockClientHandler.ROOT + ClientConstants.BANDWIDTH_PATH + vsName);
         }
 
-        @Ignore
+
         @Test
         public void genericGetItemReturnsValidObject() throws Exception {
-            mockClientHandler.when("pools/" + vsName, "GET").thenReturn(Response.Status.ACCEPTED, pool);
-
+            mockClientHandler.when(ClientConstants.BANDWIDTH_PATH + vsName, "GET").thenReturn(Response.Status.ACCEPTED, pool);
             setupMocks();
-
-
-            StingrayRestClient myClient = new StingrayRestClient();
-            Assert.assertNotNull(myClient.getPool(vsName));
+            StingrayRestClient myClient = new StingrayRestClient(new URI(MockClientHandler.ROOT));
+            bandwidth = myClient.getBandwidth(vsName);
+            Assert.assertNotNull(myClient.getBandwidth(vsName));
         }
-
-
     }
 
 
