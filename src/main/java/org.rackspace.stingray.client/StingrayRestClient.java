@@ -2,11 +2,9 @@ package org.rackspace.stingray.client;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import org.mockito.cglib.core.Local;
 import org.rackspace.stingray.client.action.ActionScript;
 import org.rackspace.stingray.client.bandwidth.Bandwidth;
 import org.rackspace.stingray.client.config.Configuration;
-import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.extra.file.ExtraFile;
@@ -29,11 +27,8 @@ import org.rackspace.stingray.client.tm.TrafficManager;
 import org.rackspace.stingray.client.traffic.ip.TrafficIp;
 import org.rackspace.stingray.client.trafficscript.Trafficscript;
 import org.rackspace.stingray.client.util.ClientConstants;
-import sun.nio.ch.SocketOpts;
+import org.rackspace.stingray.client.virtualserver.VirtualServer;
 
-import javax.xml.bind.annotation.XmlElementDecl;
-import java.awt.*;
-import java.awt.image.LookupOp;
 import java.net.URI;
 
 public class StingrayRestClient extends StingrayRestClientManager {
@@ -161,6 +156,14 @@ public class StingrayRestClient extends StingrayRestClientManager {
             return requestManager.deleteItem(endpoint, client, path + vsName);
         else
             throw new StingrayRestClientException();
+    }
+
+    /**
+     * @return A list of children representing individual virtual server names and URI's
+     * @throws StingrayRestClientException
+     */
+    public Children getVirtualServers() throws StingrayRestClientException {
+        return getItems(ClientConstants.SERVER_PATH);
     }
 
     /**

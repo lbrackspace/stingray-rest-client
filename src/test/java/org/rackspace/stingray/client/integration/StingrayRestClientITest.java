@@ -3,12 +3,12 @@ package org.rackspace.stingray.client.integration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
-import org.rackspace.stingray.client.config.virtualserver.VirtualServer;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolBasic;
 import org.rackspace.stingray.client.pool.PoolLoadbalancing;
 import org.rackspace.stingray.client.pool.PoolProperties;
 import org.rackspace.stingray.client.util.EnumFactory;
+import org.rackspace.stingray.client.virtualserver.VirtualServer;
 
 import javax.xml.bind.JAXBException;
 import java.util.HashSet;
