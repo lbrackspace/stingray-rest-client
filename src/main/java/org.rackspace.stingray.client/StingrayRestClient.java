@@ -32,7 +32,7 @@ import org.rackspace.stingray.client.virtualserver.VirtualServer;
 import java.net.URI;
 
 public class StingrayRestClient extends StingrayRestClientManager {
-    private final RequestManager requestManager = new RequestManagerImpl();
+    private RequestManager requestManager = new RequestManagerImpl();
 
     public StingrayRestClient(URI endpoint, Configuration config, Client client) {
         super(config, endpoint, client, false, null, null);
@@ -60,6 +60,10 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
     public StingrayRestClient() {
         super(null, null, null, false, null, null);
+    }
+
+    public void setRequestManager(RequestManager requestManager) {
+        this.requestManager = requestManager;
     }
 
     private Boolean isPathValid(String path) {

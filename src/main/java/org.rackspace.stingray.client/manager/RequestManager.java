@@ -9,15 +9,15 @@ import java.net.URI;
 
 public interface RequestManager {
 
-    public Children getList(URI endpoint, Client client, String path) throws StingrayRestClientException;
+    Children getList(URI endpoint, Client client, String path) throws StingrayRestClientException;
 
-    public ClientResponse getItem(URI endpoint, Client client, String path) throws StingrayRestClientException;
+    ClientResponse getItem(URI endpoint, Client client, String path) throws StingrayRestClientException;
 
-    public ClientResponse createItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException;
+    ClientResponse createItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException;
 
-    public ClientResponse updateItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException;
+    ClientResponse updateItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException;
 
-    public boolean deleteItem(URI endpoint, Client client, String path) throws StingrayRestClientException;
+    boolean deleteItem(URI endpoint, Client client, String path) throws StingrayRestClientException;
 
 
 }
