@@ -59,7 +59,7 @@ public class ClientConstants {
     public static final String TRAFFICMANAGER_PATH = "zxtms/";
     public static final String IP_PATH = "flipper/";
     public static final String TRAFFICSCRIPT_PATH = "rules/";
-    public static final String SERVER_PATH = "vservers/";
+    public static final String V_SERVER_PATH = "vservers/";
 
     /** Error messages for the Stingray Rest Client**/
     public static final String REQUEST_ERROR = "The Stingray Rest Client encountered a problem processing the request: ";

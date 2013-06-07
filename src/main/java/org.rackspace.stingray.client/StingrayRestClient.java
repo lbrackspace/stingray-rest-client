@@ -74,7 +74,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
                 || path.equals(ClientConstants.GLB_PATH) || path.equals(ClientConstants.IP_PATH)
                 || path.equals(ClientConstants.KEYPAIR_PATH) || path.equals(ClientConstants.LOCATION_PATH)
                 || path.equals(ClientConstants.MONITOR_PATH) || path.equals(ClientConstants.MONITORSCRIPT_PATH)
-                || path.equals(ClientConstants.PROTECTION_PATH) || path.equals(ClientConstants.SERVER_PATH)
+                || path.equals(ClientConstants.PROTECTION_PATH) || path.equals(ClientConstants.V_SERVER_PATH)
                 || path.equals(ClientConstants.TRAFFICMANAGER_PATH) || path.equals(ClientConstants.TRAFFICSCRIPT_PATH)) {
             return true;
         } else {
@@ -162,12 +162,16 @@ public class StingrayRestClient extends StingrayRestClientManager {
             throw new StingrayRestClientException();
     }
 
+    public VirtualServer createVirtualServer(String vsName, VirtualServer vs) throws StingrayRestClientException {
+        return createItem(vsName, VirtualServer.class, ClientConstants.V_SERVER_PATH, vs);
+    }
+
     /**
      * @return A list of children representing individual virtual server names and URI's
      * @throws StingrayRestClientException
      */
     public Children getVirtualServers() throws StingrayRestClientException {
-        return getItems(ClientConstants.SERVER_PATH);
+        return getItems(ClientConstants.V_SERVER_PATH);
     }
 
     /**
@@ -176,7 +180,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public VirtualServer getVirtualServer(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH);
+        return getItem(vsName, VirtualServer.class, ClientConstants.V_SERVER_PATH);
     }
 
     /**
@@ -186,7 +190,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public VirtualServer updateVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException {
-        return updateItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH, virtualServer);
+        return updateItem(vsName, VirtualServer.class, ClientConstants.V_SERVER_PATH, virtualServer);
     }
 
     /**
@@ -195,7 +199,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public boolean deleteVirtualServer(String vsName) throws StingrayRestClientException {
-        return deleteItem(vsName, ClientConstants.SERVER_PATH);
+        return deleteItem(vsName, ClientConstants.V_SERVER_PATH);
     }
 
 
