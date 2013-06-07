@@ -137,13 +137,10 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     private <T> T updateItem(String vsName, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
-        if(isPathValid(path))
-        {
-        ClientResponse response = requestManager.updateItem(endpoint, client, path + vsName, obj);
-        return interpretResponse(response, clazz);
-        }
-        else
-        {
+        if (isPathValid(path)) {
+            ClientResponse response = requestManager.updateItem(endpoint, client, path + vsName, obj);
+            return interpretResponse(response, clazz);
+        } else {
             throw new StingrayRestClientPathException(path);
         }
     }
@@ -576,7 +573,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for persistences providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getPersistence() throws StingrayRestClientException {
+    public Children getPersistences() throws StingrayRestClientException {
         return getItems(ClientConstants.PERSISTENCE_PATH);
     }
 
@@ -709,7 +706,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
         deleteItem(vsName, ClientConstants.RATE_PATH);
     }
 
-     /**
+    /**
      * @return the generic list for cacrls providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
@@ -727,7 +724,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
     /**
      * @param vsName The virtual server name related to the cacrl
-     * @param cacrl   The cacrl object used to create a Stingray cacrl
+     * @param cacrl  The cacrl object used to create a Stingray cacrl
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
@@ -738,7 +735,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
     /**
      * @param vsName The virtual server name related to the cacrl
-     * @param cacrl   The cacrl object used to create a Stingray cacrl
+     * @param cacrl  The cacrl object used to create a Stingray cacrl
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
@@ -755,7 +752,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
 
-     /**
+    /**
      * @return the generic list for client keypairs providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
@@ -772,7 +769,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the client keypair
+     * @param vsName        The virtual server name related to the client keypair
      * @param clientKeypair The client keypair object used to create a Stingray client keypair
      * @return The configured ClientKeypair object
      * @throws StingrayRestClientException
@@ -783,7 +780,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
 
     /**
-     * @param vsName The virtual server name related to the clientkeypair
+     * @param vsName        The virtual server name related to the clientkeypair
      * @param clientKeypair The client keypair object used to create a Stingray client keypairs
      * @return The configured ClientKeypair object
      * @throws StingrayRestClientException
@@ -800,7 +797,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
         deleteItem(vsName, ClientConstants.CLIENTKEYPAIR_PATH);
     }
 
-     /**
+    /**
      * @return the generic list for keypairs providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
@@ -817,8 +814,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the keypair
-     * @param keypair   The keypair object used to create a Stingray keypair
+     * @param vsName  The virtual server name related to the keypair
+     * @param keypair The keypair object used to create a Stingray keypair
      * @return The configured Keypair object
      * @throws StingrayRestClientException
      */
@@ -828,7 +825,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
 
     /**
-     * @param vsName The virtual server name related to the keypair
+     * @param vsName  The virtual server name related to the keypair
      * @param keypair The keypair object used to create a Stingray keypairs
      * @return The configured Keypair object
      * @throws StingrayRestClientException
@@ -846,7 +843,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
 
-     /**
+    /**
      * @return the generic list for traffic managers providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
@@ -863,7 +860,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the traffic manager
+     * @param vsName         The virtual server name related to the traffic manager
      * @param trafficManager The traffic manager object used to create a Stingray traffic manager
      * @return The configured TrafficManager object
      * @throws StingrayRestClientException
@@ -874,7 +871,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
 
     /**
-     * @param vsName The virtual server name related to the traffic manager
+     * @param vsName         The virtual server name related to the traffic manager
      * @param trafficManager The traffic manager object used to create a Stingray traffic manager
      * @return The configured TrafficManager object
      * @throws StingrayRestClientException
@@ -891,7 +888,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
         deleteItem(vsName, ClientConstants.TRAFFICMANAGER_PATH);
     }
 
-     /**
+    /**
      * @return the generic list for trafficscripts providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
@@ -908,7 +905,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the trafficscript
+     * @param vsName        The virtual server name related to the trafficscript
      * @param trafficscript The rate object used to create a Stingray trafficscript
      * @return The configured Trafficscript object
      * @throws StingrayRestClientException
@@ -919,7 +916,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
 
     /**
-     * @param vsName The virtual server name related to the trafficscript
+     * @param vsName        The virtual server name related to the trafficscript
      * @param trafficscript The trafficscript object used to create a Stingray trafficscript
      * @return The configured Trafficscript object
      * @throws StingrayRestClientException
@@ -936,7 +933,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
         deleteItem(vsName, ClientConstants.TRAFFICSCRIPT_PATH);
     }
 
-     /**
+    /**
      * @return the generic list for TrafficIps providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
@@ -953,7 +950,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the Traffic Ip
+     * @param vsName    The virtual server name related to the Traffic Ip
      * @param trafficIp The rate object used to create a Stingray Traffic Ip
      * @return The configured TrafficIp object
      * @throws StingrayRestClientException
@@ -964,8 +961,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
 
 
     /**
-     * @param vsName The virtual server name related to the Traffic Ip
-     * @param trafficIp   The Traffic Ip object used to create a Stingray Traffic Ip
+     * @param vsName    The virtual server name related to the Traffic Ip
+     * @param trafficIp The Traffic Ip object used to create a Stingray Traffic Ip
      * @return The configured TrafficIp object
      * @throws StingrayRestClientException
      */

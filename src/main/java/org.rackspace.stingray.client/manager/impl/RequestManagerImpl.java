@@ -2,7 +2,6 @@ package org.rackspace.stingray.client.manager.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
@@ -13,7 +12,8 @@ import org.rackspace.stingray.client.util.ClientConstants;
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
-import static org.rackspace.stingray.client.manager.util.RequestManagerUtil.*;
+import static org.rackspace.stingray.client.manager.util.RequestManagerUtil.buildFaultMessage;
+import static org.rackspace.stingray.client.manager.util.RequestManagerUtil.isResponseValid;
 
 public class RequestManagerImpl implements RequestManager {
     private static final Log LOG = LogFactory.getLog(RequestManagerImpl.class);
@@ -55,10 +55,9 @@ public class RequestManagerImpl implements RequestManager {
     public ClientResponse getItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
         ClientResponse response = null;
         try {
-          //  response =
-          WebResource resource =  client.resource(endpoint + path);
-          WebResource.Builder builder = resource.accept(MediaType.APPLICATION_JSON);
-          response = builder.get(ClientResponse.class);
+              response = client.resource(endpoint + path)
+                      .accept(MediaType.APPLICATION_JSON)
+                      .get(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
