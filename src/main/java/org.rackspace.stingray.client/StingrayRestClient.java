@@ -579,7 +579,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for persistences providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getPersistence() throws StingrayRestClientException {
+    public Children getPersistences() throws StingrayRestClientException {
         return getItems(ClientConstants.PERSISTENCE_PATH);
     }
 

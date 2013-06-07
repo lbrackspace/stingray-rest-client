@@ -55,10 +55,9 @@ public class RequestManagerImpl implements RequestManager {
     public ClientResponse getItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
         ClientResponse response = null;
         try {
-          //  response =
-          WebResource resource =  client.resource(endpoint + path);
-          WebResource.Builder builder = resource.accept(MediaType.APPLICATION_JSON);
-          response = builder.get(ClientResponse.class);
+              response = client.resource(endpoint + path)
+                      .accept(MediaType.APPLICATION_JSON)
+                      .get(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
