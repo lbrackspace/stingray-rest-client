@@ -8,8 +8,10 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.virtualserver.VirtualServer;
+import org.rackspace.stingray.client.virtualserver.VirtualServerConnection;
+import org.rackspace.stingray.client.virtualserver.VirtualServerProperties;
 
-public class VirtualServerIntegrationTest extends StingrayTestBase {
+public class VirtualServerITest extends StingrayTestBase {
     StingrayRestClient client;
 
     @Before

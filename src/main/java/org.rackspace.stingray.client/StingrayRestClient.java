@@ -179,6 +179,13 @@ public class StingrayRestClient extends StingrayRestClientManager {
         return getItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH);
     }
 
+
+
+    public VirtualServer createVirtualServer(String vsName, VirtualServer virtualServer) throws StingrayRestClientException
+    {
+        return createItem(vsName, VirtualServer.class, ClientConstants.SERVER_PATH, virtualServer);
+    }
+
     /**
      * @param vsName
      * @param virtualServer
