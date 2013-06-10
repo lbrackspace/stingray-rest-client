@@ -29,8 +29,7 @@ public class TrafficIpITest extends StingrayTestBase {
 
     @Test
     public void testCreateTrafficIp() throws StingrayRestClientException {
-        client.createTrafficIp(TESTNAME, tip);
-        TrafficIp createdTip = client.getTrafficIp(TESTNAME);
+        TrafficIp createdTip = client.createTrafficIp(TESTNAME, tip);
         Assert.assertNotNull(createdTip);
     }
 

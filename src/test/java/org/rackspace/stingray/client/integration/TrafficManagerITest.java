@@ -8,13 +8,29 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.tm.TrafficManager;
+import org.rackspace.stingray.client.tm.TrafficManagerBasic;
+import org.rackspace.stingray.client.tm.TrafficManagerProperties;
 
-public class TrafficManagerITest {
+public class TrafficManagerITest extends StingrayTestBase {
     StingrayRestClient client;
+    TrafficManager manager;
+    TrafficManagerProperties properties;
+    TrafficManagerBasic basic;
 
     @Before
     public void standUp() {
         client = new StingrayRestClient();
+        basic = new TrafficManagerBasic();
+        properties = new TrafficManagerProperties();
+        properties.setBasic(basic);
+        manager = new TrafficManager();
+        manager.setProperties(properties);
+    }
+
+    @Test
+    public void testCreateTrafficManager() throws StingrayRestClientException {
+        TrafficManager createdManager = client.createTrafficManager(TESTNAME, manager);
+        Assert.assertNotNull(createdManager);
     }
 
     /**
@@ -22,18 +38,27 @@ public class TrafficManagerITest {
      *
      */
     @Test
-    public void getListOfTrafficManagers() throws StingrayRestClientException {
+    public void testGetListOfTrafficManagers() throws StingrayRestClientException {
         Children children = client.getTrafficManagers();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
     @Test
-    public void getSpecificTrafficManager() throws StingrayRestClientException {
-        Children children = client.getTrafficManagers();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String vsname = child.getName();
-        TrafficManager trafficManager = client.getTrafficManager(vsname);
+    public void testGetTrafficManager() throws StingrayRestClientException {
+        TrafficManager trafficManager = client.getTrafficManager(TESTNAME);
         Assert.assertNotNull(trafficManager);
+    }
+
+    @Test
+    public void testDeleteTrafficManager() throws StingrayRestClientException {
+        client.deleteTrafficManager(TESTNAME);
+        Children children = client.getTrafficManagers();
+        Boolean deleted = true;
+        for (Child child : children.getChildren()) {
+            if (child.getName().equals(TESTNAME)) {
+                deleted = false;
+            }
+        }
+        Assert.assertTrue(deleted);
     }
 }
