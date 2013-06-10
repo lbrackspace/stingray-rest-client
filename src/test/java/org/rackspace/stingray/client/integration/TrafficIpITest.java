@@ -29,8 +29,8 @@ public class TrafficIpITest extends StingrayTestBase {
 
     @Test
     public void testCreateTrafficIp() throws StingrayRestClientException {
-        client.createTrafficIp(testname, tip);
-        TrafficIp createdTip = client.getTrafficIp(testname);
+        client.createTrafficIp(TESTNAME, tip);
+        TrafficIp createdTip = client.getTrafficIp(TESTNAME);
         Assert.assertNotNull(createdTip);
     }
 
@@ -56,11 +56,11 @@ public class TrafficIpITest extends StingrayTestBase {
 
     @Test
     public void testDeleteTrafficIp() throws StingrayRestClientException {
-        client.deleteTrafficIp(testname);
+        client.deleteTrafficIp(TESTNAME);
         Children children = client.getTrafficIps();
         Boolean deleted = true;
         for (Child child : children.getChildren()) {
-            if (child.getName().equals(testname)) {
+            if (child.getName().equals(TESTNAME)) {
                 deleted = false;
             }
         }
