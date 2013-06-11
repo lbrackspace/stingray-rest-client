@@ -8,13 +8,19 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.ssl.cacrl.Cacrl;
+import org.rackspace.stingray.client.ssl.cacrl.CacrlProperties;
 
 public class SslCacrlITest {
     StingrayRestClient client;
-
+    String vsName;
+    Cacrl cacrl;
+    CacrlProperties cacrlProperties;
     @Before
     public void standUp() {
         client = new StingrayRestClient();
+        cacrl = new Cacrl();
+        cacrlProperties = new CacrlProperties();
+        cacrl.setProperties(cacrlProperties);
     }
 
     /**
