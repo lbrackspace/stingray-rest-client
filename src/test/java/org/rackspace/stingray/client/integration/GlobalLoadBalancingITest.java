@@ -62,12 +62,8 @@ public class GlobalLoadBalancingITest {
 
     @Test
     public void testGetSpecificGlb() throws StingrayRestClientException {
-        Children children = client.getGlbs();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String name = child.getName();
-        GlobalLoadBalancing glb = client.getGlb(name);
-        Assert.assertNotNull(glb);
+       GlobalLoadBalancing retrievedGlb = client.getGlb(vsName);
+       Assert.assertNotNull(retrievedGlb);
     }
 
 

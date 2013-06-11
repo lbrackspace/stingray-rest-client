@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
-import org.rackspace.stingray.client.glb.GlobalLoadBalancing;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.location.Location;
@@ -60,19 +59,15 @@ public class LocationITest {
      *
      */
     @Test
-    public void getListOfLocations() throws StingrayRestClientException {
+    public void testGetListOfLocations() throws StingrayRestClientException {
         Children children = client.getLocations();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
     @Test
-    public void getSpecificLocation() throws StingrayRestClientException {
-        Children children = client.getLocations();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String name = child.getName();
-        Location location = client.getLocation(name);
-        Assert.assertNotNull(location);
+    public void testGetSpecificLocation() throws StingrayRestClientException {
+        Location retrievedLocation = client.getLocation(vsName);
+        Assert.assertNotNull(retrievedLocation);
     }
 
 

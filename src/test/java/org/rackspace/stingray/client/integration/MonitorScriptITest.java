@@ -9,13 +9,19 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.monitor.MonitorScript;
+import org.rackspace.stingray.client.monitor.script.MonitorScriptProperties;
 
 public class MonitorScriptITest {
     StingrayRestClient client;
+    String vsName;
+    MonitorScript monitorScript;
+    MonitorScriptProperties monitorScriptProperties;
+
 
     @Before
     public void standUp() {
         client = new StingrayRestClient();
+
     }
 
     /**

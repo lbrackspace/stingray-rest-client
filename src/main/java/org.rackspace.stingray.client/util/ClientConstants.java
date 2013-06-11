@@ -49,7 +49,7 @@ public class ClientConstants {
     public static final String LOCATION_PATH = "locations/";
     public static final String MONITOR_PATH = "monitors/";
     public static final String MONITORSCRIPT_PATH = "scripts/";
-    public static final String PERSISTENCE_PATH = "persistence";
+    public static final String PERSISTENCE_PATH = "persistence/";
     public static final String POOL_PATH = "pools/";
     public static final String PROTECTION_PATH = "protection/";
     public static final String RATE_PATH = "rate/";
