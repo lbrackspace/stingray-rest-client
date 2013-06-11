@@ -7,9 +7,9 @@ import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
-import org.rackspace.stingray.client.ssl.keypair.Keypair;
+import org.rackspace.stingray.client.ssl.cacrl.Cacrl;
 
-public class KeypairITest {
+public class SslCacrlITest {
     StingrayRestClient client;
 
     @Before
@@ -22,18 +22,18 @@ public class KeypairITest {
      *
      */
     @Test
-    public void getListOfKeypairs() throws StingrayRestClientException {
-        Children children = client.getKeypairs();
+    public void getListOfCacrls() throws StingrayRestClientException {
+        Children children = client.getCacrls();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
     @Test
-    public void getSpecificKeypair() throws StingrayRestClientException {
-        Children children = client.getKeypairs();
+    public void getSpecificCacrl() throws StingrayRestClientException {
+        Children children = client.getCacrls();
         Assert.assertTrue(children.getChildren().size() > 0);
         Child child = children.getChildren().get(0);
         String vsname = child.getName();
-        Keypair keypair = client.getKeypair(vsname);
-        Assert.assertNotNull(keypair);
+        Cacrl cacrl = client.getCacrl(vsname);
+        Assert.assertNotNull(cacrl);
     }
 }

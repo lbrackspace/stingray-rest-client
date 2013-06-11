@@ -55,14 +55,7 @@ public class TrafficIpITest extends StingrayTestBase {
 
     @Test
     public void testDeleteTrafficIp() throws StingrayRestClientException {
-        client.deleteTrafficIp(TESTNAME);
-        Children children = client.getTrafficIps();
-        Boolean deleted = true;
-        for (Child child : children.getChildren()) {
-            if (child.getName().equals(TESTNAME)) {
-                deleted = false;
-            }
-        }
-        Assert.assertTrue(deleted);
+        Boolean result = client.deleteTrafficIp(TESTNAME);
+        Assert.assertTrue(result);
     }
 }

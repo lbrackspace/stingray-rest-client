@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
-import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.tm.TrafficManager;
 import org.rackspace.stingray.client.tm.TrafficManagerBasic;
@@ -51,14 +50,7 @@ public class TrafficManagerITest extends StingrayTestBase {
 
     @Test
     public void testDeleteTrafficManager() throws StingrayRestClientException {
-        client.deleteTrafficManager(TESTNAME);
-        Children children = client.getTrafficManagers();
-        Boolean deleted = true;
-        for (Child child : children.getChildren()) {
-            if (child.getName().equals(TESTNAME)) {
-                deleted = false;
-            }
-        }
-        Assert.assertTrue(deleted);
+        Boolean result = client.deleteTrafficManager(TESTNAME);
+        Assert.assertTrue(result);
     }
 }

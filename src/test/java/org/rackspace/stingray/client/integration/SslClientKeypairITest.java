@@ -9,7 +9,7 @@ import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypair;
 
-public class ClientKeypairITest {
+public class SslClientKeypairITest {
     StingrayRestClient client;
 
     @Before
