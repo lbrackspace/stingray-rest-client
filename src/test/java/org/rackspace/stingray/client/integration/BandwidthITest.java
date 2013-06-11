@@ -60,13 +60,9 @@ public class BandwidthITest {
     }
 
     @Test
-    public void testGetSpecificBandwidth() throws StingrayRestClientException {
-        Children children = client.getBandwidths();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String name = child.getName();
-        Bandwidth bandwidth = client.getBandwidth(name);
-        Assert.assertNotNull(bandwidth);
+    public void testGetBandwidth() throws StingrayRestClientException {
+        Bandwidth retrievedBandwidth = client.getBandwidth(vsName);
+        Assert.assertNotNull(retrievedBandwidth);
     }
 
 

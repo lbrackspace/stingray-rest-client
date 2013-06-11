@@ -8,13 +8,43 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.rate.Rate;
+import org.rackspace.stingray.client.rate.RateBasic;
+import org.rackspace.stingray.client.rate.RateProperties;
 
 public class RateITest {
     StingrayRestClient client;
+    String vsName;
+    Rate rate;
+    RateProperties rateProperties;
+    RateBasic rateBasic;
 
     @Before
     public void standUp() {
         client = new StingrayRestClient();
+        vsName = "i_test_rate";
+        rate = new Rate();
+        rateProperties = new RateProperties();
+        rateBasic = new RateBasic();
+
+        rateProperties.setBasic(rateBasic);
+        rate.setProperties(rateProperties);
+
+    }
+
+    @Test
+    public void testCreateRate() throws StingrayRestClientException {
+        Rate createdRate = client.createRate(vsName, rate);
+        Assert.assertNotNull(createdRate);
+    }
+
+    @Test
+    public void testUpdateRate() throws StingrayRestClientException {
+        int updatePerMin = 17;
+        rate.getProperties().getBasic().setMax_rate_per_minute(updatePerMin);
+        Rate updatedRate = client.updateRate(vsName, rate);
+        Assert.assertNotNull(updatedRate);
+        int retrievedPerMin = updatedRate.getProperties().getBasic().getMax_rate_per_minute();
+        Assert.assertEquals(updatePerMin, retrievedPerMin);
     }
 
     /**
@@ -22,18 +52,20 @@ public class RateITest {
      *
      */
     @Test
-    public void getListOfRates() throws StingrayRestClientException {
+    public void testGetListOfRates() throws StingrayRestClientException {
         Children children = client.getRates();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
     @Test
-    public void getSpecificRate() throws StingrayRestClientException {
-        Children children = client.getRates();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String vsname = child.getName();
-        Rate rate = client.getRate(vsname);
-        Assert.assertNotNull(rate);
+    public void testGetRate() throws StingrayRestClientException {
+        Rate retrievedRate = client.getRate(vsName);
+        Assert.assertNotNull(retrievedRate);
+    }
+
+    @Test
+    public void testDeleteRate() throws StingrayRestClientException {
+        Boolean wasDeleted = client.deleteRate(vsName);
+        Assert.assertTrue(wasDeleted);
     }
 }

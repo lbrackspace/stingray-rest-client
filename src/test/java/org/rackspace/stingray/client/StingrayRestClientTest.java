@@ -2,12 +2,9 @@ package org.rackspace.stingray.client;
 
 
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -16,28 +13,12 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.rackspace.stingray.client.bandwidth.Bandwidth;
-import org.rackspace.stingray.client.bandwidth.BandwidthBasic;
-import org.rackspace.stingray.client.bandwidth.BandwidthProperties;
-import org.rackspace.stingray.client.config.Configuration;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
-import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
-import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.manager.RequestManager;
-import org.rackspace.stingray.client.mock.MockClientHandler;
-import org.rackspace.stingray.client.pool.Pool;
-import org.rackspace.stingray.client.pool.PoolHttp;
-import org.rackspace.stingray.client.pool.PoolProperties;
-import org.rackspace.stingray.client.util.ClientConstants;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(Enclosed.class)
