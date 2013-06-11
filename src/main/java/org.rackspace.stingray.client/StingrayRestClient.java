@@ -243,8 +243,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the pool
      * @throws StingrayRestClientException
      */
-    public void deletePool(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.POOL_PATH);
+    public Boolean deletePool(String vsName) throws StingrayRestClientException {
+       return deleteItem(vsName, ClientConstants.POOL_PATH);
     }
 
 
@@ -289,8 +289,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the action script
      * @throws StingrayRestClientException
      */
-    public void deleteActionScript(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.ACTIONSCRIPT_PATH);
+    public Boolean deleteActionScript(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.ACTIONSCRIPT_PATH);
     }
 
     /**
@@ -334,8 +334,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the bandwidth
      * @throws StingrayRestClientException
      */
-    public void deleteBandwidth(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.BANDWIDTH_PATH);
+    public Boolean deleteBandwidth(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.BANDWIDTH_PATH);
     }
 
 
@@ -380,8 +380,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the extra file
      * @throws StingrayRestClientException
      */
-    public void deleteExtraFile(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.EXTRAFILE_PATH);
+    public Boolean deleteExtraFile(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.EXTRAFILE_PATH);
     }
 
     /**
@@ -426,8 +426,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the global load balancing
      * @throws StingrayRestClientException
      */
-    public void deleteGlb(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.GLB_PATH);
+    public Boolean deleteGlb(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.GLB_PATH);
     }
 
 
@@ -472,8 +472,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the location
      * @throws StingrayRestClientException
      */
-    public void deleteLocation(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.LOCATION_PATH);
+    public Boolean deleteLocation(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.LOCATION_PATH);
     }
 
 
@@ -518,8 +518,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the monitor
      * @throws StingrayRestClientException
      */
-    public void deleteMonitor(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.MONITOR_PATH);
+    public Boolean deleteMonitor(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.MONITOR_PATH);
     }
 
 
@@ -564,8 +564,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the monitor script
      * @throws StingrayRestClientException
      */
-    public void deleteMonitorScript(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.MONITORSCRIPT_PATH);
+    public Boolean deleteMonitorScript(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.MONITORSCRIPT_PATH);
     }
 
 
@@ -610,8 +610,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the persistence
      * @throws StingrayRestClientException
      */
-    public void deletePersistence(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.PERSISTENCE_PATH);
+    public Boolean deletePersistence(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.PERSISTENCE_PATH);
     }
 
 
@@ -656,8 +656,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the extra file
      * @throws StingrayRestClientException
      */
-    public void deleteProtection(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.PROTECTION_PATH);
+    public Boolean deleteProtection(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.PROTECTION_PATH);
     }
 
 
@@ -702,8 +702,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the rate
      * @throws StingrayRestClientException
      */
-    public void deleteRate(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.RATE_PATH);
+    public Boolean deleteRate(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.RATE_PATH);
     }
 
     /**
@@ -747,8 +747,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the cacrl
      * @throws StingrayRestClientException
      */
-    public void deleteCacrl(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.CACRL_PATH);
+    public Boolean deleteCacrl(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.CACRL_PATH);
     }
 
 
@@ -793,8 +793,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the client keypair
      * @throws StingrayRestClientException
      */
-    public void deleteClientKeypair(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.CLIENTKEYPAIR_PATH);
+    public Boolean deleteClientKeypair(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.CLIENTKEYPAIR_PATH);
     }
 
     /**
@@ -838,8 +838,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the keypair
      * @throws StingrayRestClientException
      */
-    public void deleteKeypair(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.KEYPAIR_PATH);
+    public Boolean deleteKeypair(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.KEYPAIR_PATH);
     }
 
 
@@ -884,8 +884,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the rate
      * @throws StingrayRestClientException
      */
-    public void deleteTrafficManager(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.TRAFFICMANAGER_PATH);
+    public Boolean deleteTrafficManager(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.TRAFFICMANAGER_PATH);
     }
 
     /**
@@ -929,8 +929,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the trafficscript
      * @throws StingrayRestClientException
      */
-    public void deleteTrafficscript(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.TRAFFICSCRIPT_PATH);
+    public Boolean deleteTrafficscript(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.TRAFFICSCRIPT_PATH);
     }
 
     /**
@@ -974,8 +974,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName The virtual server name related to the TrafficIp
      * @throws StingrayRestClientException
      */
-    public void deleteTrafficIp(String vsName) throws StingrayRestClientException {
-        deleteItem(vsName, ClientConstants.IP_PATH);
+    public Boolean deleteTrafficIp(String vsName) throws StingrayRestClientException {
+        return deleteItem(vsName, ClientConstants.IP_PATH);
     }
 
 
