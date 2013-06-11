@@ -64,8 +64,8 @@ public class BandwidthITest {
         Children children = client.getBandwidths();
         Assert.assertTrue(children.getChildren().size() > 0);
         Child child = children.getChildren().get(0);
-        String vsname = child.getName();
-        Bandwidth bandwidth = client.getBandwidth(vsname);
+        String name = child.getName();
+        Bandwidth bandwidth = client.getBandwidth(name);
         Assert.assertNotNull(bandwidth);
     }
 
@@ -74,6 +74,12 @@ public class BandwidthITest {
     public void deleteBandwidth() throws StingrayRestClientException {
         Boolean wasDeleted = client.deleteBandwidth(vsName);
         Assert.assertTrue(wasDeleted);
+
+        //because we are not restricted to the local instance, we
+        //can't guarantee what resources have already been created.
+//        Children children = client.getBandwidths();
+//        int expectedSize = 0;
+//        Assert.assertEquals(expectedSize, children.getChildren().size());
     }
 
 }

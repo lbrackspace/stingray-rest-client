@@ -244,7 +244,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     public Boolean deletePool(String vsName) throws StingrayRestClientException {
-       return deleteItem(vsName, ClientConstants.POOL_PATH);
+        return deleteItem(vsName, ClientConstants.POOL_PATH);
     }
 
 
