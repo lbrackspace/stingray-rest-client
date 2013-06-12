@@ -17,7 +17,6 @@ import org.rackspace.stingray.client.persistence.Persistence;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.protection.Protection;
 import org.rackspace.stingray.client.rate.Rate;
-import org.rackspace.stingray.client.ssl.cacrl.Cacrl;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypair;
 import org.rackspace.stingray.client.ssl.keypair.Keypair;
 import org.rackspace.stingray.client.tm.TrafficManager;
@@ -610,7 +609,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName the virtual server name for monitor script retrieval
+     * @param fileName the virtual server name for monitor script retrieval
      * @throws StingrayRestClientException
      */
     public File getMonitorScript(String fileName) throws StingrayRestClientException {
@@ -618,24 +617,24 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName        The virtual server name related to the monitor script
+     * @param fileName        The virtual server name related to the monitor script
      * @param monitorScript The monitor script object used to create a Stingray monitor script
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public File createMonitorScript(String fileName, File file) throws StingrayRestClientException {
-        return createItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File createMonitorScript(String fileName, File monitorScript) throws StingrayRestClientException {
+        return createItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
     /**
-     * @param vsName        The virtual server name related to the monitor script
+     * @param fileName        The virtual server name related to the monitor script
      * @param monitorScript The monitor script object used to create a Stingray monitor scripts
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public File updateMonitorScript(String fileName, File file) throws StingrayRestClientException {
-        return updateItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File updateMonitorScript(String fileName, File monitorScript) throws StingrayRestClientException {
+        return updateItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -793,7 +792,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName the virtual server name for cacrl retrieval
+     * @param fileName the virtual server name for cacrl retrieval
      * @throws StingrayRestClientException
      */
     public File getCacrl(String fileName) throws StingrayRestClientException {
@@ -801,28 +800,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the cacrl
+     * @param fileName The virtual server name related to the cacrl
      * @param cacrl  The cacrl object used to create a Stingray cacrl
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
-    public File createCacrl(String fileName, File file) throws StingrayRestClientException {
-        return createItem(fileName, File.class, ClientConstants.CACRL_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File createCacrl(String fileName, File cacrl) throws StingrayRestClientException {
+        return createItem(fileName, File.class, ClientConstants.CACRL_PATH, cacrl, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
     /**
-     * @param vsName The virtual server name related to the cacrl
+     * @param fileName The virtual server name related to the cacrl
      * @param cacrl  The cacrl object used to create a Stingray cacrl
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
-    public File updateCacrl(String fileName, File file) throws StingrayRestClientException {
-        return updateItem(fileName, File.class, ClientConstants.CACRL_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File updateCacrl(String fileName, File cacrl) throws StingrayRestClientException {
+        return updateItem(fileName, File.class, ClientConstants.CACRL_PATH, cacrl, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     * @param vsName The virtual server name related to the cacrl
+     * @param fileName The virtual server name related to the cacrl
      * @throws StingrayRestClientException
      */
     public Boolean deleteCacrl(String fileName) throws StingrayRestClientException {
