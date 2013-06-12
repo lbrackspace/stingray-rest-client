@@ -63,8 +63,9 @@ public class StingrayRestClientTest {
             stingrayRestClient.setRequestManager(requestManager);
             bandwidth = new Bandwidth();
 
-            when(requestManager.getItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
+            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(bandwidth);
+            when(requestManager.getItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
         }
 
 
@@ -96,8 +97,9 @@ public class StingrayRestClientTest {
             stingrayRestClient.setRequestManager(requestManager);
             bandwidth = new Bandwidth();
 
-            when(requestManager.updateItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<Bandwidth>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
+            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(bandwidth);
+            when(requestManager.updateItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<Bandwidth>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
         }
 
 
@@ -107,8 +109,6 @@ public class StingrayRestClientTest {
             Bandwidth bandwidthTwo = stingrayRestClient.updateBandwidth(vsName, bandwidth);
             Assert.assertNotNull(bandwidthTwo);
         }
-
-
     }
 
 
@@ -130,8 +130,9 @@ public class StingrayRestClientTest {
             stingrayRestClient.setRequestManager(requestManager);
             bandwidth = new Bandwidth();
 
-            when(requestManager.deleteItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any())).thenReturn(true);
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
+            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(bandwidth);
+            when(requestManager.deleteItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any())).thenReturn(true);
         }
 
 

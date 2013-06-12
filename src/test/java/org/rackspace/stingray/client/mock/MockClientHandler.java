@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse.Status;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.mockito.Mockito;
+import org.rackspace.stingray.client.exception.StingrayRestClientException;
 
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public final class MockClientHandler implements ClientHandler {
         }
 
         @SuppressWarnings("unchecked")
-        public void thenReturn(final Response.Status status, final Object response) {
+        public void thenReturn(final Response.Status status, final Object response) throws StingrayRestClientException {
             // TODO we might try to use the real response here
             // InBoundHeaders headers = new InBoundHeaders();
             // MessageBodyWorkers workers = Mockito.mock(MessageBodyWorkers.class);
