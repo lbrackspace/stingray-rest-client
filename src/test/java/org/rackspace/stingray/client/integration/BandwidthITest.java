@@ -12,7 +12,7 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 
-public class BandwidthITest {
+public class BandwidthITest extends StingrayTestBase {
     StingrayRestClient client;
     Bandwidth bandwidth;
     BandwidthProperties bandwidthProperties;
@@ -27,16 +27,20 @@ public class BandwidthITest {
         bandwidthBasic = new BandwidthBasic();
         bandwidthProperties.setBasic(bandwidthBasic);
         bandwidth.setProperties(bandwidthProperties);
-        vsName = "i_test_bandwidth";
+        vsName = TESTNAME;
     }
 
+    /**
+     * Tests the creation of a Bandwidth
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateBandwidth() throws StingrayRestClientException {
         Bandwidth createdBandwidth = client.createBandwidth(vsName, bandwidth);
         Assert.assertNotNull(createdBandwidth);
-        Children children = client.getBandwidths();
-        Child child = children.getChildren().get(0);
-        Assert.assertEquals(child.getName(), vsName);
+        Assert.assertEquals(createdBandwidth, client.getBandwidth(vsName));
+
 
     }
 

@@ -1,6 +1,7 @@
 package org.rackspace.stingray.client.integration;
 
 import junit.framework.Assert;
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
@@ -8,40 +9,49 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.extra.file.ExtraFileProperties;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
+import org.rackspace.stingray.client.util.ClientConstants;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
-public class ExtraFileITest {
+public class ExtraFileITest extends StingrayTestBase {
     StingrayRestClient client;
-    File extraFile;
-    ExtraFileProperties extraFileProperties;
-    String vsName;
     String fileName;
+    String fileText;
 
     @Before
     public void standUp() {
         client = new StingrayRestClient();
-        extraFile = new File("test_file");
-        extraFileProperties = new ExtraFileProperties();
-        vsName = "i_test_extraFile";
-        fileName = "test_file";
+        fileText = "test_file";
+        fileName = TESTNAME;
+    }
+
+    /**
+     * Tests the creation of an Extra File
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Test
+    public void testCreateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException {
+
+        client.createExtraFile(fileName, createTestFile(fileName, fileText));
+        File createdFile = client.getExtraFile(fileName);
+        Assert.assertNotNull(createdFile);
+        Assert.assertEquals(fileText, FileUtils.readFileToString(createdFile));
     }
 
     @Test
-    public void testCreateExtraFile() throws StingrayRestClientException
-    {
+    public void testUpdateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException {
+        String updatedFileText = "Updated the test script...";
 
-        File createdExtraFile = client.createExtraFile(fileName, extraFile);
-        Assert.assertEquals(extraFile, createdExtraFile);
-        //TODO need to get by name...
-        Child child = client.getExtraFiles().getChildren().get(0);
-        Assert.assertEquals(fileName, child.getName());
-    }
+        client.updateExtraFile(fileName, createTestFile(fileName, updatedFileText));
 
-    @Test
-    public void testUpdateExtraFile() throws StingrayRestClientException
-    {
-        System.out.println(extraFileProperties.toString());
+        File updatedFile = client.getExtraFile(fileName);
+        Assert.assertNotNull(updatedFile);
+        Assert.assertEquals(updatedFileText, FileUtils.readFileToString(updatedFile));
     }
 
     /**
@@ -56,11 +66,16 @@ public class ExtraFileITest {
 
     @Test
     public void testGetSpecificExtraFile() throws StingrayRestClientException {
-        Children children = client.getExtraFiles();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String vsname = child.getName();
-        File extraFile = client.getExtraFile(fileName);
-        Assert.assertNotNull(extraFile);
+        File retrievedFile = client.getExtraFile(fileName);
+        Assert.assertNotNull(retrievedFile);
+    }
+
+    @Test(expected = StingrayRestClientException.class)
+    public void testDeleteExtraFile() throws StingrayRestClientException {
+        Boolean wasDeleted = client.deleteExtraFile(fileName);
+        Assert.assertTrue(wasDeleted);
+        client.getExtraFile(fileName);
+
+
     }
 }

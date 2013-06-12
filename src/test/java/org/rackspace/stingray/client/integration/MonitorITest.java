@@ -12,7 +12,7 @@ import org.rackspace.stingray.client.monitor.Monitor;
 import org.rackspace.stingray.client.monitor.MonitorBasic;
 import org.rackspace.stingray.client.monitor.MonitorProperties;
 
-public class MonitorITest {
+public class MonitorITest extends StingrayTestBase{
     StingrayRestClient client;
     Monitor monitor;
     MonitorProperties monitorProperties;
@@ -25,13 +25,17 @@ public class MonitorITest {
         monitor = new Monitor();
         monitorProperties = new MonitorProperties();
         monitorBasic = new MonitorBasic();
-        vsName = "i_test_monitor";
+        vsName = TESTNAME;
 
         monitorProperties.setBasic(monitorBasic);
         monitor.setProperties(monitorProperties);
     }
 
-
+    /**
+     * Tests the creation of a Monitor
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateMonitor() throws StingrayRestClientException {
         Monitor createdMonitor = client.createMonitor(vsName, monitor);

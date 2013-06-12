@@ -54,7 +54,7 @@ public class RequestManagerImpl implements RequestManager {
         ClientResponse response = null;
         try {
             response = client.resource(endpoint + path)
-                    .accept(MediaType.APPLICATION_OCTET_STREAM)
+                    .accept(cType)
                     .get(ClientResponse.class);
 
             if (!isResponseValid(response)) {
@@ -92,8 +92,8 @@ public class RequestManagerImpl implements RequestManager {
         ClientResponse response = null;
         try {
             response = client.resource(endpoint + path)
-                    .accept(MediaType.APPLICATION_OCTET_STREAM)
-                    .type(MediaType.APPLICATION_OCTET_STREAM)
+                    .accept(cType)
+                    .type(cType)
                     .entity(object)
                     .put(ClientResponse.class);
 

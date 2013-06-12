@@ -302,7 +302,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for action script retrieval
      * @throws StingrayRestClientException
      */
-    public File retrievActionScript(String vsName) throws StingrayRestClientException {
+    public File getActionScript(String vsName) throws StingrayRestClientException {
         return getItem(vsName, File.class, ClientConstants.ACTIONSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
@@ -613,8 +613,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for monitor script retrieval
      * @throws StingrayRestClientException
      */
-    public File getMonitorScript(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, File.class, ClientConstants.MONITORSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File getMonitorScript(String fileName) throws StingrayRestClientException {
+        return getItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -623,8 +623,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public File createMonitorScript(String vsName, File monitorScript) throws StingrayRestClientException {
-        return createItem(vsName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File createMonitorScript(String fileName, File file) throws StingrayRestClientException {
+        return createItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
@@ -634,16 +634,16 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public File updateMonitorScript(String vsName, File monitorScript) throws StingrayRestClientException {
-        return updateItem(vsName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    public File updateMonitorScript(String fileName, File file) throws StingrayRestClientException {
+        return updateItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
      * @param vsName The virtual server name related to the monitor script
      * @throws StingrayRestClientException
      */
-    public Boolean deleteMonitorScript(String vsName) throws StingrayRestClientException {
-        return deleteItem(vsName, ClientConstants.MONITORSCRIPT_PATH);
+    public Boolean deleteMonitorScript(String fileName) throws StingrayRestClientException {
+        return deleteItem(fileName, ClientConstants.MONITORSCRIPT_PATH);
     }
 
 

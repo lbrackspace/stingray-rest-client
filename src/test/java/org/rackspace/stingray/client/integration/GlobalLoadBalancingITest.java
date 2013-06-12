@@ -12,7 +12,7 @@ import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 
 
-public class GlobalLoadBalancingITest {
+public class GlobalLoadBalancingITest extends StingrayTestBase {
     StingrayRestClient client;
     GlobalLoadBalancing glb;
     GlobalLoadBalancingProperties glbProperties;
@@ -27,17 +27,19 @@ public class GlobalLoadBalancingITest {
         glb = new GlobalLoadBalancing();
         glbProperties.setBasic(glbBasic);
         glb.setProperties(glbProperties);
-        vsName = "i_test_glb";
+        vsName = TESTNAME;
     }
 
-
+    /**
+     * Tests the creation of a Glb
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateGlb() throws StingrayRestClientException {
         GlobalLoadBalancing createdGlb = client.createGlb(vsName, glb);
         Assert.assertNotNull(createdGlb);
-        Children children = client.getGlbs();
-        Child child = children.getChildren().get(0);
-        Assert.assertEquals(vsName, child.getName());
+        Assert.assertEquals(createdGlb, client.getGlb(vsName));
     }
 
     @Test

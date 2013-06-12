@@ -11,7 +11,7 @@ import org.rackspace.stingray.client.rate.Rate;
 import org.rackspace.stingray.client.rate.RateBasic;
 import org.rackspace.stingray.client.rate.RateProperties;
 
-public class RateITest {
+public class RateITest extends StingrayTestBase{
     StingrayRestClient client;
     String vsName;
     Rate rate;
@@ -21,7 +21,7 @@ public class RateITest {
     @Before
     public void standUp() {
         client = new StingrayRestClient();
-        vsName = "i_test_rate";
+        vsName = TESTNAME;
         rate = new Rate();
         rateProperties = new RateProperties();
         rateBasic = new RateBasic();
@@ -31,10 +31,16 @@ public class RateITest {
 
     }
 
+    /**
+     * Tests the creation of a Rate
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateRate() throws StingrayRestClientException {
         Rate createdRate = client.createRate(vsName, rate);
         Assert.assertNotNull(createdRate);
+        Assert.assertEquals(createdRate, client.getRate(vsName));
     }
 
     @Test

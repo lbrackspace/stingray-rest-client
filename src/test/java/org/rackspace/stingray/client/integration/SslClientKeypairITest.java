@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
-import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypair;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypairBasic;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypairProperties;
 
-public class SslClientKeypairITest {
+
+public class SslClientKeypairITest extends  StingrayTestBase {
     StingrayRestClient client;
     String vsName;
     ClientKeypair clientKeypair;
@@ -21,7 +21,7 @@ public class SslClientKeypairITest {
     @Before
     public void standUp() {
         client = new StingrayRestClient();
-        vsName = "i_test_clientKeypair";
+        vsName = TESTNAME;
         clientKeypair = new ClientKeypair();
         clientKeypairProperties = new ClientKeypairProperties();
         clientKeypairBasic = new ClientKeypairBasic();
@@ -31,11 +31,17 @@ public class SslClientKeypairITest {
 
     }
 
+    /**
+     * Tests the creation of a Client Keypair
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateClientKeypair() throws StingrayRestClientException
     {
         ClientKeypair createdClientKeypair = client.createClientKeypair(vsName, clientKeypair);
         Assert.assertNotNull(createdClientKeypair);
+        Assert.assertEquals(createdClientKeypair, client.getClientKeypair(vsName));
     }
 
 
@@ -68,11 +74,12 @@ public class SslClientKeypairITest {
         Assert.assertNotNull(retrievedKeypair);
     }
 
-    @Test
+    @Test(expected = StingrayRestClientException.class)
     public void testDeleteClientKeypair() throws StingrayRestClientException
     {
         Boolean wasDeleted = client.deleteClientKeypair(vsName);
         Assert.assertTrue(wasDeleted);
+        client.getClientKeypair(vsName);
     }
 
 

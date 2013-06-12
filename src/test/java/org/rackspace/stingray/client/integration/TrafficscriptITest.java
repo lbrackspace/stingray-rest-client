@@ -1,5 +1,6 @@
 package org.rackspace.stingray.client.integration;
 
+import com.sun.tools.corba.se.idl.constExpr.BooleanAnd;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,17 +9,38 @@ import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
+import org.rackspace.stingray.client.trafficscript.Trafficscript;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class TrafficscriptITest extends StingrayTestBase{
+public class TrafficscriptITest extends StingrayTestBase {
     StingrayRestClient client;
+    String fileName;
+    String fileText;
 
     @Before
     public void standUp() {
         client = new StingrayRestClient();
+        fileName = "test_script";
+        fileText = "This is a test script...";
+    }
+
+    /**
+     * Tests the creation of a Traffic Script
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Test
+    public void testCreateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
+        //the fileName is what it will be created as. ex: /rules/test_script the file in STM is 'test_script'
+        client.createTrafficscript(fileName, createTestFile(fileName, fileText));
+        File gfile = client.getTraffiscript(fileName);
+        Assert.assertNotNull(gfile);
+        Assert.assertEquals(fileText, FileUtils.readFileToString(gfile));
     }
 
     /**
@@ -32,45 +54,30 @@ public class TrafficscriptITest extends StingrayTestBase{
     }
 
     @Test
-    public void getSpecificTrafficscript() throws StingrayRestClientException {
-        Children children = client.getTrafficscripts();
-        Assert.assertTrue(children.getChildren().size() > 0);
-        Child child = children.getChildren().get(0);
-        String fileName = child.getName();
-        File trafficscript = client.getTraffiscript(fileName);
-        Assert.assertNotNull(trafficscript);
+    public void testGetTrafficscript() throws StingrayRestClientException {
+        File retrievedFile = client.getTraffiscript(fileName);
+        Assert.assertNotNull(retrievedFile);
+
     }
 
-    @Test
-    public void createTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
-        //the fileName is what it will be created as. ex: /rules/test_script the file in STM is 'test_script'
-        String fileName = "test_script";
-        String fileText = "This is a test script...";
-
-        client.createTrafficscript(fileName, createTestFile(fileName, fileText));
-
-        File gfile = client.getTraffiscript(fileName);
-        Assert.assertNotNull(gfile);
-        Assert.assertEquals(fileText, FileUtils.readFileToString(gfile));
-    }
 
     @Test
-    public void updateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testUpdateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
         //the filename is the same, we want to update the contents...
-        String fileName = "test_script";
-        String fileText = "Updated the test script...";
+        String updatedFileText = "Updated the test script...";
 
-        client.updateTrafficScript(fileName, createTestFile(fileName, fileText));
+        client.updateTrafficScript(fileName, createTestFile(fileName, updatedFileText));
 
-        File gfile = client.getTraffiscript(fileName);
-        Assert.assertNotNull(gfile);
-        Assert.assertEquals(fileText, FileUtils.readFileToString(gfile));
+        File updatedFile = client.getTraffiscript(fileName);
+        Assert.assertNotNull(updatedFile);
+        Assert.assertEquals(updatedFileText, FileUtils.readFileToString(updatedFile));
     }
 
     @Test(expected = StingrayRestClientException.class)
     public void deleteTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
-        String fileName = "test_script";
-        client.deleteTrafficscript(fileName);
+        Boolean wasDeleted = client.deleteTrafficscript(fileName);
+        Assert.assertTrue(wasDeleted);
         client.getTraffiscript(fileName);
+
     }
 }

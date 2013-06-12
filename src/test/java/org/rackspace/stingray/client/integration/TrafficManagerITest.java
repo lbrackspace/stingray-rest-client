@@ -26,6 +26,11 @@ public class TrafficManagerITest extends StingrayTestBase {
         manager.setProperties(properties);
     }
 
+    /**
+     * Tests the creation of a Traffic Manager
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateTrafficManager() throws StingrayRestClientException {
         TrafficManager createdManager = client.createTrafficManager(TESTNAME, manager);

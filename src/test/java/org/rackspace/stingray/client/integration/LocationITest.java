@@ -11,7 +11,7 @@ import org.rackspace.stingray.client.location.Location;
 import org.rackspace.stingray.client.location.LocationBasic;
 import org.rackspace.stingray.client.location.LocationProperties;
 
-public class LocationITest {
+public class LocationITest extends StingrayTestBase {
     StingrayRestClient client;
     Location location;
     LocationProperties locationProperties;
@@ -27,22 +27,23 @@ public class LocationITest {
         locationProperties = new LocationProperties();
         locationBasic = new LocationBasic();
         locationId = 20;
-        vsName = "i_test_location";
+        vsName = TESTNAME;
         locationBasic.setId(locationId);
         locationProperties.setBasic(locationBasic);
         location.setProperties(locationProperties);
 
     }
 
-
+    /**
+     * Tests the creation of a Location
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateLocation() throws StingrayRestClientException {
         Location createdLocation = client.createLocation(vsName, location);
         Assert.assertNotNull(createdLocation);
-        Children children = client.getLocations();
-        Child child = children.getChildren().get(0);
-        Assert.assertEquals(vsName, child.getName());
-
+        Assert.assertEquals(createdLocation, client.getLocation(vsName));
     }
 
     @Test

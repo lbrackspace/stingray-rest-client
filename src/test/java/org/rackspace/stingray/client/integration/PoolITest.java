@@ -13,7 +13,7 @@ import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.pool.PoolBasic;
 import org.rackspace.stingray.client.pool.PoolProperties;
 
-public class PoolITest {
+public class PoolITest extends  StingrayTestBase {
     StingrayRestClient client;
     String vsName;
     Pool pool;
@@ -24,7 +24,7 @@ public class PoolITest {
     @Before
     public void standUp() {
         client = new StingrayRestClient();
-        vsName = "i_test_pool";
+        vsName = TESTNAME;
         pool = new Pool();
         poolProperties = new PoolProperties();
         poolBasic = new PoolBasic();
@@ -36,6 +36,11 @@ public class PoolITest {
     }
 
 
+    /**
+     * Tests the creation of a Pool
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreatePool() throws StingrayRestClientException {
         Pool createdPool = client.createPool(vsName, pool);

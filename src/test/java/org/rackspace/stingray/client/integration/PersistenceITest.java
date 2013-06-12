@@ -12,7 +12,7 @@ import org.rackspace.stingray.client.persistence.PersistenceBasic;
 import org.rackspace.stingray.client.persistence.PersistenceProperties;
 import org.rackspace.stingray.client.util.ClientConstants;
 
-public class PersistenceITest {
+public class PersistenceITest extends StingrayTestBase {
     StingrayRestClient client;
     Persistence persistence;
     PersistenceProperties persistenceProperties;
@@ -23,7 +23,7 @@ public class PersistenceITest {
     @Before
     public void standUp() {
         client = new StingrayRestClient();
-        vsName = "i_test_persistence";
+        vsName = TESTNAME;
         persistence = new Persistence();
         persistenceProperties = new PersistenceProperties();
         persistenceBasic = new PersistenceBasic();
@@ -32,6 +32,11 @@ public class PersistenceITest {
         persistence.setProperties(persistenceProperties);
     }
 
+    /**
+     * Tests the creation of a Persistence
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreatePersistence() throws StingrayRestClientException {
         Persistence createdPersistence = client.createPersistence(vsName, persistence);

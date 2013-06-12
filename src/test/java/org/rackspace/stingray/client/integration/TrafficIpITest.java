@@ -27,6 +27,11 @@ public class TrafficIpITest extends StingrayTestBase {
         tip.setProperties(properties);
     }
 
+    /**
+     * Tests the creation of a Traffic IP
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateTrafficIp() throws StingrayRestClientException {
         TrafficIp createdTip = client.createTrafficIp(TESTNAME, tip);

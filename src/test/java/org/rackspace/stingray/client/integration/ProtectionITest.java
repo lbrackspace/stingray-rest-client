@@ -3,6 +3,7 @@ package org.rackspace.stingray.client.integration;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Child;
@@ -11,9 +12,9 @@ import org.rackspace.stingray.client.protection.Protection;
 import org.rackspace.stingray.client.protection.ProtectionBasic;
 import org.rackspace.stingray.client.protection.ProtectionProperties;
 
-public class ProtectionITest {
+public class ProtectionITest extends StingrayTestBase{
     StingrayRestClient client;
-    String vsName = "i_test_protection";
+    String vsName = TESTNAME;
     Protection protection;
     ProtectionProperties protectionProperties;
     ProtectionBasic protectionBasic;
@@ -30,10 +31,16 @@ public class ProtectionITest {
 
     }
 
+    /**
+     * Tests the creation of a Protection
+     * Verifies using get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testCreateProtection() throws StingrayRestClientException {
         Protection createdProtection = client.createProtection(vsName, protection);
         Assert.assertNotNull(createdProtection);
+        Assert.assertEquals(createdProtection, client.getProtection(vsName));
     }
 
     @Test
