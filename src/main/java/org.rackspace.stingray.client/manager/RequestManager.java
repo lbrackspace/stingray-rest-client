@@ -20,6 +20,5 @@ public interface RequestManager {
 
     boolean deleteItem(URI endpoint, Client client, String path) throws StingrayRestClientException;
 
-    public <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) throws StingrayRestClientException;
 
 }

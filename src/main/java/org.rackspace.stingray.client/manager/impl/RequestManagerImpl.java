@@ -132,27 +132,6 @@ public class RequestManagerImpl implements RequestManager {
         return true;
     }
 
-    /**
-     * Retrieves and interprets the response entity.
-     *
-     * @param response
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public synchronized <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) throws StingrayRestClientException {
-        T t;
-        try {
-            t = response.getEntity(clazz);
-        } catch (Exception ex) {
-            LOG.error("Could not retrieve object of type: " + clazz + " Exception: " + ex);
-            if (!isResponseValid(response)) {
-                throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, ex);
-            }
-            //The script calls dont return on POST/PUT...
-            return null;
-        }
-        return t;
-    }
+
 }
 

@@ -1,21 +1,30 @@
 package org.rackspace.stingray.client.manager;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.rackspace.stingray.client.config.ClientConfigKeys;
 import org.rackspace.stingray.client.config.Configuration;
 import org.rackspace.stingray.client.config.StingrayRestClientConfiguration;
+import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.util.ClientConstants;
 import org.rackspace.stingray.client.util.StingrayRestClientUtil;
 
 import java.net.URI;
 
+import static org.rackspace.stingray.client.manager.util.RequestManagerUtil.isResponseValid;
+
 public class StingrayRestClientManager {
+    private static final Log LOG = LogFactory.getLog(StingrayRestClientManager.class);
     protected URI endpoint;
     protected Configuration config;
     protected Client client;
     protected boolean isDebugging;
     protected final String adminUser;
     protected final String adminKey;
+
 
 
 
@@ -131,5 +140,27 @@ public class StingrayRestClientManager {
         this.adminKey = adminKey;
 
         this.client.addFilter(new HTTPBasicAuthFilter(this.adminUser, this.adminKey));
+    }
+    /**
+     * Retrieves and interprets the response entity.
+     *
+     * @param response
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public synchronized <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) throws StingrayRestClientException {
+        T t;
+        try {
+            t = response.getEntity(clazz);
+        } catch (Exception ex) {
+            LOG.error("Could not retrieve object of type: " + clazz + " Exception: " + ex);
+            if (!isResponseValid(response)) {
+                throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, ex);
+            }
+            //The script calls dont return on POST/PUT...
+            return null;
+        }
+        return t;
     }
 }

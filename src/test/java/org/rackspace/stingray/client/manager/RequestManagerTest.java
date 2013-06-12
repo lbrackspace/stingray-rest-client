@@ -43,6 +43,7 @@ public class RequestManagerTest {
         private ClientResponse mockedResponse;
         private MockClientHandler mockClientHandler;
         private Pool pool;
+        private MediaType mockedType;
 
         @Before
         public void standUp() throws URISyntaxException, IOException {
@@ -72,7 +73,8 @@ public class RequestManagerTest {
             client = mock(Client.class);
             webResource = mock(WebResource.class);
             builder = mock(WebResource.Builder.class);
-            requestManager = mock(RequestManagerImpl.class);
+            //requestManager = mock(RequestManagerImpl.class);
+
 
             when(client.resource(anyString())).thenReturn(webResource);
             when(webResource.accept(MediaType.APPLICATION_JSON)).thenReturn(builder);
@@ -85,10 +87,10 @@ public class RequestManagerTest {
         }
 
 
-        @Ignore
+
         @Test
         public void shouldReturnAPoolWhenResponseIsValid() throws URISyntaxException, StingrayRestClientException {
-            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(mockedResponse);
+
             mockClientHandler.when("pool", "GET").thenReturn(Response.Status.ACCEPTED, pool);
 
             setupMocks();

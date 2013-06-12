@@ -56,7 +56,7 @@ public final class MockClientHandler implements ClientHandler {
         }
 
         @SuppressWarnings("unchecked")
-        public void thenReturn(final Response.Status status, final Object response) throws StingrayRestClientException {
+        public void thenReturn(final Response.Status status, final Object response) {
             // TODO we might try to use the real response here
             // InBoundHeaders headers = new InBoundHeaders();
             // MessageBodyWorkers workers = Mockito.mock(MessageBodyWorkers.class);

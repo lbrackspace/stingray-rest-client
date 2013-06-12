@@ -118,7 +118,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     private <T> T getItem(String vsName, java.lang.Class<T> clazz, String path, MediaType cType) throws StingrayRestClientException {
         if (isPathValid(path)) {
             ClientResponse response = requestManager.getItem(endpoint, client, path + vsName, cType);
-            T obj = requestManager.interpretResponse(response, clazz);
+            T obj = interpretResponse(response, clazz);
             return obj;
         } else {
             throw new StingrayRestClientPathException(path);
@@ -181,7 +181,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     private <T> T updateItem(String vsName, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException {
         if (isPathValid(path)) {
             ClientResponse response = requestManager.updateItem(endpoint, client, path + vsName, obj, cType);
-            return requestManager.interpretResponse(response, clazz);
+            return interpretResponse(response, clazz);
         } else {
             throw new StingrayRestClientPathException(path);
         }
@@ -639,7 +639,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName The virtual server name related to the monitor script
+     * @param fileName The virtual server name related to the monitor script
      * @throws StingrayRestClientException
      */
     public Boolean deleteMonitorScript(String fileName) throws StingrayRestClientException {

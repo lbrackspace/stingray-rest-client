@@ -64,7 +64,6 @@ public class StingrayRestClientTest {
             bandwidth = new Bandwidth();
 
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
-            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(bandwidth);
             when(requestManager.getItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
         }
 
@@ -98,7 +97,6 @@ public class StingrayRestClientTest {
             bandwidth = new Bandwidth();
 
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
-            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(bandwidth);
             when(requestManager.updateItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<Bandwidth>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
         }
 
@@ -131,7 +129,6 @@ public class StingrayRestClientTest {
             bandwidth = new Bandwidth();
 
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
-            when(requestManager.interpretResponse(Matchers.<ClientResponse>any(), Matchers.any(Class.class))).thenReturn(bandwidth);
             when(requestManager.deleteItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any())).thenReturn(true);
         }
 
