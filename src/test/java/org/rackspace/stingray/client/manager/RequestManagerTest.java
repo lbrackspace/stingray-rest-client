@@ -6,7 +6,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -75,9 +74,8 @@ public class RequestManagerTest {
             builder = mock(WebResource.Builder.class);
             //requestManager = mock(RequestManagerImpl.class);
 
-
             when(client.resource(anyString())).thenReturn(webResource);
-            when(webResource.accept(MediaType.APPLICATION_JSON)).thenReturn(builder);
+            when(webResource.accept(Matchers.<MediaType>any())).thenReturn(builder);
             when(builder.get(ClientResponse.class)).thenReturn(mockedResponse);
 
         }
@@ -102,7 +100,6 @@ public class RequestManagerTest {
         }
 
 
-        @Ignore
         @Test(expected = StingrayRestClientException.class)
         public void shouldThrowExceptionWhenBadResponseStatus() throws URISyntaxException, StingrayRestClientException {
             mockClientHandler.when("pool", "GET").thenReturn(Response.Status.BAD_REQUEST, pool);
@@ -163,13 +160,12 @@ public class RequestManagerTest {
             builder = mock(WebResource.Builder.class);
 
             when(client.resource(anyString())).thenReturn(webResource);
-            when(webResource.accept(MediaType.APPLICATION_JSON)).thenReturn(builder);
-            when(builder.type(MediaType.APPLICATION_JSON)).thenReturn(builder);
+            when(webResource.accept(Matchers.<MediaType>any())).thenReturn(builder);
+            when(builder.type(Matchers.<MediaType>any())).thenReturn(builder);
             when(builder.entity(pool)).thenReturn(builder);
             when(builder.put(ClientResponse.class)).thenReturn(mockedResponse);
         }
 
-        @Ignore
         @Test
         public void shouldReturnAPoolAfterUpdate() throws URISyntaxException, StingrayRestClientException {
             mockClientHandler.when("pool", "PUT").thenReturn(Response.Status.ACCEPTED, pool);
