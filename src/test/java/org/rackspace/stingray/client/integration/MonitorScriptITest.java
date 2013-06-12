@@ -11,6 +11,8 @@ import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.monitor.MonitorScript;
 import org.rackspace.stingray.client.monitor.script.MonitorScriptProperties;
 
+import java.io.File;
+
 public class MonitorScriptITest {
     StingrayRestClient client;
     String vsName;
@@ -40,7 +42,7 @@ public class MonitorScriptITest {
         Assert.assertTrue(children.getChildren().size() > 0);
         Child child = children.getChildren().get(0);
         String vsname = child.getName();
-        MonitorScript monitorScript = client.getMonitorScript(vsname);
+        File monitorScript = client.getMonitorScript(vsname);
         Assert.assertNotNull(monitorScript);
     }
 }

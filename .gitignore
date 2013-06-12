@@ -24,3 +24,4 @@ classes/
 *.log
 *.log.*
 *.idea
+test_script

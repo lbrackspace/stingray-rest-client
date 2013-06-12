@@ -17,6 +17,7 @@ import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.manager.RequestManager;
 
+import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
 import static org.mockito.Mockito.when;
@@ -62,7 +63,7 @@ public class StingrayRestClientTest {
             stingrayRestClient.setRequestManager(requestManager);
             bandwidth = new Bandwidth();
 
-            when(requestManager.getItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any())).thenReturn(mockedResponse);
+            when(requestManager.getItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
         }
 
@@ -95,7 +96,7 @@ public class StingrayRestClientTest {
             stingrayRestClient.setRequestManager(requestManager);
             bandwidth = new Bandwidth();
 
-            when(requestManager.updateItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<Bandwidth>any())).thenReturn(mockedResponse);
+            when(requestManager.updateItem(Matchers.<URI>any(), Matchers.<Client>any(), Matchers.<String>any(), Matchers.<Bandwidth>any(), Matchers.<MediaType>any())).thenReturn(mockedResponse);
             when(mockedResponse.getEntity(Bandwidth.class)).thenReturn(bandwidth);
         }
 

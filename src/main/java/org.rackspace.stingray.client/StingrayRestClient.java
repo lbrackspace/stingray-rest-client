@@ -2,12 +2,10 @@ package org.rackspace.stingray.client;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import org.rackspace.stingray.client.action.ActionScript;
 import org.rackspace.stingray.client.bandwidth.Bandwidth;
 import org.rackspace.stingray.client.config.Configuration;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
 import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
-import org.rackspace.stingray.client.extra.file.ExtraFile;
 import org.rackspace.stingray.client.glb.GlobalLoadBalancing;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.location.Location;
@@ -15,7 +13,6 @@ import org.rackspace.stingray.client.manager.RequestManager;
 import org.rackspace.stingray.client.manager.StingrayRestClientManager;
 import org.rackspace.stingray.client.manager.impl.RequestManagerImpl;
 import org.rackspace.stingray.client.monitor.Monitor;
-import org.rackspace.stingray.client.monitor.MonitorScript;
 import org.rackspace.stingray.client.persistence.Persistence;
 import org.rackspace.stingray.client.pool.Pool;
 import org.rackspace.stingray.client.protection.Protection;
@@ -25,10 +22,11 @@ import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypair;
 import org.rackspace.stingray.client.ssl.keypair.Keypair;
 import org.rackspace.stingray.client.tm.TrafficManager;
 import org.rackspace.stingray.client.traffic.ip.TrafficIp;
-import org.rackspace.stingray.client.trafficscript.Trafficscript;
 import org.rackspace.stingray.client.util.ClientConstants;
 import org.rackspace.stingray.client.virtualserver.VirtualServer;
 
+import javax.ws.rs.core.MediaType;
+import java.io.File;
 import java.net.URI;
 
 public class StingrayRestClient extends StingrayRestClientManager {
@@ -104,9 +102,23 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     private <T> T getItem(String vsName, java.lang.Class<T> clazz, String path) throws StingrayRestClientException {
+        return getItem(vsName, clazz, path, MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    /**
+     *
+     * @param vsName
+     * @param clazz
+     * @param path
+     * @param cType
+     * @param <T>
+     * @return
+     * @throws StingrayRestClientException
+     */
+    private <T> T getItem(String vsName, java.lang.Class<T> clazz, String path, MediaType cType) throws StingrayRestClientException {
         if (isPathValid(path)) {
-            ClientResponse response = requestManager.getItem(endpoint, client, path + vsName);
-            T obj = interpretResponse(response, clazz);
+            ClientResponse response = requestManager.getItem(endpoint, client, path + vsName, cType);
+            T obj = requestManager.interpretResponse(response, clazz);
             return obj;
         } else {
             throw new StingrayRestClientPathException(path);
@@ -123,7 +135,22 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     private <T> T createItem(String vsName, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
-        return updateItem(vsName, clazz, path, obj);
+        return createItem(vsName, clazz, path, obj, MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    /**
+     *
+     * @param vsName
+     * @param clazz
+     * @param path
+     * @param obj
+     * @param cType
+     * @param <T>
+     * @return
+     * @throws StingrayRestClientException
+     */
+    private <T> T createItem(String vsName, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException {
+        return updateItem(vsName, clazz, path, obj, cType);
     }
 
 
@@ -137,9 +164,24 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @throws StingrayRestClientException
      */
     private <T> T updateItem(String vsName, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
+        return updateItem(vsName, clazz, path, obj, MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    /**
+     *
+     * @param vsName
+     * @param clazz
+     * @param path
+     * @param obj
+     * @param cType
+     * @param <T>
+     * @return
+     * @throws StingrayRestClientException
+     */
+    private <T> T updateItem(String vsName, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException {
         if (isPathValid(path)) {
-            ClientResponse response = requestManager.updateItem(endpoint, client, path + vsName, obj);
-            return interpretResponse(response, clazz);
+            ClientResponse response = requestManager.updateItem(endpoint, client, path + vsName, obj, cType);
+            return requestManager.interpretResponse(response, clazz);
         } else {
             throw new StingrayRestClientPathException(path);
         }
@@ -260,8 +302,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for action script retrieval
      * @throws StingrayRestClientException
      */
-    public ActionScript retrievActionScript(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, ActionScript.class, ClientConstants.ACTIONSCRIPT_PATH);
+    public File retrievActionScript(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, File.class, ClientConstants.ACTIONSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -270,8 +312,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured Action Script object
      * @throws StingrayRestClientException
      */
-    public ActionScript createActionScript(String vsName, ActionScript actionScript) throws StingrayRestClientException {
-        return createItem(vsName, ActionScript.class, ClientConstants.ACTIONSCRIPT_PATH, actionScript);
+    public File createActionScript(String vsName, File actionScript) throws StingrayRestClientException {
+        return createItem(vsName, File.class, ClientConstants.ACTIONSCRIPT_PATH, actionScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
@@ -281,8 +323,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured action script object
      * @throws StingrayRestClientException
      */
-    public ActionScript updateActionScript(String vsName, ActionScript actionScript) throws StingrayRestClientException {
-        return updateItem(vsName, ActionScript.class, ClientConstants.ACTIONSCRIPT_PATH, actionScript);
+    public File updateActionScript(String vsName, File actionScript) throws StingrayRestClientException {
+        return updateItem(vsName, File.class, ClientConstants.ACTIONSCRIPT_PATH, actionScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -348,32 +390,68 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName the virtual server name for extra file retrieval
+     * @param fileName the virtual server name for extra file retrieval
      * @throws StingrayRestClientException
+     * @return File
      */
-    public ExtraFile getExtraFile(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, ExtraFile.class, ClientConstants.EXTRAFILE_PATH);
+    public File getExtraFile(String fileName) throws StingrayRestClientException {
+        return getExtraFile(fileName, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     * @param vsName    The virtual server name related to the extra file
+     *
+     * @param fileName
+     * @param cType
+     * @return File
+     * @throws StingrayRestClientException
+     */
+    public File getExtraFile(String fileName, MediaType cType) throws StingrayRestClientException {
+        return getItem(fileName, File.class, ClientConstants.EXTRAFILE_PATH, cType);
+    }
+
+    /**
+     * @param fileName    The virtual server name related to the extra file
      * @param extraFile The extra file object used to create a Stingray extra file
      * @return The configured ExtraFile object
      * @throws StingrayRestClientException
      */
-    public ExtraFile createExtraFile(String vsName, ExtraFile extraFile) throws StingrayRestClientException {
-        return createItem(vsName, ExtraFile.class, ClientConstants.EXTRAFILE_PATH, extraFile);
+    public File createExtraFile(String fileName, File extraFile) throws StingrayRestClientException {
+        return createExtraFile(fileName, extraFile, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    }
+
+    /**
+     *
+     * @param vsName
+     * @param extraFile
+     * @param cType
+     * @return File
+     * @throws StingrayRestClientException
+     */
+    public File createExtraFile(String vsName, File extraFile, MediaType cType) throws StingrayRestClientException {
+        return createItem(vsName, File.class, ClientConstants.EXTRAFILE_PATH, extraFile, cType);
     }
 
 
     /**
-     * @param vsName    The virtual server name related to the extra file
+     * @param fileName    The virtual server name related to the extra file
      * @param extraFile The extra file object used to create a Stingray extra files
-     * @return The configured extra file object
+     * @return File
      * @throws StingrayRestClientException
      */
-    public ExtraFile updateExtraFile(String vsName, ExtraFile extraFile) throws StingrayRestClientException {
-        return updateItem(vsName, ExtraFile.class, ClientConstants.EXTRAFILE_PATH, extraFile);
+    public File updateExtraFile(String fileName, File extraFile) throws StingrayRestClientException {
+        return updateExtraFile(fileName, extraFile, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    }
+
+    /**
+     *
+     * @param fileName
+     * @param extraFile
+     * @param cType
+     * @return File
+     * @throws StingrayRestClientException
+     */
+    public File updateExtraFile(String fileName, File extraFile, MediaType cType) throws StingrayRestClientException {
+        return updateItem(fileName, File.class, ClientConstants.EXTRAFILE_PATH, extraFile, cType);
     }
 
     /**
@@ -535,8 +613,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for monitor script retrieval
      * @throws StingrayRestClientException
      */
-    public MonitorScript getMonitorScript(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, MonitorScript.class, ClientConstants.MONITORSCRIPT_PATH);
+    public File getMonitorScript(String vsName) throws StingrayRestClientException {
+        return getItem(vsName, File.class, ClientConstants.MONITORSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -545,8 +623,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public MonitorScript createMonitorScript(String vsName, MonitorScript monitorScript) throws StingrayRestClientException {
-        return createItem(vsName, MonitorScript.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript);
+    public File createMonitorScript(String vsName, File monitorScript) throws StingrayRestClientException {
+        return createItem(vsName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
@@ -556,8 +634,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public MonitorScript updateMonitorScript(String vsName, MonitorScript monitorScript) throws StingrayRestClientException {
-        return updateItem(vsName, MonitorScript.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript);
+    public File updateMonitorScript(String vsName, File monitorScript) throws StingrayRestClientException {
+        return updateItem(vsName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -897,21 +975,21 @@ public class StingrayRestClient extends StingrayRestClientManager {
     }
 
     /**
-     * @param vsName the virtual server name for trafficscript retrieval
+     * @param fileName the virtual server name for trafficscript retrieval
      * @throws StingrayRestClientException
      */
-    public Trafficscript getTraffiscript(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH);
+    public File getTraffiscript(String fileName) throws StingrayRestClientException {
+        return getItem(fileName, File.class, ClientConstants.TRAFFICSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     * @param vsName        The virtual server name related to the trafficscript
+     * @param fileName        The virtual server name related to the trafficscript
      * @param trafficscript The rate object used to create a Stingray trafficscript
      * @return The configured Trafficscript object
      * @throws StingrayRestClientException
      */
-    public Trafficscript createTrafficscript(String vsName, Trafficscript trafficscript) throws StingrayRestClientException {
-        return createItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript);
+    public File createTrafficscript(String fileName, File trafficscript) throws StingrayRestClientException {
+        return createItem(fileName, File.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
@@ -921,8 +999,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured Trafficscript object
      * @throws StingrayRestClientException
      */
-    public Trafficscript updateTrafficScript(String vsName, Trafficscript trafficscript) throws StingrayRestClientException {
-        return createItem(vsName, Trafficscript.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript);
+    public File updateTrafficScript(String vsName, File trafficscript) throws StingrayRestClientException {
+        return createItem(vsName, File.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -977,42 +1055,4 @@ public class StingrayRestClient extends StingrayRestClientManager {
     public Boolean deleteTrafficIp(String vsName) throws StingrayRestClientException {
         return deleteItem(vsName, ClientConstants.IP_PATH);
     }
-
-
-    //Todo: rest of the methods, this is dependent on the managers being built up...
-//    public ClientResponse updatePool(String path, Pool pool) throws Exception {
-//        //Path will be in the client methods. This method should be generic possibly ...
-//        ClientResponse response = null;
-//        Client client = StingrayRestClientUtil.ClientHelper.createClient();
-//
-//        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
-//        try {
-//            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
-//            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
-//                    .accept(MediaType.APPLICATION_JSON).entity(pool).put(ClientResponse.class);
-//        } catch (UniformInterfaceException ux) {
-//            throw ux;
-//        }
-//
-//        return response;
-//    }
-//
-
-    //TODO: to do this call we need to generate object (based off of json schema we build) to pull in all lists as its 'generic' according to stingray
-//    public ClientResponse getPools(String path) throws Exception {
-//        ClientResponse response;
-//        Client client = StingrayRestClientUtil.ClientHelper.createClient();
-//
-//        URI endpoint = URI.create(config.getString(ClientConfigKeys.stingray_rest_endpoint) + config.getString(ClientConfigKeys.stingray_base_uri));
-//        try {
-//            client.addFilter(new HTTPBasicAuthFilter(config.getString(ClientConfigKeys.stingray_admin_user), config.getString(ClientConfigKeys.stingray_admin_key)));
-//            response = client.resource(endpoint + path).type(MediaType.APPLICATION_JSON)
-//                    .accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-//        } catch (UniformInterfaceException ux) {
-//            throw ux;
-//        }
-//
-////        List<Pool> pools = StingrayRestClientUtil.ClientHelper.parsePools(response.getEntity(String.class));
-//        return response;
-//    }
 }

@@ -1,7 +1,6 @@
 package org.rackspace.stingray.client.manager;
 
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import org.rackspace.stingray.client.config.ClientConfigKeys;
 import org.rackspace.stingray.client.config.Configuration;
@@ -132,17 +131,5 @@ public class StingrayRestClientManager {
         this.adminKey = adminKey;
 
         this.client.addFilter(new HTTPBasicAuthFilter(this.adminUser, this.adminKey));
-    }
-
-    /**
-     * Retrieves and interprets the response entity.
-     *
-     * @param response
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public synchronized <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) {
-        return response.getEntity(clazz);
     }
 }

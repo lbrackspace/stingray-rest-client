@@ -19,7 +19,6 @@ public class RequestManagerImpl implements RequestManager {
     private static final Log LOG = LogFactory.getLog(RequestManagerImpl.class);
 
     /**
-     *
      * @param endpoint
      * @param client
      * @return
@@ -37,14 +36,13 @@ public class RequestManagerImpl implements RequestManager {
             }
 
             scripts = response.getEntity(Children.class);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, e);
         }
         return scripts;
     }
 
     /**
-     *
      * @param endpoint
      * @param client
      * @param path
@@ -52,12 +50,12 @@ public class RequestManagerImpl implements RequestManager {
      * @throws StingrayRestClientException
      */
     @Override
-    public ClientResponse getItem(URI endpoint, Client client, String path) throws StingrayRestClientException {
+    public ClientResponse getItem(URI endpoint, Client client, String path, MediaType cType) throws StingrayRestClientException {
         ClientResponse response = null;
         try {
-              response = client.resource(endpoint + path)
-                      .accept(MediaType.APPLICATION_JSON)
-                      .get(ClientResponse.class);
+            response = client.resource(endpoint + path)
+                    .accept(MediaType.APPLICATION_OCTET_STREAM)
+                    .get(ClientResponse.class);
 
             if (!isResponseValid(response)) {
                 buildFaultMessage(response);
@@ -69,7 +67,6 @@ public class RequestManagerImpl implements RequestManager {
     }
 
     /**
-     *
      * @param endpoint
      * @param client
      * @param path
@@ -78,12 +75,11 @@ public class RequestManagerImpl implements RequestManager {
      * @throws StingrayRestClientException
      */
     @Override
-    public ClientResponse createItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException {
-        return updateItem(endpoint, client, path, object);
+    public ClientResponse createItem(URI endpoint, Client client, String path, Object object, MediaType cType) throws StingrayRestClientException {
+        return updateItem(endpoint, client, path, object, cType);
     }
 
     /**
-     *
      * @param endpoint
      * @param client
      * @param path
@@ -92,12 +88,12 @@ public class RequestManagerImpl implements RequestManager {
      * @throws StingrayRestClientException
      */
     @Override
-    public ClientResponse updateItem(URI endpoint, Client client, String path, Object object) throws StingrayRestClientException {
-       ClientResponse response = null;
+    public ClientResponse updateItem(URI endpoint, Client client, String path, Object object, MediaType cType) throws StingrayRestClientException {
+        ClientResponse response = null;
         try {
             response = client.resource(endpoint + path)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .type(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_OCTET_STREAM)
+                    .type(MediaType.APPLICATION_OCTET_STREAM)
                     .entity(object)
                     .put(ClientResponse.class);
 
@@ -111,7 +107,6 @@ public class RequestManagerImpl implements RequestManager {
     }
 
     /**
-     *
      * @param endpoint
      * @param client
      * @param path
@@ -135,6 +130,29 @@ public class RequestManagerImpl implements RequestManager {
             throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, e);
         }
         return true;
+    }
+
+    /**
+     * Retrieves and interprets the response entity.
+     *
+     * @param response
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public synchronized <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) throws StingrayRestClientException {
+        T t;
+        try {
+            t = response.getEntity(clazz);
+        } catch (Exception ex) {
+            LOG.error("Could not retrieve object of type: " + clazz + " Exception: " + ex);
+            if (!isResponseValid(response)) {
+                throw new StingrayRestClientException(ClientConstants.REQUEST_ERROR, ex);
+            }
+            //The script calls dont return on POST/PUT...
+            return null;
+        }
+        return t;
     }
 }
 

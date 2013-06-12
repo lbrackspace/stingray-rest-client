@@ -87,7 +87,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            ClientResponse response = requestManager.getItem(getPoolPath(), client, vsName);
+            ClientResponse response = requestManager.getItem(getPoolPath(), client, vsName, MediaType.APPLICATION_JSON_TYPE);
 
             Assert.assertNotNull(response.getEntity(Pool.class));
             Assert.assertTrue(true);
@@ -100,7 +100,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            requestManager.getItem(getPoolPath(), client, vsName);
+            requestManager.getItem(getPoolPath(), client, vsName, MediaType.APPLICATION_JSON_TYPE);
         }
 
 
@@ -167,7 +167,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            ClientResponse response = requestManager.updateItem(getPoolPath(), client, vsName, pool);
+            ClientResponse response = requestManager.updateItem(getPoolPath(), client, vsName, pool, MediaType.APPLICATION_JSON_TYPE);
             Assert.assertNotNull(response.getEntity(Pool.class));
             Pool poolEntity = response.getEntity(Pool.class);
             Assert.assertTrue(true);
@@ -180,7 +180,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            requestManager.getItem(getPoolPath(), client, vsName);
+            requestManager.getItem(getPoolPath(), client, vsName, MediaType.APPLICATION_JSON_TYPE);
         }
     }
 
@@ -253,7 +253,7 @@ public class RequestManagerTest {
 
             setupMocks();
 
-            requestManager.getItem(getPoolPath(), client, vsName);
+            requestManager.getItem(getPoolPath(), client, vsName, MediaType.APPLICATION_JSON_TYPE);
         }
     }
 }
