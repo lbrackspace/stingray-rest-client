@@ -12,13 +12,16 @@ import org.rackspace.stingray.client.monitor.Monitor;
 import org.rackspace.stingray.client.monitor.MonitorBasic;
 import org.rackspace.stingray.client.monitor.MonitorProperties;
 
-public class MonitorITest extends StingrayTestBase{
+public class MonitorITest extends StingrayTestBase {
     StingrayRestClient client;
     Monitor monitor;
     MonitorProperties monitorProperties;
     MonitorBasic monitorBasic;
     String vsName;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -34,6 +37,7 @@ public class MonitorITest extends StingrayTestBase{
     /**
      * Tests the creation of a Monitor
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -44,6 +48,12 @@ public class MonitorITest extends StingrayTestBase{
 
     }
 
+    /**
+     * Tests the updating of a Monitor
+     * Verifies using a get and a comparison of content contained
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testUpdateMonitor() throws StingrayRestClientException {
         int updateTimeout = 17;
@@ -55,6 +65,9 @@ public class MonitorITest extends StingrayTestBase{
 
 
     /**
+     * Tests the retrieval of a list of Monitors
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -64,12 +77,24 @@ public class MonitorITest extends StingrayTestBase{
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Monitor
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetMonitor() throws StingrayRestClientException {
         Monitor retrievedMonitor = client.getMonitor(vsName);
         Assert.assertNotNull(retrievedMonitor);
     }
 
+    /**
+     * Tests the deletion of a Monitor
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeleteMonitor() throws StingrayRestClientException {
         Boolean wasDeleted = client.deleteMonitor(vsName);

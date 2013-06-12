@@ -19,6 +19,9 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
     GlobalLoadBalancingBasic glbBasic;
     String vsName;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -42,6 +45,11 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
         Assert.assertEquals(createdGlb, client.getGlb(vsName));
     }
 
+    /**
+     * Tests the updating of a Glb
+     * Verifies using a get and a comparison of content contained
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testUpdateGlb() throws StingrayRestClientException {
         int testInt = 1;
@@ -53,6 +61,8 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
 
 
     /**
+     * Tests the retrieval of a list of Glbs
+     * Retrieves a list of action scripts and checks its size
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -62,13 +72,22 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Glb
+     * Retrieves the specific Action Script created earlier
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetSpecificGlb() throws StingrayRestClientException {
        GlobalLoadBalancing retrievedGlb = client.getGlb(vsName);
        Assert.assertNotNull(retrievedGlb);
     }
 
-
+    /**
+     * Tests the deletion of a Glb
+     * Checks return of the delete call, and throws an error
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeleteGlb() throws StingrayRestClientException {
 //        int expectedLength = 0;

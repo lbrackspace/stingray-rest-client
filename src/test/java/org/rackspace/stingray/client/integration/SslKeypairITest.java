@@ -16,6 +16,9 @@ public class SslKeypairITest extends StingrayTestBase {
     KeypairProperties properties;
     KeypairBasic basic;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -28,6 +31,7 @@ public class SslKeypairITest extends StingrayTestBase {
 
     /**
      * Method to test the creation of SSL Keypair
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -40,7 +44,9 @@ public class SslKeypairITest extends StingrayTestBase {
 
     /**
      * Method that tests the request to retrieve all the names for every SSL Keypair
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
+     *
      */
     @Test
     public void testGetListOfSslKeypairs() throws StingrayRestClientException {
@@ -49,7 +55,9 @@ public class SslKeypairITest extends StingrayTestBase {
     }
 
     /**
-     * Method to test the retrieval of a specific SSL Keypair
+     * Tests the get function for an individual Keypair
+     * Retrieves the specific Action Script created earlier
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -60,6 +68,7 @@ public class SslKeypairITest extends StingrayTestBase {
 
     /**
      * Method to delete a specific SSL Keypair
+     *
      * @throws StingrayRestClientException
      */
     @Test

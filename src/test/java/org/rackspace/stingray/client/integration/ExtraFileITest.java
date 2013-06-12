@@ -20,6 +20,9 @@ public class ExtraFileITest extends StingrayTestBase {
     String fileName;
     String fileText;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -30,6 +33,7 @@ public class ExtraFileITest extends StingrayTestBase {
     /**
      * Tests the creation of an Extra File
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      * @throws URISyntaxException
      * @throws IOException
@@ -43,6 +47,14 @@ public class ExtraFileITest extends StingrayTestBase {
         Assert.assertEquals(fileText, FileUtils.readFileToString(createdFile));
     }
 
+    /**
+     * Tests the updating of a Extra File
+     * Verifies using a get and a comparison of content contained
+     *
+     * @throws StingrayRestClientException
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     @Test
     public void testUpdateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException {
         String updatedFileText = "Updated the test script...";
@@ -55,6 +67,9 @@ public class ExtraFileITest extends StingrayTestBase {
     }
 
     /**
+     * Tests the retrieval of a list of Extra Files
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -64,12 +79,24 @@ public class ExtraFileITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Extra File
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetSpecificExtraFile() throws StingrayRestClientException {
         File retrievedFile = client.getExtraFile(fileName);
         Assert.assertNotNull(retrievedFile);
     }
 
+    /**
+     * Tests the deletion of an Extra File
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test(expected = StingrayRestClientException.class)
     public void testDeleteExtraFile() throws StingrayRestClientException {
         Boolean wasDeleted = client.deleteExtraFile(fileName);

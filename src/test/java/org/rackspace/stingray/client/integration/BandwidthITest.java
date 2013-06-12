@@ -19,6 +19,9 @@ public class BandwidthITest extends StingrayTestBase {
     BandwidthBasic bandwidthBasic;
     String vsName;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -33,6 +36,7 @@ public class BandwidthITest extends StingrayTestBase {
     /**
      * Tests the creation of a Bandwidth
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -44,7 +48,12 @@ public class BandwidthITest extends StingrayTestBase {
 
     }
 
-
+    /**
+     * Tests the updating of a Bandwidth
+     * Verifies using a get and a comparison of content contained
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testUpdateBandwidth() throws StingrayRestClientException {
         int testLimit = 1;
@@ -54,6 +63,9 @@ public class BandwidthITest extends StingrayTestBase {
     }
 
     /**
+     * Tests the retrieval of a list of Bandwidths
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -63,13 +75,24 @@ public class BandwidthITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Bandwidth
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetBandwidth() throws StingrayRestClientException {
         Bandwidth retrievedBandwidth = client.getBandwidth(vsName);
         Assert.assertNotNull(retrievedBandwidth);
     }
 
-
+    /**
+     * Tests the deletion of a Bandwidth
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void deleteBandwidth() throws StingrayRestClientException {
         Boolean wasDeleted = client.deleteBandwidth(vsName);

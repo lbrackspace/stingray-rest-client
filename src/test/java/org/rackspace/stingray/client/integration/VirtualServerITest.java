@@ -32,8 +32,8 @@ public class VirtualServerITest extends StingrayTestBase {
         virtualServer = new VirtualServer();
         properties = new VirtualServerProperties();
         basic = new VirtualServerBasic();
-        poolName = "i_test_pool";
-        vsName = "i_test_vs";
+        poolName = TESTNAME;
+        vsName = TESTNAME;
         port = 8998;
         pool = new Pool();
         pool.setProperties(new PoolProperties());
@@ -45,6 +45,7 @@ public class VirtualServerITest extends StingrayTestBase {
 
     /**
      * This method tests the create virtual server request, and will verify its creation with a get request.
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -73,6 +74,7 @@ public class VirtualServerITest extends StingrayTestBase {
 
     /**
      * This method tests that a list of children holding the name and URI for every virtual server can be retrieved.
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -83,6 +85,7 @@ public class VirtualServerITest extends StingrayTestBase {
 
     /**
      * This method tests that one virtual server can be retrieved.
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -93,6 +96,7 @@ public class VirtualServerITest extends StingrayTestBase {
 
     /**
      * This method tests that our originally created virtual server is able to be deleted.
+     *
      * @throws StingrayRestClientException
      */
     @Test

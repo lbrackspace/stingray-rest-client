@@ -19,7 +19,9 @@ public class PersistenceITest extends StingrayTestBase {
     PersistenceBasic persistenceBasic;
     String vsName;
 
-
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -35,6 +37,7 @@ public class PersistenceITest extends StingrayTestBase {
     /**
      * Tests the creation of a Persistence
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -44,6 +47,12 @@ public class PersistenceITest extends StingrayTestBase {
         Assert.assertEquals(createdPersistence, client.getPersistence(vsName));
     }
 
+    /**
+     * Tests the updating of a Persistence
+     * Verifies using a get and a comparison of content contained
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testUpdatePersistence() throws StingrayRestClientException {
         String updateNote = "qwertyuiop";
@@ -55,6 +64,9 @@ public class PersistenceITest extends StingrayTestBase {
 
 
     /**
+     * Tests the retrieval of a list of Persistences
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -64,12 +76,24 @@ public class PersistenceITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Persistence
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetPersistence() throws StingrayRestClientException {
         Persistence retrievedPersistence = client.getPersistence(vsName);
         Assert.assertNotNull(retrievedPersistence);
     }
 
+    /**
+     * Tests the deletion of a Persistence
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeletePersistence() throws StingrayRestClientException {
         Boolean wasDeleted = client.deletePersistence(vsName);

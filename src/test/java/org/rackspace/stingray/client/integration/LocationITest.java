@@ -20,6 +20,9 @@ public class LocationITest extends StingrayTestBase {
     int locationId;
 
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -37,6 +40,7 @@ public class LocationITest extends StingrayTestBase {
     /**
      * Tests the creation of a Location
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -46,6 +50,12 @@ public class LocationITest extends StingrayTestBase {
         Assert.assertEquals(createdLocation, client.getLocation(vsName));
     }
 
+    /**
+     * Tests the updating of a Location
+     * Verifies using a get and a comparison of content contained
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testUpdateLocation() throws StingrayRestClientException {
         int updateId = 33;
@@ -56,6 +66,9 @@ public class LocationITest extends StingrayTestBase {
 
 
     /**
+     * Tests the retrieval of a list of Locations
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -65,13 +78,24 @@ public class LocationITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Location
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetSpecificLocation() throws StingrayRestClientException {
         Location retrievedLocation = client.getLocation(vsName);
         Assert.assertNotNull(retrievedLocation);
     }
 
-
+    /**
+     * Tests the deletion of a Location
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeleteLocation() throws StingrayRestClientException {
         Boolean wasDeleted = client.deleteLocation(vsName);

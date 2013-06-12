@@ -31,6 +31,7 @@ public class ActionScriptITest extends StingrayTestBase {
     /**
      * Tests the creation of an Action Script
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      * @throws URISyntaxException
      * @throws IOException
@@ -47,6 +48,7 @@ public class ActionScriptITest extends StingrayTestBase {
     /**
      * Tests the updating of an Action Script
      * Verifies using a get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      * @throws URISyntaxException
      * @throws IOException
@@ -65,6 +67,7 @@ public class ActionScriptITest extends StingrayTestBase {
     /**
      * Tests the retrieval of a list of Action Scripts
      * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -77,6 +80,7 @@ public class ActionScriptITest extends StingrayTestBase {
     /**
      * Tests the get function for an individual Action Script
      * Retrieves the specific Action Script created earlier
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -88,6 +92,7 @@ public class ActionScriptITest extends StingrayTestBase {
     /**
      * Tests the deletion of an Action Script
      * Checks return of the delete call, and throws an error
+     *
      * @throws StingrayRestClientException
      */
     @Test(expected = StingrayRestClientException.class)

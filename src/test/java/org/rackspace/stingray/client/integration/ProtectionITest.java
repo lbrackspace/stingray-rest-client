@@ -12,13 +12,16 @@ import org.rackspace.stingray.client.protection.Protection;
 import org.rackspace.stingray.client.protection.ProtectionBasic;
 import org.rackspace.stingray.client.protection.ProtectionProperties;
 
-public class ProtectionITest extends StingrayTestBase{
+public class ProtectionITest extends StingrayTestBase {
     StingrayRestClient client;
     String vsName = TESTNAME;
     Protection protection;
     ProtectionProperties protectionProperties;
     ProtectionBasic protectionBasic;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -34,6 +37,7 @@ public class ProtectionITest extends StingrayTestBase{
     /**
      * Tests the creation of a Protection
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -43,6 +47,12 @@ public class ProtectionITest extends StingrayTestBase{
         Assert.assertEquals(createdProtection, client.getProtection(vsName));
     }
 
+    /**
+     * Tests the updating of a Protection
+     * Verifies using a get and a comparison of content contained
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testUpdateProtection() throws StingrayRestClientException {
         String updateNote = "qwertyuiop";
@@ -54,6 +64,9 @@ public class ProtectionITest extends StingrayTestBase{
 
 
     /**
+     * Tests the retrieval of a list of Protections
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -63,12 +76,24 @@ public class ProtectionITest extends StingrayTestBase{
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Protection
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetProtection() throws StingrayRestClientException {
         Protection retrievedProtection = client.getProtection(vsName);
         Assert.assertNotNull(retrievedProtection);
     }
 
+    /**
+     * Tests the deletion of a Protection
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeleteProtection() throws StingrayRestClientException {
         Boolean wasDeleted = client.deleteProtection(vsName);

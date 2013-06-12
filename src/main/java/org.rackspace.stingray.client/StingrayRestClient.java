@@ -796,8 +796,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param vsName the virtual server name for cacrl retrieval
      * @throws StingrayRestClientException
      */
-    public Cacrl getCacrl(String vsName) throws StingrayRestClientException {
-        return getItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH);
+    public File getCacrl(String fileName) throws StingrayRestClientException {
+        return getItem(fileName, File.class, ClientConstants.CACRL_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
@@ -806,8 +806,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
-    public Cacrl createCacrl(String vsName, Cacrl cacrl) throws StingrayRestClientException {
-        return createItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH, cacrl);
+    public File createCacrl(String fileName, File file) throws StingrayRestClientException {
+        return createItem(fileName, File.class, ClientConstants.CACRL_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
@@ -817,16 +817,16 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
-    public Cacrl updateCacrl(String vsName, Cacrl cacrl) throws StingrayRestClientException {
-        return createItem(vsName, Cacrl.class, ClientConstants.CACRL_PATH, cacrl);
+    public File updateCacrl(String fileName, File file) throws StingrayRestClientException {
+        return updateItem(fileName, File.class, ClientConstants.CACRL_PATH, file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
      * @param vsName The virtual server name related to the cacrl
      * @throws StingrayRestClientException
      */
-    public Boolean deleteCacrl(String vsName) throws StingrayRestClientException {
-        return deleteItem(vsName, ClientConstants.CACRL_PATH);
+    public Boolean deleteCacrl(String fileName) throws StingrayRestClientException {
+        return deleteItem(fileName, ClientConstants.CACRL_PATH);
     }
 
 

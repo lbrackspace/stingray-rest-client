@@ -20,6 +20,9 @@ public class TrafficscriptITest extends StingrayTestBase {
     String fileName;
     String fileText;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -43,7 +46,9 @@ public class TrafficscriptITest extends StingrayTestBase {
         Assert.assertEquals(fileText, FileUtils.readFileToString(gfile));
     }
 
-    /**
+   /**
+     * Tests the retrieval of a list of Trafficscripts
+     * Retrieves a list of action scripts and checks its size
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -53,6 +58,11 @@ public class TrafficscriptITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Trafficscript
+     * Retrieves the specific Action Script created earlier
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetTrafficscript() throws StingrayRestClientException {
         File retrievedFile = client.getTraffiscript(fileName);
@@ -60,7 +70,13 @@ public class TrafficscriptITest extends StingrayTestBase {
 
     }
 
-
+    /**
+     * Tests the updating of a Traffic Script
+     * Verifies using a get and a comparison of content contained
+     * @throws StingrayRestClientException
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     @Test
     public void testUpdateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
         //the filename is the same, we want to update the contents...

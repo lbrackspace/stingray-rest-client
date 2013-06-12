@@ -17,6 +17,9 @@ public class TrafficIpITest extends StingrayTestBase {
     TrafficIpProperties properties;
     TrafficIpBasic basic;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -30,6 +33,7 @@ public class TrafficIpITest extends StingrayTestBase {
     /**
      * Tests the creation of a Traffic IP
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -39,6 +43,9 @@ public class TrafficIpITest extends StingrayTestBase {
     }
 
     /**
+     * Tests the retrieval of a list of Traffic Ips
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -48,6 +55,12 @@ public class TrafficIpITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Traffic Ip
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetTrafficIp() throws StingrayRestClientException {
         Children children = client.getTrafficIps();
@@ -58,6 +71,12 @@ public class TrafficIpITest extends StingrayTestBase {
         Assert.assertNotNull(trafficIp);
     }
 
+    /**
+     * Tests the deletion of a Traffic Ip
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeleteTrafficIp() throws StingrayRestClientException {
         Boolean result = client.deleteTrafficIp(TESTNAME);

@@ -16,6 +16,9 @@ public class TrafficManagerITest extends StingrayTestBase {
     TrafficManagerProperties properties;
     TrafficManagerBasic basic;
 
+    /**
+     * Initializes variables prior to test execution
+     */
     @Before
     public void standUp() {
         client = new StingrayRestClient();
@@ -29,6 +32,7 @@ public class TrafficManagerITest extends StingrayTestBase {
     /**
      * Tests the creation of a Traffic Manager
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
@@ -38,6 +42,9 @@ public class TrafficManagerITest extends StingrayTestBase {
     }
 
     /**
+     * Tests the retrieval of a list of Traffic Managers
+     * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
@@ -47,12 +54,24 @@ public class TrafficManagerITest extends StingrayTestBase {
         Assert.assertTrue(children.getChildren().size() > 0);
     }
 
+    /**
+     * Tests the get function for an individual Traffic Manager
+     * Retrieves the specific Action Script created earlier
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testGetTrafficManager() throws StingrayRestClientException {
         TrafficManager trafficManager = client.getTrafficManager(TESTNAME);
         Assert.assertNotNull(trafficManager);
     }
 
+    /**
+     * Tests the deletion of a Traffic Manager
+     * Checks return of the delete call, and throws an error
+     *
+     * @throws StingrayRestClientException
+     */
     @Test
     public void testDeleteTrafficManager() throws StingrayRestClientException {
         Boolean result = client.deleteTrafficManager(TESTNAME);
