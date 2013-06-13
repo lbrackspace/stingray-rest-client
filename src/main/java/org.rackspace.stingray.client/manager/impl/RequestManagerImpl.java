@@ -19,9 +19,11 @@ public class RequestManagerImpl implements RequestManager {
     private static final Log LOG = LogFactory.getLog(RequestManagerImpl.class);
 
     /**
-     * @param endpoint
-     * @param client
-     * @return
+     * Implementation of the method to retrieve a list from the REST api
+     *
+     * @param endpoint  The REST URL endpoint for retrieving the list items
+     * @param client    The client to handle the specific request
+     * @return          Returns the entity inside the response of the REST api
      */
     @Override
     public Children getList(URI endpoint, Client client, String path) throws StingrayRestClientException {
@@ -43,10 +45,12 @@ public class RequestManagerImpl implements RequestManager {
     }
 
     /**
-     * @param endpoint
-     * @param client
-     * @param path
-     * @return
+     * Implementation of the method to retrieve a specific item from the REST api
+     *
+     * @param endpoint  The REST URL endpoint for retrieving the item
+     * @param client    The client to handle the specific request
+     * @param path      The path to the specific object, including its name descriptor
+     * @return          Returns the entity inside the response of the REST api
      * @throws StingrayRestClientException
      */
     @Override
@@ -67,11 +71,15 @@ public class RequestManagerImpl implements RequestManager {
     }
 
     /**
-     * @param endpoint
-     * @param client
-     * @param path
-     * @param object
-     * @return
+     * Implementation of the object creation method through the REST api.
+     * In the case of the REST api, creation is the same method as updating,
+     *   so this method will simply call the update method.
+     *
+     * @param endpoint  The REST URL endpoint for creating an item
+     * @param client    The client to handle the specific request
+     * @param path      The path to the specific object, including its name descriptor
+     * @param object    The generic object to be created on Stingray's side
+     * @return          Returns the entity inside the response of the REST api
      * @throws StingrayRestClientException
      */
     @Override
@@ -80,11 +88,13 @@ public class RequestManagerImpl implements RequestManager {
     }
 
     /**
-     * @param endpoint
-     * @param client
-     * @param path
-     * @param object
-     * @return
+     * Implementation of the method for updating an item through the REST api
+     *
+     * @param endpoint  The REST URL endpoint for updating an item
+     * @param client    The client to handle the specific request
+     * @param path      The path to the specific object, including its name descriptor
+     * @param object    The generic object to be updated on Stingray's side
+     * @return          Returns the entity inside the response of the REST api
      * @throws StingrayRestClientException
      */
     @Override
@@ -107,10 +117,12 @@ public class RequestManagerImpl implements RequestManager {
     }
 
     /**
-     * @param endpoint
-     * @param client
-     * @param path
-     * @return
+     * Implementation of the method for deleting an item through the REST api
+     *
+     * @param endpoint  The REST URL endpoint for deleting an item
+     * @param client    The client to handle the specific request
+     * @param path      The path to the specific object, including its name descriptor
+     * @return          Returns a boolean value evaluating the result of the operation
      * @throws StingrayRestClientException
      */
     @Override

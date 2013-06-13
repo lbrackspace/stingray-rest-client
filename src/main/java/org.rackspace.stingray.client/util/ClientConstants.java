@@ -85,7 +85,7 @@ public class ClientConstants {
     /**
      * Convenience method to get a MIME Type.  If none is found it will return "application/octet-stream"
      *
-     * @param fileExt
+     * @param fileExt   Provides the file extension
      * @return The suggested MIME type for the file extention.
      */
     public static String getMimetype (String fileExt)

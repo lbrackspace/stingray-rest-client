@@ -42,8 +42,8 @@ public class StingrayRestClientManager {
     /**
      * Creates the client configured for authentication and security.
      *
-     * @param endpoint
-     * @param config
+     * @param endpoint      The REST client endpoint
+     * @param config        The object to retrieve configuration data
      */
     public StingrayRestClientManager(URI endpoint, Configuration config) {
         this(config, endpoint, null, false, null, null);
@@ -52,7 +52,7 @@ public class StingrayRestClientManager {
     /**
      * Creates the client configured for authentication and security.
      *
-     * @param endpoint
+     * @param endpoint      The REST client endpoint
      */
     public StingrayRestClientManager(URI endpoint) {
         this(null, endpoint, null, false, null, null);
@@ -61,9 +61,9 @@ public class StingrayRestClientManager {
     /**
      * Creates the client configured for authentication and security.
      *
-     * @param endpoint
-     * @param adminUser
-     * @param adminKey
+     * @param endpoint      The REST client endpoint
+     * @param adminUser     The configuration username
+     * @param adminKey      The configuration user's key
      */
     public StingrayRestClientManager(URI endpoint, String adminUser, String adminKey) {
         this(null, endpoint, null, false, adminUser, adminKey);
@@ -72,10 +72,10 @@ public class StingrayRestClientManager {
     /**
      * Creates the client configured for authentication and security.
      *
-     * @param endpoint
-     * @param isDebugging
-     * @param adminUser
-     * @param adminKey
+     * @param endpoint      The REST client endpoint
+     * @param isDebugging   Boolean for switching context
+     * @param adminUser     The configuration username
+     * @param adminKey      The configuration user's key
      */
     public StingrayRestClientManager(URI endpoint, boolean isDebugging, String adminUser, String adminKey) {
         this(null, endpoint, null, isDebugging, adminUser, adminKey);
@@ -84,7 +84,7 @@ public class StingrayRestClientManager {
     /**
      * Creates the client configured for authentication and security.
      *
-     * @param isDebugging
+     * @param isDebugging   Boolean for switching context
      */
     public StingrayRestClientManager(boolean isDebugging) {
         this(null, null, null, isDebugging, null, null);
@@ -144,10 +144,10 @@ public class StingrayRestClientManager {
     /**
      * Retrieves and interprets the response entity.
      *
-     * @param response
-     * @param clazz
-     * @param <T>
-     * @return
+     * @param response  Holds all the values from the REST api response
+     * @param clazz     Specific class to map the entity needed
+     * @param <T>       Generic object for the declaration of the returned entity
+     * @return          Returns an object of the passed type
      */
     public synchronized <T> T interpretResponse(ClientResponse response, java.lang.Class<T> clazz) throws StingrayRestClientException {
         T t;

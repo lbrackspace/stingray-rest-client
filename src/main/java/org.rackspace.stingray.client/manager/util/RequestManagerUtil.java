@@ -10,7 +10,12 @@ import org.rackspace.stingray.client.util.ClientConstants;
 public class RequestManagerUtil {
     private static final Log logger = LogFactory.getLog(RequestManagerUtil.class);
 
-
+    /**
+     * This method checks whether or not the status returned through the Stingray REST api response object is valid.
+     *
+     * @param response  Holds all the details from the response of the Stingray REST api
+     * @return          Boolean result for the validity check
+     */
     public static boolean isResponseValid(ClientResponse response) {
         return (response != null && (response.getStatus() == ClientConstants.ACCEPTED
                 || response.getStatus() == ClientConstants.NON_AUTHORATIVE
@@ -19,6 +24,12 @@ public class RequestManagerUtil {
                 || response.getStatus() == ClientConstants.CREATED));
     }
 
+    /**
+     * A method to build a message detailing a failure response from the Stingray REST api
+     *
+     * @param response  Holds all the details from the response of the Stingray REST api
+     * @throws StingrayRestClientException
+     */
     public static void buildFaultMessage(ClientResponse response)
             throws StingrayRestClientException {
 
