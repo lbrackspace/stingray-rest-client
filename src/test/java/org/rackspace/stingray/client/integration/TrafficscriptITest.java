@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.trafficscript.Trafficscript;
@@ -33,12 +34,13 @@ public class TrafficscriptITest extends StingrayTestBase {
     /**
      * Tests the creation of a Traffic Script
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      * @throws URISyntaxException
      * @throws IOException
      */
     @Test
-    public void testCreateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testCreateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         //the fileName is what it will be created as. ex: /rules/test_script the file in STM is 'test_script'
         client.createTrafficscript(fileName, createTestFile(fileName, fileText));
         File gfile = client.getTraffiscript(fileName);
@@ -46,14 +48,15 @@ public class TrafficscriptITest extends StingrayTestBase {
         Assert.assertEquals(fileText, FileUtils.readFileToString(gfile));
     }
 
-   /**
+    /**
      * Tests the retrieval of a list of Trafficscripts
      * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
     @Test
-    public void getListOfTrafficscripts() throws StingrayRestClientException {
+    public void getListOfTrafficscripts() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getTrafficscripts();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -61,10 +64,11 @@ public class TrafficscriptITest extends StingrayTestBase {
     /**
      * Tests the get function for an individual Trafficscript
      * Retrieves the specific Action Script created earlier
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetTrafficscript() throws StingrayRestClientException {
+    public void testGetTrafficscript() throws StingrayRestClientException, StingrayRestClientPathException {
         File retrievedFile = client.getTraffiscript(fileName);
         Assert.assertNotNull(retrievedFile);
 
@@ -73,12 +77,13 @@ public class TrafficscriptITest extends StingrayTestBase {
     /**
      * Tests the updating of a Traffic Script
      * Verifies using a get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      * @throws URISyntaxException
      * @throws IOException
      */
     @Test
-    public void testUpdateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testUpdateTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         //the filename is the same, we want to update the contents...
         String updatedFileText = "Updated the test script...";
 
@@ -90,7 +95,7 @@ public class TrafficscriptITest extends StingrayTestBase {
     }
 
     @Test(expected = StingrayRestClientException.class)
-    public void deleteTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void deleteTrafficScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteTrafficscript(fileName);
         Assert.assertTrue(wasDeleted);
         client.getTraffiscript(fileName);

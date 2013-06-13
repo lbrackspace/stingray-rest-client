@@ -66,8 +66,8 @@ public class StingrayRestClient extends StingrayRestClientManager {
     /**
      * This method will check that a path is defined in one of the constants described in REST api documentation
      *
-     * @param path  Variable holding the path used in a request
-     * @return      Result from checking the path's validity
+     * @param path Variable holding the path used in a request
+     * @return Result from checking the path's validity
      */
     private Boolean isPathValid(String path) {
         if (path.equals(ClientConstants.RATE_PATH) || path.equals(ClientConstants.PERSISTENCE_PATH)
@@ -92,7 +92,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list retrieval method
      * @throws StingrayRestClientException ]
      */
-    private Children getItems(String path) throws StingrayRestClientException {
+    private Children getItems(String path) throws StingrayRestClientException, StingrayRestClientPathException {
         if (isPathValid(path)) {
             return requestManager.getList(endpoint, client, path);
         } else {
@@ -103,29 +103,29 @@ public class StingrayRestClient extends StingrayRestClientManager {
     /**
      * Generic method to retrieve an item at the specified path
      *
-     * @param name      Name of the object to retrieve
-     * @param clazz     Class type of the object being retrieved
-     * @param path      Path to the object
-     * @param <T>       Object generic declaration
-     * @return          Calls another method to retrieve an item of a specified type
+     * @param name  Name of the object to retrieve
+     * @param clazz Class type of the object being retrieved
+     * @param path  Path to the object
+     * @param <T>   Object generic declaration
+     * @return Calls another method to retrieve an item of a specified type
      * @throws StingrayRestClientException
      */
-    private <T> T getItem(String name, java.lang.Class<T> clazz, String path) throws StingrayRestClientException {
+    private <T> T getItem(String name, java.lang.Class<T> clazz, String path) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, clazz, path, MediaType.APPLICATION_JSON_TYPE);
     }
 
     /**
      * Overloaded method to retrieve an item at the specified path
      *
-     * @param name      Name of the object to retrieve
-     * @param clazz     Class type of the object being retrieved
-     * @param path      Path to the object
-     * @param <T>       Object generic declaration
-     * @param cType     Type of request being sent (IE application/json)
-     * @return          Return object of a specified type
+     * @param name  Name of the object to retrieve
+     * @param clazz Class type of the object being retrieved
+     * @param path  Path to the object
+     * @param <T>   Object generic declaration
+     * @param cType Type of request being sent (IE application/json)
+     * @return Return object of a specified type
      * @throws StingrayRestClientException
      */
-    private <T> T getItem(String name, java.lang.Class<T> clazz, String path, MediaType cType) throws StingrayRestClientException {
+    private <T> T getItem(String name, java.lang.Class<T> clazz, String path, MediaType cType) throws StingrayRestClientException, StingrayRestClientPathException {
         if (isPathValid(path)) {
             ClientResponse response = requestManager.getItem(endpoint, client, path + name, cType);
             T obj = interpretResponse(response, clazz);
@@ -144,12 +144,11 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    private <T> T createItem(String name, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
+    private <T> T createItem(String name, Class<T> clazz, String path, T obj) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, clazz, path, obj, MediaType.APPLICATION_JSON_TYPE);
     }
 
     /**
-     *
      * @param name
      * @param clazz
      * @param path
@@ -159,7 +158,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    private <T> T createItem(String name, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException {
+    private <T> T createItem(String name, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, clazz, path, obj, cType);
     }
 
@@ -173,12 +172,11 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    private <T> T updateItem(String name, Class<T> clazz, String path, T obj) throws StingrayRestClientException {
+    private <T> T updateItem(String name, Class<T> clazz, String path, T obj) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, clazz, path, obj, MediaType.APPLICATION_JSON_TYPE);
     }
 
     /**
-     *
      * @param name
      * @param clazz
      * @param path
@@ -188,7 +186,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    private <T> T updateItem(String name, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException {
+    private <T> T updateItem(String name, Class<T> clazz, String path, T obj, MediaType cType) throws StingrayRestClientException, StingrayRestClientPathException {
         if (isPathValid(path)) {
             ClientResponse response = requestManager.updateItem(endpoint, client, path + name, obj, cType);
             return interpretResponse(response, clazz);
@@ -211,7 +209,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
             throw new StingrayRestClientException();
     }
 
-    public VirtualServer createVirtualServer(String name, VirtualServer vs) throws StingrayRestClientException {
+    public VirtualServer createVirtualServer(String name, VirtualServer vs) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, VirtualServer.class, ClientConstants.V_SERVER_PATH, vs);
     }
 
@@ -219,7 +217,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return A list of children representing individual virtual server names and URI's
      * @throws StingrayRestClientException
      */
-    public Children getVirtualServers() throws StingrayRestClientException {
+    public Children getVirtualServers() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.V_SERVER_PATH);
     }
 
@@ -228,7 +226,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    public VirtualServer getVirtualServer(String name) throws StingrayRestClientException {
+    public VirtualServer getVirtualServer(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, VirtualServer.class, ClientConstants.V_SERVER_PATH);
     }
 
@@ -238,7 +236,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return
      * @throws StingrayRestClientException
      */
-    public VirtualServer updateVirtualServer(String name, VirtualServer virtualServer) throws StingrayRestClientException {
+    public VirtualServer updateVirtualServer(String name, VirtualServer virtualServer) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, VirtualServer.class, ClientConstants.V_SERVER_PATH, virtualServer);
     }
 
@@ -256,7 +254,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for pools providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getPools() throws StingrayRestClientException {
+    public Children getPools() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.POOL_PATH);
     }
     /*
@@ -267,27 +265,27 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for pool retrieval
      * @throws StingrayRestClientException
      */
-    public Pool getPool(String name) throws StingrayRestClientException {
+    public Pool getPool(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Pool.class, ClientConstants.POOL_PATH);
     }
 
     /**
      * @param name The virtual server name related to the pool
-     * @param pool   The pool object used to create a Stingray Pool
+     * @param pool The pool object used to create a Stingray Pool
      * @return The configured pool object
      * @throws StingrayRestClientException
      */
-    public Pool createPool(String name, Pool pool) throws StingrayRestClientException {
+    public Pool createPool(String name, Pool pool) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Pool.class, ClientConstants.POOL_PATH, pool);
     }
 
     /**
      * @param name The virtual server name related to the pool
-     * @param pool   The pool object used to create a Stingray Pool
+     * @param pool The pool object used to create a Stingray Pool
      * @return The configured pool object
      * @throws StingrayRestClientException
      */
-    public Pool updatePool(String name, Pool pool) throws StingrayRestClientException {
+    public Pool updatePool(String name, Pool pool) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, Pool.class, ClientConstants.POOL_PATH, pool);
     }
 
@@ -304,7 +302,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for actionScripts providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getActionScripts() throws StingrayRestClientException {
+    public Children getActionScripts() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.ACTIONSCRIPT_PATH);
     }
 
@@ -312,28 +310,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for action script retrieval
      * @throws StingrayRestClientException
      */
-    public File getActionScript(String name) throws StingrayRestClientException {
+    public File getActionScript(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, File.class, ClientConstants.ACTIONSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     * @param name       The virtual server name related to the actionScript
+     * @param name         The virtual server name related to the actionScript
      * @param actionScript The actionScript object used to create a Stingray Action Script
      * @return The configured Action Script object
      * @throws StingrayRestClientException
      */
-    public File createActionScript(String name, File actionScript) throws StingrayRestClientException {
+    public File createActionScript(String name, File actionScript) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, File.class, ClientConstants.ACTIONSCRIPT_PATH, actionScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
     /**
-     * @param name       The virtual server name related to the action script
+     * @param name         The virtual server name related to the action script
      * @param actionScript The action script object used to create a Stingray action script
      * @return The configured action script object
      * @throws StingrayRestClientException
      */
-    public File updateActionScript(String name, File actionScript) throws StingrayRestClientException {
+    public File updateActionScript(String name, File actionScript) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, File.class, ClientConstants.ACTIONSCRIPT_PATH, actionScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
@@ -349,7 +347,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for bandwidths providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getBandwidths() throws StingrayRestClientException {
+    public Children getBandwidths() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.BANDWIDTH_PATH);
     }
 
@@ -357,28 +355,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for bandwidth retrieval
      * @throws StingrayRestClientException
      */
-    public Bandwidth getBandwidth(String name) throws StingrayRestClientException {
+    public Bandwidth getBandwidth(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Bandwidth.class, ClientConstants.BANDWIDTH_PATH);
     }
 
     /**
-     * @param name    The virtual server name related to the bandwidth
+     * @param name      The virtual server name related to the bandwidth
      * @param bandwidth The bandwidth object used to create a Stingray bandwidth
      * @return The configured Bandwidth object
      * @throws StingrayRestClientException
      */
-    public Bandwidth createBandwidth(String name, Bandwidth bandwidth) throws StingrayRestClientException {
+    public Bandwidth createBandwidth(String name, Bandwidth bandwidth) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Bandwidth.class, ClientConstants.BANDWIDTH_PATH, bandwidth);
     }
 
 
     /**
-     * @param name    The virtual server name related to the bandwidth
+     * @param name      The virtual server name related to the bandwidth
      * @param bandwidth The bandwidth object used to create a Stingray bandwidth
      * @return The configured bandwidth object
      * @throws StingrayRestClientException
      */
-    public Bandwidth updateBandwidth(String name, Bandwidth bandwidth) throws StingrayRestClientException {
+    public Bandwidth updateBandwidth(String name, Bandwidth bandwidth) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, Bandwidth.class, ClientConstants.BANDWIDTH_PATH, bandwidth);
     }
 
@@ -395,72 +393,69 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for extra files providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getExtraFiles() throws StingrayRestClientException {
+    public Children getExtraFiles() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.EXTRAFILE_PATH);
     }
 
     /**
      * @param fileName the virtual server name for extra file retrieval
-     * @throws StingrayRestClientException
      * @return File
+     * @throws StingrayRestClientException
      */
-    public File getExtraFile(String fileName) throws StingrayRestClientException {
+    public File getExtraFile(String fileName) throws StingrayRestClientException, StingrayRestClientPathException {
         return getExtraFile(fileName, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     *
      * @param fileName
      * @param cType
      * @return File
      * @throws StingrayRestClientException
      */
-    public File getExtraFile(String fileName, MediaType cType) throws StingrayRestClientException {
+    public File getExtraFile(String fileName, MediaType cType) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(fileName, File.class, ClientConstants.EXTRAFILE_PATH, cType);
     }
 
     /**
-     * @param fileName    The virtual server name related to the extra file
+     * @param fileName  The virtual server name related to the extra file
      * @param extraFile The extra file object used to create a Stingray extra file
      * @return The configured ExtraFile object
      * @throws StingrayRestClientException
      */
-    public File createExtraFile(String fileName, File extraFile) throws StingrayRestClientException {
+    public File createExtraFile(String fileName, File extraFile) throws StingrayRestClientException, StingrayRestClientPathException {
         return createExtraFile(fileName, extraFile, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     *
      * @param name
      * @param extraFile
      * @param cType
      * @return File
      * @throws StingrayRestClientException
      */
-    public File createExtraFile(String name, File extraFile, MediaType cType) throws StingrayRestClientException {
+    public File createExtraFile(String name, File extraFile, MediaType cType) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, File.class, ClientConstants.EXTRAFILE_PATH, extraFile, cType);
     }
 
 
     /**
-     * @param fileName    The virtual server name related to the extra file
+     * @param fileName  The virtual server name related to the extra file
      * @param extraFile The extra file object used to create a Stingray extra files
      * @return File
      * @throws StingrayRestClientException
      */
-    public File updateExtraFile(String fileName, File extraFile) throws StingrayRestClientException {
+    public File updateExtraFile(String fileName, File extraFile) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateExtraFile(fileName, extraFile, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     *
      * @param fileName
      * @param extraFile
      * @param cType
      * @return File
      * @throws StingrayRestClientException
      */
-    public File updateExtraFile(String fileName, File extraFile, MediaType cType) throws StingrayRestClientException {
+    public File updateExtraFile(String fileName, File extraFile, MediaType cType) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(fileName, File.class, ClientConstants.EXTRAFILE_PATH, extraFile, cType);
     }
 
@@ -476,7 +471,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for global load balancers providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getGlbs() throws StingrayRestClientException {
+    public Children getGlbs() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.GLB_PATH);
     }
 
@@ -484,28 +479,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for global load balancing retrieval
      * @throws StingrayRestClientException
      */
-    public GlobalLoadBalancing getGlb(String name) throws StingrayRestClientException {
+    public GlobalLoadBalancing getGlb(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, GlobalLoadBalancing.class, ClientConstants.GLB_PATH);
     }
 
     /**
-     * @param name              The virtual server name related to the Glb
+     * @param name                The virtual server name related to the Glb
      * @param globalLoadBalancing The global load balancing object used to create a Stingray global load balancer
      * @return The configured ExtraFile object
      * @throws StingrayRestClientException
      */
-    public GlobalLoadBalancing createGlb(String name, GlobalLoadBalancing globalLoadBalancing) throws StingrayRestClientException {
+    public GlobalLoadBalancing createGlb(String name, GlobalLoadBalancing globalLoadBalancing) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, GlobalLoadBalancing.class, ClientConstants.GLB_PATH, globalLoadBalancing);
     }
 
 
     /**
-     * @param name              The virtual server name related to the Glb
+     * @param name                The virtual server name related to the Glb
      * @param globalLoadBalancing The global load balancing object used to create a Stingray global load balancer
      * @return The configured global load balancing object
      * @throws StingrayRestClientException
      */
-    public GlobalLoadBalancing updateGlb(String name, GlobalLoadBalancing globalLoadBalancing) throws StingrayRestClientException {
+    public GlobalLoadBalancing updateGlb(String name, GlobalLoadBalancing globalLoadBalancing) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, GlobalLoadBalancing.class, ClientConstants.GLB_PATH, globalLoadBalancing);
 
     }
@@ -514,7 +509,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the global load balancing
      * @throws StingrayRestClientException
      */
-    public Boolean deleteGlb(String name) throws StingrayRestClientException {
+    public Boolean deleteGlb(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.GLB_PATH);
     }
 
@@ -523,7 +518,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for locations providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getLocations() throws StingrayRestClientException {
+    public Children getLocations() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.LOCATION_PATH);
     }
 
@@ -531,28 +526,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for extra file retrieval
      * @throws StingrayRestClientException
      */
-    public Location getLocation(String name) throws StingrayRestClientException {
+    public Location getLocation(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Location.class, ClientConstants.LOCATION_PATH);
     }
 
     /**
-     * @param name   The virtual server name related to the extra file
+     * @param name     The virtual server name related to the extra file
      * @param location The location object used to create a Stingray location
      * @return The configured Location object
      * @throws StingrayRestClientException
      */
-    public Location createLocation(String name, Location location) throws StingrayRestClientException {
+    public Location createLocation(String name, Location location) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Location.class, ClientConstants.LOCATION_PATH, location);
     }
 
 
     /**
-     * @param name   The virtual server name related to the location
+     * @param name     The virtual server name related to the location
      * @param location The extra file object used to create a Stingray locations
      * @return The configured Location object
      * @throws StingrayRestClientException
      */
-    public Location updateLocation(String name, Location location) throws StingrayRestClientException {
+    public Location updateLocation(String name, Location location) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, Location.class, ClientConstants.LOCATION_PATH, location);
     }
 
@@ -560,7 +555,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the location
      * @throws StingrayRestClientException
      */
-    public Boolean deleteLocation(String name) throws StingrayRestClientException {
+    public Boolean deleteLocation(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.LOCATION_PATH);
     }
 
@@ -569,7 +564,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for extra files providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getMonitors() throws StingrayRestClientException {
+    public Children getMonitors() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.MONITOR_PATH);
     }
 
@@ -577,28 +572,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for monitor retrieval
      * @throws StingrayRestClientException
      */
-    public Monitor getMonitor(String name) throws StingrayRestClientException {
+    public Monitor getMonitor(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Monitor.class, ClientConstants.MONITOR_PATH);
     }
 
     /**
-     * @param name  The virtual server name related to the monitor
+     * @param name    The virtual server name related to the monitor
      * @param monitor The monitor object used to create a Stingray monitor
      * @return The configured Monitor object
      * @throws StingrayRestClientException
      */
-    public Monitor createMonitor(String name, Monitor monitor) throws StingrayRestClientException {
+    public Monitor createMonitor(String name, Monitor monitor) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Monitor.class, ClientConstants.MONITOR_PATH, monitor);
     }
 
 
     /**
-     * @param name  The virtual server name related to the monitor
+     * @param name    The virtual server name related to the monitor
      * @param monitor The monitor object used to create a Stingray monitors
      * @return The configured Monitor object
      * @throws StingrayRestClientException
      */
-    public Monitor updateMonitor(String name, Monitor monitor) throws StingrayRestClientException {
+    public Monitor updateMonitor(String name, Monitor monitor) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, Monitor.class, ClientConstants.MONITOR_PATH, monitor);
     }
 
@@ -606,7 +601,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the monitor
      * @throws StingrayRestClientException
      */
-    public Boolean deleteMonitor(String name) throws StingrayRestClientException {
+    public Boolean deleteMonitor(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.MONITOR_PATH);
     }
 
@@ -615,7 +610,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for monitor scripts providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getMonitorScripts() throws StingrayRestClientException {
+    public Children getMonitorScripts() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.MONITORSCRIPT_PATH);
     }
 
@@ -623,28 +618,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param fileName the virtual server name for monitor script retrieval
      * @throws StingrayRestClientException
      */
-    public File getMonitorScript(String fileName) throws StingrayRestClientException {
+    public File getMonitorScript(String fileName) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     * @param fileName        The virtual server name related to the monitor script
+     * @param fileName      The virtual server name related to the monitor script
      * @param monitorScript The monitor script object used to create a Stingray monitor script
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public File createMonitorScript(String fileName, File monitorScript) throws StingrayRestClientException {
+    public File createMonitorScript(String fileName, File monitorScript) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
     /**
-     * @param fileName        The virtual server name related to the monitor script
+     * @param fileName      The virtual server name related to the monitor script
      * @param monitorScript The monitor script object used to create a Stingray monitor scripts
      * @return The configured MonitorScript object
      * @throws StingrayRestClientException
      */
-    public File updateMonitorScript(String fileName, File monitorScript) throws StingrayRestClientException {
+    public File updateMonitorScript(String fileName, File monitorScript) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(fileName, File.class, ClientConstants.MONITORSCRIPT_PATH, monitorScript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
@@ -652,7 +647,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param fileName The virtual server name related to the monitor script
      * @throws StingrayRestClientException
      */
-    public Boolean deleteMonitorScript(String fileName) throws StingrayRestClientException {
+    public Boolean deleteMonitorScript(String fileName) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(fileName, ClientConstants.MONITORSCRIPT_PATH);
     }
 
@@ -661,7 +656,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for persistences providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getPersistences() throws StingrayRestClientException {
+    public Children getPersistences() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.PERSISTENCE_PATH);
     }
 
@@ -669,28 +664,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for persistence retrieval
      * @throws StingrayRestClientException
      */
-    public Persistence getPersistence(String name) throws StingrayRestClientException {
+    public Persistence getPersistence(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Persistence.class, ClientConstants.PERSISTENCE_PATH);
     }
 
     /**
-     * @param name      The virtual server name related to the extra file
+     * @param name        The virtual server name related to the extra file
      * @param persistence The persistence object used to create a Stingray persistence
      * @return The configured Persistence object
      * @throws StingrayRestClientException
      */
-    public Persistence createPersistence(String name, Persistence persistence) throws StingrayRestClientException {
+    public Persistence createPersistence(String name, Persistence persistence) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Persistence.class, ClientConstants.PERSISTENCE_PATH, persistence);
     }
 
 
     /**
-     * @param name      The virtual server name related to the persistence
+     * @param name        The virtual server name related to the persistence
      * @param persistence The persistence object used to create a Stingray persistence
      * @return The configured Persistence object
      * @throws StingrayRestClientException
      */
-    public Persistence updatePersistence(String name, Persistence persistence) throws StingrayRestClientException {
+    public Persistence updatePersistence(String name, Persistence persistence) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, Persistence.class, ClientConstants.PERSISTENCE_PATH, persistence);
     }
 
@@ -707,7 +702,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for protections providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getProtections() throws StingrayRestClientException {
+    public Children getProtections() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.PROTECTION_PATH);
     }
 
@@ -715,28 +710,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for protection retrieval
      * @throws StingrayRestClientException
      */
-    public Protection getProtection(String name) throws StingrayRestClientException {
+    public Protection getProtection(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Protection.class, ClientConstants.PROTECTION_PATH);
     }
 
     /**
-     * @param name     The virtual server name related to the protection
+     * @param name       The virtual server name related to the protection
      * @param protection The protection object used to create a Stingray protection
      * @return The configured Protection object
      * @throws StingrayRestClientException
      */
-    public Protection createProtection(String name, Protection protection) throws StingrayRestClientException {
+    public Protection createProtection(String name, Protection protection) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Protection.class, ClientConstants.PROTECTION_PATH, protection);
     }
 
 
     /**
-     * @param name     The virtual server name related to the bandwidth
+     * @param name       The virtual server name related to the bandwidth
      * @param protection The protection object used to create a Stingray protections
      * @return The configured Protection object
      * @throws StingrayRestClientException
      */
-    public Protection updateProtection(String name, Protection protection) throws StingrayRestClientException {
+    public Protection updateProtection(String name, Protection protection) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(name, Protection.class, ClientConstants.PROTECTION_PATH, protection);
     }
 
@@ -744,7 +739,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the extra file
      * @throws StingrayRestClientException
      */
-    public Boolean deleteProtection(String name) throws StingrayRestClientException {
+    public Boolean deleteProtection(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.PROTECTION_PATH);
     }
 
@@ -753,7 +748,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for rates providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getRates() throws StingrayRestClientException {
+    public Children getRates() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.RATE_PATH);
     }
 
@@ -761,28 +756,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for rate retrieval
      * @throws StingrayRestClientException
      */
-    public Rate getRate(String name) throws StingrayRestClientException {
+    public Rate getRate(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Rate.class, ClientConstants.RATE_PATH);
     }
 
     /**
      * @param name The virtual server name related to the rate
-     * @param rate   The rate object used to create a Stingray rate
+     * @param rate The rate object used to create a Stingray rate
      * @return The configured Rate object
      * @throws StingrayRestClientException
      */
-    public Rate createRate(String name, Rate rate) throws StingrayRestClientException {
+    public Rate createRate(String name, Rate rate) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Rate.class, ClientConstants.RATE_PATH, rate);
     }
 
 
     /**
      * @param name The virtual server name related to the rate
-     * @param rate   The rate object used to create a Stingray rates
+     * @param rate The rate object used to create a Stingray rates
      * @return The configured Rate object
      * @throws StingrayRestClientException
      */
-    public Rate updateRate(String name, Rate rate) throws StingrayRestClientException {
+    public Rate updateRate(String name, Rate rate) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Rate.class, ClientConstants.RATE_PATH, rate);
     }
 
@@ -790,7 +785,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the rate
      * @throws StingrayRestClientException
      */
-    public Boolean deleteRate(String name) throws StingrayRestClientException {
+    public Boolean deleteRate(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.RATE_PATH);
     }
 
@@ -798,7 +793,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for cacrls providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getCacrls() throws StingrayRestClientException {
+    public Children getCacrls() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.CACRL_PATH);
     }
 
@@ -806,28 +801,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param fileName the virtual server name for cacrl retrieval
      * @throws StingrayRestClientException
      */
-    public File getCacrl(String fileName) throws StingrayRestClientException {
+    public File getCacrl(String fileName) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(fileName, File.class, ClientConstants.CACRL_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
      * @param fileName The virtual server name related to the cacrl
-     * @param cacrl  The cacrl object used to create a Stingray cacrl
+     * @param cacrl    The cacrl object used to create a Stingray cacrl
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
-    public File createCacrl(String fileName, File cacrl) throws StingrayRestClientException {
+    public File createCacrl(String fileName, File cacrl) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(fileName, File.class, ClientConstants.CACRL_PATH, cacrl, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
     /**
      * @param fileName The virtual server name related to the cacrl
-     * @param cacrl  The cacrl object used to create a Stingray cacrl
+     * @param cacrl    The cacrl object used to create a Stingray cacrl
      * @return The configured Cacrl object
      * @throws StingrayRestClientException
      */
-    public File updateCacrl(String fileName, File cacrl) throws StingrayRestClientException {
+    public File updateCacrl(String fileName, File cacrl) throws StingrayRestClientException, StingrayRestClientPathException {
         return updateItem(fileName, File.class, ClientConstants.CACRL_PATH, cacrl, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
@@ -835,7 +830,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param fileName The virtual server name related to the cacrl
      * @throws StingrayRestClientException
      */
-    public Boolean deleteCacrl(String fileName) throws StingrayRestClientException {
+    public Boolean deleteCacrl(String fileName) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(fileName, ClientConstants.CACRL_PATH);
     }
 
@@ -844,7 +839,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for client keypairs providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getClientKeypairs() throws StingrayRestClientException {
+    public Children getClientKeypairs() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.CLIENTKEYPAIR_PATH);
     }
 
@@ -852,28 +847,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for client keypair retrieval
      * @throws StingrayRestClientException
      */
-    public ClientKeypair getClientKeypair(String name) throws StingrayRestClientException {
+    public ClientKeypair getClientKeypair(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH);
     }
 
     /**
-     * @param name        The virtual server name related to the client keypair
+     * @param name          The virtual server name related to the client keypair
      * @param clientKeypair The client keypair object used to create a Stingray client keypair
      * @return The configured ClientKeypair object
      * @throws StingrayRestClientException
      */
-    public ClientKeypair createClientKeypair(String name, ClientKeypair clientKeypair) throws StingrayRestClientException {
+    public ClientKeypair createClientKeypair(String name, ClientKeypair clientKeypair) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH, clientKeypair);
     }
 
 
     /**
-     * @param name        The virtual server name related to the clientkeypair
+     * @param name          The virtual server name related to the clientkeypair
      * @param clientKeypair The client keypair object used to create a Stingray client keypairs
      * @return The configured ClientKeypair object
      * @throws StingrayRestClientException
      */
-    public ClientKeypair updateClientKeypair(String name, ClientKeypair clientKeypair) throws StingrayRestClientException {
+    public ClientKeypair updateClientKeypair(String name, ClientKeypair clientKeypair) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, ClientKeypair.class, ClientConstants.CLIENTKEYPAIR_PATH, clientKeypair);
     }
 
@@ -881,7 +876,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the client keypair
      * @throws StingrayRestClientException
      */
-    public Boolean deleteClientKeypair(String name) throws StingrayRestClientException {
+    public Boolean deleteClientKeypair(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.CLIENTKEYPAIR_PATH);
     }
 
@@ -889,7 +884,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for keypairs providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getKeypairs() throws StingrayRestClientException {
+    public Children getKeypairs() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.KEYPAIR_PATH);
     }
 
@@ -897,28 +892,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for keypair retrieval
      * @throws StingrayRestClientException
      */
-    public Keypair getKeypair(String name) throws StingrayRestClientException {
+    public Keypair getKeypair(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, Keypair.class, ClientConstants.KEYPAIR_PATH);
     }
 
     /**
-     * @param name  The virtual server name related to the keypair
+     * @param name    The virtual server name related to the keypair
      * @param keypair The keypair object used to create a Stingray keypair
      * @return The configured Keypair object
      * @throws StingrayRestClientException
      */
-    public Keypair createKeypair(String name, Keypair keypair) throws StingrayRestClientException {
+    public Keypair createKeypair(String name, Keypair keypair) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Keypair.class, ClientConstants.KEYPAIR_PATH, keypair);
     }
 
 
     /**
-     * @param name  The virtual server name related to the keypair
+     * @param name    The virtual server name related to the keypair
      * @param keypair The keypair object used to create a Stingray keypairs
      * @return The configured Keypair object
      * @throws StingrayRestClientException
      */
-    public Keypair updateKeypair(String name, Keypair keypair) throws StingrayRestClientException {
+    public Keypair updateKeypair(String name, Keypair keypair) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, Keypair.class, ClientConstants.KEYPAIR_PATH, keypair);
     }
 
@@ -926,7 +921,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the keypair
      * @throws StingrayRestClientException
      */
-    public Boolean deleteKeypair(String name) throws StingrayRestClientException {
+    public Boolean deleteKeypair(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.KEYPAIR_PATH);
     }
 
@@ -935,7 +930,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for traffic managers providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getTrafficManagers() throws StingrayRestClientException {
+    public Children getTrafficManagers() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.TRAFFICMANAGER_PATH);
     }
 
@@ -943,28 +938,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for rate retrieval
      * @throws StingrayRestClientException
      */
-    public TrafficManager getTrafficManager(String name) throws StingrayRestClientException {
+    public TrafficManager getTrafficManager(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH);
     }
 
     /**
-     * @param name         The virtual server name related to the traffic manager
+     * @param name           The virtual server name related to the traffic manager
      * @param trafficManager The traffic manager object used to create a Stingray traffic manager
      * @return The configured TrafficManager object
      * @throws StingrayRestClientException
      */
-    public TrafficManager createTrafficManager(String name, TrafficManager trafficManager) throws StingrayRestClientException {
+    public TrafficManager createTrafficManager(String name, TrafficManager trafficManager) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH, trafficManager);
     }
 
 
     /**
-     * @param name         The virtual server name related to the traffic manager
+     * @param name           The virtual server name related to the traffic manager
      * @param trafficManager The traffic manager object used to create a Stingray traffic manager
      * @return The configured TrafficManager object
      * @throws StingrayRestClientException
      */
-    public TrafficManager updateTrafficManager(String name, TrafficManager trafficManager) throws StingrayRestClientException {
+    public TrafficManager updateTrafficManager(String name, TrafficManager trafficManager) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, TrafficManager.class, ClientConstants.TRAFFICMANAGER_PATH, trafficManager);
     }
 
@@ -972,7 +967,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the rate
      * @throws StingrayRestClientException
      */
-    public Boolean deleteTrafficManager(String name) throws StingrayRestClientException {
+    public Boolean deleteTrafficManager(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.TRAFFICMANAGER_PATH);
     }
 
@@ -980,7 +975,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for trafficscripts providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getTrafficscripts() throws StingrayRestClientException {
+    public Children getTrafficscripts() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.TRAFFICSCRIPT_PATH);
     }
 
@@ -988,28 +983,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param fileName the virtual server name for trafficscript retrieval
      * @throws StingrayRestClientException
      */
-    public File getTraffiscript(String fileName) throws StingrayRestClientException {
+    public File getTraffiscript(String fileName) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(fileName, File.class, ClientConstants.TRAFFICSCRIPT_PATH, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
     /**
-     * @param fileName        The virtual server name related to the trafficscript
+     * @param fileName      The virtual server name related to the trafficscript
      * @param trafficscript The rate object used to create a Stingray trafficscript
      * @return The configured Trafficscript object
      * @throws StingrayRestClientException
      */
-    public File createTrafficscript(String fileName, File trafficscript) throws StingrayRestClientException {
+    public File createTrafficscript(String fileName, File trafficscript) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(fileName, File.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
 
     /**
-     * @param name        The virtual server name related to the trafficscript
+     * @param name          The virtual server name related to the trafficscript
      * @param trafficscript The trafficscript object used to create a Stingray trafficscript
      * @return The configured Trafficscript object
      * @throws StingrayRestClientException
      */
-    public File updateTrafficScript(String name, File trafficscript) throws StingrayRestClientException {
+    public File updateTrafficScript(String name, File trafficscript) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, File.class, ClientConstants.TRAFFICSCRIPT_PATH, trafficscript, MediaType.APPLICATION_OCTET_STREAM_TYPE);
     }
 
@@ -1017,7 +1012,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the trafficscript
      * @throws StingrayRestClientException
      */
-    public Boolean deleteTrafficscript(String name) throws StingrayRestClientException {
+    public Boolean deleteTrafficscript(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.TRAFFICSCRIPT_PATH);
     }
 
@@ -1025,7 +1020,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @return the generic list for TrafficIps providing the name and the endpoint for a specific request
      * @throws StingrayRestClientException
      */
-    public Children getTrafficIps() throws StingrayRestClientException {
+    public Children getTrafficIps() throws StingrayRestClientException, StingrayRestClientPathException {
         return getItems(ClientConstants.IP_PATH);
     }
 
@@ -1033,28 +1028,28 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name the virtual server name for rate retrieval
      * @throws StingrayRestClientException
      */
-    public TrafficIp getTrafficIp(String name) throws StingrayRestClientException {
+    public TrafficIp getTrafficIp(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return getItem(name, TrafficIp.class, ClientConstants.IP_PATH);
     }
 
     /**
-     * @param name    The virtual server name related to the Traffic Ip
+     * @param name      The virtual server name related to the Traffic Ip
      * @param trafficIp The rate object used to create a Stingray Traffic Ip
      * @return The configured TrafficIp object
      * @throws StingrayRestClientException
      */
-    public TrafficIp createTrafficIp(String name, TrafficIp trafficIp) throws StingrayRestClientException {
+    public TrafficIp createTrafficIp(String name, TrafficIp trafficIp) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, TrafficIp.class, ClientConstants.IP_PATH, trafficIp);
     }
 
 
     /**
-     * @param name    The virtual server name related to the Traffic Ip
+     * @param name      The virtual server name related to the Traffic Ip
      * @param trafficIp The Traffic Ip object used to create a Stingray Traffic Ip
      * @return The configured TrafficIp object
      * @throws StingrayRestClientException
      */
-    public TrafficIp updateTrafficIp(String name, TrafficIp trafficIp) throws StingrayRestClientException {
+    public TrafficIp updateTrafficIp(String name, TrafficIp trafficIp) throws StingrayRestClientException, StingrayRestClientPathException {
         return createItem(name, TrafficIp.class, ClientConstants.IP_PATH, trafficIp);
     }
 
@@ -1062,7 +1057,7 @@ public class StingrayRestClient extends StingrayRestClientManager {
      * @param name The virtual server name related to the TrafficIp
      * @throws StingrayRestClientException
      */
-    public Boolean deleteTrafficIp(String name) throws StingrayRestClientException {
+    public Boolean deleteTrafficIp(String name) throws StingrayRestClientException, StingrayRestClientPathException {
         return deleteItem(name, ClientConstants.IP_PATH);
     }
 }

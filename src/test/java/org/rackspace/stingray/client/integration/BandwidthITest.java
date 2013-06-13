@@ -9,6 +9,7 @@ import org.rackspace.stingray.client.bandwidth.Bandwidth;
 import org.rackspace.stingray.client.bandwidth.BandwidthBasic;
 import org.rackspace.stingray.client.bandwidth.BandwidthProperties;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 
@@ -40,7 +41,7 @@ public class BandwidthITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateBandwidth() throws StingrayRestClientException {
+    public void testCreateBandwidth() throws StingrayRestClientException, StingrayRestClientPathException {
         Bandwidth createdBandwidth = client.createBandwidth(vsName, bandwidth);
         Assert.assertNotNull(createdBandwidth);
         Assert.assertEquals(createdBandwidth, client.getBandwidth(vsName));
@@ -55,7 +56,7 @@ public class BandwidthITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateBandwidth() throws StingrayRestClientException {
+    public void testUpdateBandwidth() throws StingrayRestClientException, StingrayRestClientPathException {
         int testLimit = 1;
         bandwidth.getProperties().getBasic().setMaximum(testLimit);
         Bandwidth updatedBandwidth = client.updateBandwidth(vsName, bandwidth);
@@ -70,7 +71,7 @@ public class BandwidthITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfBandwidths() throws StingrayRestClientException {
+    public void testGetListOfBandwidths() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getBandwidths();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -82,7 +83,7 @@ public class BandwidthITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetBandwidth() throws StingrayRestClientException {
+    public void testGetBandwidth() throws StingrayRestClientException, StingrayRestClientPathException {
         Bandwidth retrievedBandwidth = client.getBandwidth(vsName);
         Assert.assertNotNull(retrievedBandwidth);
     }
@@ -93,16 +94,12 @@ public class BandwidthITest extends StingrayTestBase {
      *
      * @throws StingrayRestClientException
      */
-    @Test
-    public void deleteBandwidth() throws StingrayRestClientException {
+    @Test(expected = StingrayRestClientException.class)
+    public void deleteBandwidth() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteBandwidth(vsName);
         Assert.assertTrue(wasDeleted);
+        client.getBandwidth(vsName);
 
-        //because we are not restricted to the local instance, we
-        //can't guarantee what resources have already been created.
-//        Children children = client.getBandwidths();
-//        int expectedSize = 0;
-//        Assert.assertEquals(expectedSize, children.getChildren().size());
     }
 
 }

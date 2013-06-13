@@ -5,13 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.rate.Rate;
 import org.rackspace.stingray.client.rate.RateBasic;
 import org.rackspace.stingray.client.rate.RateProperties;
 
-public class RateITest extends StingrayTestBase{
+public class RateITest extends StingrayTestBase {
     StingrayRestClient client;
     String vsName;
     Rate rate;
@@ -37,10 +38,11 @@ public class RateITest extends StingrayTestBase{
     /**
      * Tests the creation of a Rate
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateRate() throws StingrayRestClientException {
+    public void testCreateRate() throws StingrayRestClientException, StingrayRestClientPathException {
         Rate createdRate = client.createRate(vsName, rate);
         Assert.assertNotNull(createdRate);
         Assert.assertEquals(createdRate, client.getRate(vsName));
@@ -49,10 +51,11 @@ public class RateITest extends StingrayTestBase{
     /**
      * Tests the updating of a Rate
      * Verifies using a get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateRate() throws StingrayRestClientException {
+    public void testUpdateRate() throws StingrayRestClientException, StingrayRestClientPathException {
         int updatePerMin = 17;
         rate.getProperties().getBasic().setMax_rate_per_minute(updatePerMin);
         Rate updatedRate = client.updateRate(vsName, rate);
@@ -64,11 +67,12 @@ public class RateITest extends StingrayTestBase{
     /**
      * Tests the retrieval of a list of Rates
      * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
     @Test
-    public void testGetListOfRates() throws StingrayRestClientException {
+    public void testGetListOfRates() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getRates();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -76,10 +80,11 @@ public class RateITest extends StingrayTestBase{
     /**
      * Tests the get function for an individual Rate
      * Retrieves the specific Action Script created earlier
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetRate() throws StingrayRestClientException {
+    public void testGetRate() throws StingrayRestClientException, StingrayRestClientPathException {
         Rate retrievedRate = client.getRate(vsName);
         Assert.assertNotNull(retrievedRate);
     }
@@ -87,10 +92,11 @@ public class RateITest extends StingrayTestBase{
     /**
      * Tests the deletion of a Rate
      * Checks return of the delete call, and throws an error
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteRate() throws StingrayRestClientException {
+    public void testDeleteRate() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteRate(vsName);
         Assert.assertTrue(wasDeleted);
     }

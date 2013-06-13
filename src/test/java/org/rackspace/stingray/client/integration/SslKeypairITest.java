@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.ssl.keypair.Keypair;
 import org.rackspace.stingray.client.ssl.keypair.KeypairBasic;
@@ -35,7 +36,7 @@ public class SslKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateSslKeyPair() throws StingrayRestClientException {
+    public void testCreateSslKeyPair() throws StingrayRestClientException, StingrayRestClientPathException {
         Keypair createdKeypair = client.createKeypair(TESTNAME, keypair);
         Assert.assertNotNull(createdKeypair);
         Keypair verifyKeypair = client.getKeypair(TESTNAME);
@@ -49,7 +50,7 @@ public class SslKeypairITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfSslKeypairs() throws StingrayRestClientException {
+    public void testGetListOfSslKeypairs() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getKeypairs();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -61,7 +62,7 @@ public class SslKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetSslKeypair() throws StingrayRestClientException {
+    public void testGetSslKeypair() throws StingrayRestClientException, StingrayRestClientPathException {
         Keypair keypair = client.getKeypair(TESTNAME);
         Assert.assertNotNull(keypair);
     }
@@ -72,7 +73,7 @@ public class SslKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteSslKeyPair() throws StingrayRestClientException {
+    public void testDeleteSslKeyPair() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean result = client.deleteKeypair(TESTNAME);
         Assert.assertTrue(result);
     }

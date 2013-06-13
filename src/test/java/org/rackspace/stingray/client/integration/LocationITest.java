@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.location.Location;
@@ -44,7 +45,7 @@ public class LocationITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateLocation() throws StingrayRestClientException {
+    public void testCreateLocation() throws StingrayRestClientException, StingrayRestClientPathException {
         Location createdLocation = client.createLocation(vsName, location);
         Assert.assertNotNull(createdLocation);
         Assert.assertEquals(createdLocation, client.getLocation(vsName));
@@ -57,7 +58,7 @@ public class LocationITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateLocation() throws StingrayRestClientException {
+    public void testUpdateLocation() throws StingrayRestClientException, StingrayRestClientPathException {
         int updateId = 33;
         location.getProperties().getBasic().setId(updateId);
         Location updatedLocation = client.updateLocation(vsName, location);
@@ -73,7 +74,7 @@ public class LocationITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfLocations() throws StingrayRestClientException {
+    public void testGetListOfLocations() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getLocations();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -85,7 +86,7 @@ public class LocationITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetSpecificLocation() throws StingrayRestClientException {
+    public void testGetSpecificLocation() throws StingrayRestClientException, StingrayRestClientPathException {
         Location retrievedLocation = client.getLocation(vsName);
         Assert.assertNotNull(retrievedLocation);
     }
@@ -97,7 +98,7 @@ public class LocationITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteLocation() throws StingrayRestClientException {
+    public void testDeleteLocation() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteLocation(vsName);
         Assert.assertTrue(wasDeleted);
 

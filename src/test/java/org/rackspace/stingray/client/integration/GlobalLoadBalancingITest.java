@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.glb.GlobalLoadBalancing;
 import org.rackspace.stingray.client.glb.GlobalLoadBalancingBasic;
 import org.rackspace.stingray.client.glb.GlobalLoadBalancingProperties;
@@ -36,10 +37,11 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
     /**
      * Tests the creation of a Glb
      * Verifies using get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateGlb() throws StingrayRestClientException {
+    public void testCreateGlb() throws StingrayRestClientException, StingrayRestClientPathException {
         GlobalLoadBalancing createdGlb = client.createGlb(vsName, glb);
         Assert.assertNotNull(createdGlb);
         Assert.assertEquals(createdGlb, client.getGlb(vsName));
@@ -48,10 +50,11 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
     /**
      * Tests the updating of a Glb
      * Verifies using a get and a comparison of content contained
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateGlb() throws StingrayRestClientException {
+    public void testUpdateGlb() throws StingrayRestClientException, StingrayRestClientPathException {
         int testInt = 1;
         glb.getProperties().getBasic().setGeo_effect(testInt);
         GlobalLoadBalancing updatedGlb = client.updateGlb(vsName, glb);
@@ -63,11 +66,12 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
     /**
      * Tests the retrieval of a list of Glbs
      * Retrieves a list of action scripts and checks its size
+     *
      * @throws org.rackspace.stingray.client.exception.StingrayRestClientException
      *
      */
     @Test
-    public void testGetListOfGlbs() throws StingrayRestClientException {
+    public void testGetListOfGlbs() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getGlbs();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -75,21 +79,23 @@ public class GlobalLoadBalancingITest extends StingrayTestBase {
     /**
      * Tests the get function for an individual Glb
      * Retrieves the specific Action Script created earlier
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetSpecificGlb() throws StingrayRestClientException {
-       GlobalLoadBalancing retrievedGlb = client.getGlb(vsName);
-       Assert.assertNotNull(retrievedGlb);
+    public void testGetSpecificGlb() throws StingrayRestClientException, StingrayRestClientPathException {
+        GlobalLoadBalancing retrievedGlb = client.getGlb(vsName);
+        Assert.assertNotNull(retrievedGlb);
     }
 
     /**
      * Tests the deletion of a Glb
      * Checks return of the delete call, and throws an error
+     *
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteGlb() throws StingrayRestClientException {
+    public void testDeleteGlb() throws StingrayRestClientException, StingrayRestClientPathException {
 //        int expectedLength = 0;
         Boolean wasDeleted = client.deleteGlb(vsName);
         Assert.assertTrue(wasDeleted);

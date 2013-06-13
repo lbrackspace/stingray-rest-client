@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Children;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class ActionScriptITest extends StingrayTestBase {
      * @throws IOException
      */
     @Test
-    public void testCreateActionScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testCreateActionScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
 
         client.createActionScript(fileName, createTestFile(fileName, fileText));
         File createdFile = client.getActionScript(fileName);
@@ -54,7 +55,7 @@ public class ActionScriptITest extends StingrayTestBase {
      * @throws IOException
      */
     @Test
-    public void testUpdateActionScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testUpdateActionScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         String updatedFileText = "Updated the test script...";
 
         client.updateActionScript(fileName, createTestFile(fileName, updatedFileText));
@@ -72,7 +73,7 @@ public class ActionScriptITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfActionScripts() throws StingrayRestClientException {
+    public void testGetListOfActionScripts() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getActionScripts();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -84,7 +85,7 @@ public class ActionScriptITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetSpecificActionScript() throws StingrayRestClientException {
+    public void testGetSpecificActionScript() throws StingrayRestClientException, StingrayRestClientPathException {
         File retrievedFile = client.getActionScript(fileName);
         Assert.assertNotNull(retrievedFile);
     }
@@ -96,7 +97,7 @@ public class ActionScriptITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test(expected = StingrayRestClientException.class)
-    public void testDeleteActionScript() throws StingrayRestClientException {
+    public void testDeleteActionScript() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteActionScript(fileName);
         Assert.assertTrue(wasDeleted);
         client.getActionScript(fileName);

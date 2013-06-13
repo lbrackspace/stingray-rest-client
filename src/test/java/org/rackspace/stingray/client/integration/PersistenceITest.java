@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.persistence.Persistence;
@@ -41,7 +42,7 @@ public class PersistenceITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreatePersistence() throws StingrayRestClientException {
+    public void testCreatePersistence() throws StingrayRestClientException, StingrayRestClientPathException {
         Persistence createdPersistence = client.createPersistence(vsName, persistence);
         Assert.assertNotNull(createdPersistence);
         Assert.assertEquals(createdPersistence, client.getPersistence(vsName));
@@ -54,7 +55,7 @@ public class PersistenceITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdatePersistence() throws StingrayRestClientException {
+    public void testUpdatePersistence() throws StingrayRestClientException, StingrayRestClientPathException {
         String updateNote = "qwertyuiop";
         persistence.getProperties().getBasic().setNote(updateNote);
         Persistence updatedPersistence = client.updatePersistence(vsName, persistence);
@@ -71,7 +72,7 @@ public class PersistenceITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfPersistences() throws StingrayRestClientException {
+    public void testGetListOfPersistences() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getPersistences();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -83,7 +84,7 @@ public class PersistenceITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetPersistence() throws StingrayRestClientException {
+    public void testGetPersistence() throws StingrayRestClientException, StingrayRestClientPathException {
         Persistence retrievedPersistence = client.getPersistence(vsName);
         Assert.assertNotNull(retrievedPersistence);
     }

@@ -5,6 +5,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.rackspace.stingray.client.exception.ClientException;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientObjectNotFoundException;
 import org.rackspace.stingray.client.util.ClientConstants;
 
 public class RequestManagerUtil {
@@ -31,13 +32,19 @@ public class RequestManagerUtil {
      * @throws StingrayRestClientException
      */
     public static void buildFaultMessage(ClientResponse response)
-            throws StingrayRestClientException {
+            throws StingrayRestClientException, StingrayRestClientObjectNotFoundException {
 
+        String objectNotFound = "Invalid resource URI";
+        String objectNotFoundMessage = "The resource does not exist.";
         ClientException exception = null;
 
         logger.info("ResponseWrapper, response status code is: " + response.getStatus());
         try {
             exception = response.getEntity(ClientException.class);
+            if(exception.getError_text().contains(objectNotFound))
+            {
+                throw new StingrayRestClientObjectNotFoundException(objectNotFoundMessage);
+            }
 
             logger.debug(String.format("Client Request failed: %s", exception.toString()));
 

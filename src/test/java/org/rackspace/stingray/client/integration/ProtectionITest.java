@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.protection.Protection;
@@ -41,7 +42,7 @@ public class ProtectionITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateProtection() throws StingrayRestClientException {
+    public void testCreateProtection() throws StingrayRestClientException, StingrayRestClientPathException {
         Protection createdProtection = client.createProtection(vsName, protection);
         Assert.assertNotNull(createdProtection);
         Assert.assertEquals(createdProtection, client.getProtection(vsName));
@@ -54,7 +55,7 @@ public class ProtectionITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateProtection() throws StingrayRestClientException {
+    public void testUpdateProtection() throws StingrayRestClientException, StingrayRestClientPathException {
         String updateNote = "qwertyuiop";
         protection.getProperties().getBasic().setNote(updateNote);
         Protection updatedProtection = client.updateProtection(vsName, protection);
@@ -71,7 +72,7 @@ public class ProtectionITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfProtections() throws StingrayRestClientException {
+    public void testGetListOfProtections() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getProtections();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -83,7 +84,7 @@ public class ProtectionITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetProtection() throws StingrayRestClientException {
+    public void testGetProtection() throws StingrayRestClientException, StingrayRestClientPathException {
         Protection retrievedProtection = client.getProtection(vsName);
         Assert.assertNotNull(retrievedProtection);
     }
@@ -95,7 +96,7 @@ public class ProtectionITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteProtection() throws StingrayRestClientException {
+    public void testDeleteProtection() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteProtection(vsName);
         Assert.assertTrue(wasDeleted);
     }

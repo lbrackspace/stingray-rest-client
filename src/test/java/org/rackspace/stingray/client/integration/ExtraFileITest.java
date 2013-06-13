@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.extra.file.ExtraFileProperties;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
@@ -39,7 +40,7 @@ public class ExtraFileITest extends StingrayTestBase {
      * @throws IOException
      */
     @Test
-    public void testCreateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testCreateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
 
         client.createExtraFile(fileName, createTestFile(fileName, fileText));
         File createdFile = client.getExtraFile(fileName);
@@ -56,7 +57,7 @@ public class ExtraFileITest extends StingrayTestBase {
      * @throws IOException
      */
     @Test
-    public void testUpdateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testUpdateExtraFile() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         String updatedFileText = "Updated the test script...";
 
         client.updateExtraFile(fileName, createTestFile(fileName, updatedFileText));
@@ -74,7 +75,7 @@ public class ExtraFileITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfExtraFiles() throws StingrayRestClientException {
+    public void testGetListOfExtraFiles() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getExtraFiles();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -86,7 +87,7 @@ public class ExtraFileITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetSpecificExtraFile() throws StingrayRestClientException {
+    public void testGetSpecificExtraFile() throws StingrayRestClientException, StingrayRestClientPathException {
         File retrievedFile = client.getExtraFile(fileName);
         Assert.assertNotNull(retrievedFile);
     }
@@ -98,7 +99,7 @@ public class ExtraFileITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test(expected = StingrayRestClientException.class)
-    public void testDeleteExtraFile() throws StingrayRestClientException {
+    public void testDeleteExtraFile() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteExtraFile(fileName);
         Assert.assertTrue(wasDeleted);
         client.getExtraFile(fileName);

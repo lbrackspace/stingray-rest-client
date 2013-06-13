@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.pool.Pool;
@@ -45,7 +46,7 @@ public class PoolITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreatePool() throws StingrayRestClientException {
+    public void testCreatePool() throws StingrayRestClientException, StingrayRestClientPathException {
         Pool createdPool = client.createPool(vsName, pool);
         Assert.assertNotNull(createdPool);
         Pool retrievedPool = client.getPool(vsName);
@@ -59,7 +60,7 @@ public class PoolITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdatePool() throws StingrayRestClientException {
+    public void testUpdatePool() throws StingrayRestClientException, StingrayRestClientPathException {
         String updateNote = "qwertyuiop";
         pool.getProperties().getBasic().setNote(updateNote);
         Pool updatedPool = client.updatePool(vsName, pool);
@@ -74,7 +75,7 @@ public class PoolITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfPools() throws StingrayRestClientException {
+    public void testGetListOfPools() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getPools();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -86,7 +87,7 @@ public class PoolITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetPool() throws StingrayRestClientException {
+    public void testGetPool() throws StingrayRestClientException, StingrayRestClientPathException {
         Pool retrievedPool = client.getPool(vsName);
         Assert.assertNotNull(retrievedPool);
     }
@@ -97,10 +98,11 @@ public class PoolITest extends StingrayTestBase {
      *
      * @throws StingrayRestClientException
      */
-    @Test
-    public void testDeletePool() throws StingrayRestClientException {
+    @Test(expected = StingrayRestClientException.class)
+    public void testDeletePool() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deletePool(vsName);
         Assert.assertTrue(wasDeleted);
+        client.getPool(vsName);
     }
 
 }

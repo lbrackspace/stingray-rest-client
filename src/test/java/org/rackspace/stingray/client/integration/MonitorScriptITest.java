@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.monitor.MonitorScript;
@@ -41,7 +42,7 @@ public class MonitorScriptITest extends StingrayTestBase {
      * @throws IOException
      */
     @Test
-    public void testCreateMonitorScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testCreateMonitorScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         client.createMonitorScript(fileName, createTestFile(fileName, fileText));
         File createdFile = client.getMonitorScript(fileName);
         Assert.assertNotNull(createdFile);
@@ -58,7 +59,7 @@ public class MonitorScriptITest extends StingrayTestBase {
      * @throws IOException
      */
     @Test
-    public void testUpateMonitorScript() throws StingrayRestClientException, URISyntaxException, IOException {
+    public void testUpateMonitorScript() throws StingrayRestClientException, URISyntaxException, IOException, StingrayRestClientPathException {
         String updatedFileText = "Updated the test script...";
 
         client.updateMonitorScript(fileName, createTestFile(fileName, updatedFileText));
@@ -77,7 +78,7 @@ public class MonitorScriptITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfMonitorScripts() throws StingrayRestClientException {
+    public void testGetListOfMonitorScripts() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getMonitorScripts();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -89,7 +90,7 @@ public class MonitorScriptITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetMonitorScript() throws StingrayRestClientException {
+    public void testGetMonitorScript() throws StingrayRestClientException, StingrayRestClientPathException {
         File retrievedFile = client.getMonitorScript(fileName);
         Assert.assertNotNull(retrievedFile);
     }
@@ -101,7 +102,7 @@ public class MonitorScriptITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test(expected = StingrayRestClientException.class)
-    public void testDeleteMonitorScript() throws StingrayRestClientException {
+    public void testDeleteMonitorScript() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteMonitorScript(fileName);
         Assert.assertTrue(wasDeleted);
         client.getMonitorScript(fileName);

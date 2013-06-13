@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.traffic.ip.TrafficIp;
@@ -37,7 +38,7 @@ public class TrafficIpITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateTrafficIp() throws StingrayRestClientException {
+    public void testCreateTrafficIp() throws StingrayRestClientException, StingrayRestClientPathException {
         TrafficIp createdTip = client.createTrafficIp(TESTNAME, tip);
         Assert.assertNotNull(createdTip);
     }
@@ -50,7 +51,7 @@ public class TrafficIpITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfTrafficIps() throws StingrayRestClientException {
+    public void testGetListOfTrafficIps() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getTrafficIps();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -62,7 +63,7 @@ public class TrafficIpITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetTrafficIp() throws StingrayRestClientException {
+    public void testGetTrafficIp() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getTrafficIps();
         Assert.assertTrue(children.getChildren().size() > 0);
         Child child = children.getChildren().get(0);
@@ -78,7 +79,7 @@ public class TrafficIpITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteTrafficIp() throws StingrayRestClientException {
+    public void testDeleteTrafficIp() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean result = client.deleteTrafficIp(TESTNAME);
         Assert.assertTrue(result);
     }

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.pool.Pool;
@@ -49,7 +50,7 @@ public class VirtualServerITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateVirtualServer() throws StingrayRestClientException {
+    public void testCreateVirtualServer() throws StingrayRestClientException, StingrayRestClientPathException {
         Pool createdPool = client.createPool(poolName, pool);
         Assert.assertNotNull(createdPool);
         VirtualServer vs = client.createVirtualServer(vsName, virtualServer);
@@ -65,7 +66,7 @@ public class VirtualServerITest extends StingrayTestBase {
     }
 
     @Test
-    public void testUpdateVirtualServer() throws StingrayRestClientException {
+    public void testUpdateVirtualServer() throws StingrayRestClientException, StingrayRestClientPathException {
         Integer modPort = 8999;
         virtualServer.getProperties().getBasic().setPort(modPort);
         VirtualServer vs = client.updateVirtualServer(vsName, virtualServer);
@@ -78,7 +79,7 @@ public class VirtualServerITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetVirtualServersList() throws StingrayRestClientException {
+    public void testGetVirtualServersList() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getVirtualServers();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -89,7 +90,7 @@ public class VirtualServerITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetVirtualServer() throws StingrayRestClientException {
+    public void testGetVirtualServer() throws StingrayRestClientException, StingrayRestClientPathException {
         VirtualServer vs = client.getVirtualServer(vsName);
         Assert.assertNotNull(vs);
     }

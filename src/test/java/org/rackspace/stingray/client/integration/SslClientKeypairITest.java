@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypair;
 import org.rackspace.stingray.client.ssl.client.keypair.ClientKeypairBasic;
@@ -41,7 +42,7 @@ public class SslClientKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateClientKeypair() throws StingrayRestClientException {
+    public void testCreateClientKeypair() throws StingrayRestClientException, StingrayRestClientPathException {
         ClientKeypair createdClientKeypair = client.createClientKeypair(vsName, clientKeypair);
         Assert.assertNotNull(createdClientKeypair);
         Assert.assertEquals(createdClientKeypair, client.getClientKeypair(vsName));
@@ -54,7 +55,7 @@ public class SslClientKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateClientKeypair() throws StingrayRestClientException {
+    public void testUpdateClientKeypair() throws StingrayRestClientException, StingrayRestClientPathException {
         String updateNote = "qwertyuiop";
         clientKeypair.getProperties().getBasic().setNote(updateNote);
         ClientKeypair updatedKeypair = client.updateClientKeypair(vsName, clientKeypair);
@@ -73,7 +74,7 @@ public class SslClientKeypairITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfClientKeypairs() throws StingrayRestClientException {
+    public void testGetListOfClientKeypairs() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getClientKeypairs();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -85,7 +86,7 @@ public class SslClientKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetClientKeypair() throws StingrayRestClientException {
+    public void testGetClientKeypair() throws StingrayRestClientException, StingrayRestClientPathException {
         ClientKeypair retrievedKeypair = client.getClientKeypair(vsName);
         Assert.assertNotNull(retrievedKeypair);
     }
@@ -97,7 +98,7 @@ public class SslClientKeypairITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test(expected = StingrayRestClientException.class)
-    public void testDeleteClientKeypair() throws StingrayRestClientException {
+    public void testDeleteClientKeypair() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteClientKeypair(vsName);
         Assert.assertTrue(wasDeleted);
         client.getClientKeypair(vsName);

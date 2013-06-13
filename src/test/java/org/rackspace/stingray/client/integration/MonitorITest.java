@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rackspace.stingray.client.StingrayRestClient;
 import org.rackspace.stingray.client.exception.StingrayRestClientException;
+import org.rackspace.stingray.client.exception.StingrayRestClientPathException;
 import org.rackspace.stingray.client.list.Child;
 import org.rackspace.stingray.client.list.Children;
 import org.rackspace.stingray.client.monitor.Monitor;
@@ -41,7 +42,7 @@ public class MonitorITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testCreateMonitor() throws StingrayRestClientException {
+    public void testCreateMonitor() throws StingrayRestClientException, StingrayRestClientPathException {
         Monitor createdMonitor = client.createMonitor(vsName, monitor);
         Assert.assertNotNull(createdMonitor);
         Assert.assertEquals(createdMonitor, client.getMonitor(vsName));
@@ -55,7 +56,7 @@ public class MonitorITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testUpdateMonitor() throws StingrayRestClientException {
+    public void testUpdateMonitor() throws StingrayRestClientException, StingrayRestClientPathException {
         int updateTimeout = 17;
         monitor.getProperties().getBasic().setTimeout(updateTimeout);
         Monitor updatedMonitor = client.updateMonitor(vsName, monitor);
@@ -72,7 +73,7 @@ public class MonitorITest extends StingrayTestBase {
      *
      */
     @Test
-    public void testGetListOfMonitors() throws StingrayRestClientException {
+    public void testGetListOfMonitors() throws StingrayRestClientException, StingrayRestClientPathException {
         Children children = client.getMonitors();
         Assert.assertTrue(children.getChildren().size() > 0);
     }
@@ -84,7 +85,7 @@ public class MonitorITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testGetMonitor() throws StingrayRestClientException {
+    public void testGetMonitor() throws StingrayRestClientException, StingrayRestClientPathException {
         Monitor retrievedMonitor = client.getMonitor(vsName);
         Assert.assertNotNull(retrievedMonitor);
     }
@@ -96,7 +97,7 @@ public class MonitorITest extends StingrayTestBase {
      * @throws StingrayRestClientException
      */
     @Test
-    public void testDeleteMonitor() throws StingrayRestClientException {
+    public void testDeleteMonitor() throws StingrayRestClientException, StingrayRestClientPathException {
         Boolean wasDeleted = client.deleteMonitor(vsName);
         Assert.assertTrue(wasDeleted);
 
