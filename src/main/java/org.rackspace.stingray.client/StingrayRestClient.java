@@ -28,6 +28,9 @@ import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.net.URI;
 
+
+//Now lives in atlas-lb...
+@Deprecated
 public class StingrayRestClient extends StingrayRestClientManager {
     private RequestManager requestManager = new RequestManagerImpl();
 
